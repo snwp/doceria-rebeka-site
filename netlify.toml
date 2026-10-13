@@ -1,0 +1,10 @@
+# Configuração do site KON BOLOS no Netlify.
+# O site é estático (index.html), mas o painel da equipe e o catálogo
+# precisam de um servidor pra funcionar em qualquer dispositivo.
+
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

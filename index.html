@@ -1,0 +1,5112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sweet Land — Brownies, cookies, bolos e sobremesas artesanais</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   SWEET LAND — paleta oficial (identidade/design-guide.md)
+   Quer trocar cor ou fonte? Mexe só aqui embaixo.
+   ============================================================ */
+:root{
+  --rosa:        #FF4FA3;  /* cor-assinatura: faixas, blocos, logo  */
+  --rosa-forte:  #E5338C;  /* CTA e destaques (rosa com leitura)    */
+  --vermelho:    #E83B2E;  /* energia, apetite                      */
+  --laranja:     #F58220;  /* calor, estrelas, selos                */
+  --rosa-claro:  #F5D8E8;  /* fundos suaves, texto sobre o vinho    */
+  --verde-agua:  #42C7B1;  /* contraste e frescor                   */
+  --branco:      #FFFFFF;
+  --creme:       #FFF5EA;  /* fundo das artes do Instagram          */
+  --vinho:       #8A1450;  /* títulos, placas, rodapé               */
+  --escuro:      #3A1A2C;  /* textos menores                        */
+
+  --fonte-titulo: 'Fraunces', Georgia, serif;
+  --fonte-script: 'Pacifico', cursive;
+  --fonte-corpo:  'Poppins', system-ui, -apple-system, sans-serif;
+
+  --raio: 18px;
+  --maxw: 1240px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+/* nenhum elemento empurra a página pro lado no celular.
+   "clip" e não "hidden": hidden viraria área de rolagem e
+   mataria o topo sticky. */
+html, body{ max-width: 100%; overflow-x: clip; }
+html{ scroll-behavior: smooth; }
+section, footer{ scroll-margin-top: 90px; }   /* folga pro topo flutuante */
+img, svg{ max-width: 100%; }
+
+body{
+  font-family: var(--fonte-corpo);
+  color: var(--escuro);
+  background: var(--branco);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* base branca com brilhos rosa e laranja suaves — a cor entra como detalhe */
+.wrap{
+  position: relative;
+  /* "clip" em vez de "hidden": corta o que vazar sem criar área de rolagem,
+     senão o topo sticky deixa de grudar. */
+  overflow: clip;
+  background:
+    radial-gradient(980px 560px at 82% 18%, rgba(255,79,163,.16) 0%, transparent 64%),
+    radial-gradient(720px 500px at 4% 78%, rgba(245,130,32,.12) 0%, transparent 62%),
+    var(--creme);
+}
+
+/* ============================================================
+   TOPO / NAVEGAÇÃO
+   ============================================================ */
+/* janela flutuante: gruda no topo e acompanha a rolagem */
+.topbar{
+  position: sticky;
+  top: 16px;
+  z-index: 40;
+  max-width: calc(var(--maxw) - 40px);
+  margin: 16px auto 0;
+  padding: 15px 18px 15px 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: rgba(245,216,232,.94);
+  backdrop-filter: blur(12px);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(138,20,80,.16);
+}
+
+.logo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo img{ width: 42px; height: 42px; object-fit: contain; display: block; }
+.logo-texto{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: .5px;
+  color: var(--vinho);
+  line-height: 1;
+}
+.logo-texto span{ color: var(--rosa-forte); }
+
+.menu{
+  display: flex;
+  gap: 30px;
+  margin: 0 auto;
+  list-style: none;
+}
+.menu a{
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--vinho);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: border-color .2s;
+  white-space: nowrap;
+}
+.menu a:hover,
+.menu a.ativo{ border-bottom-color: var(--rosa-forte); }
+
+.acoes{
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ---------- botão sanduíche (só aparece quando o menu não cabe) ---------- */
+.sanduiche{
+  display: none;
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  place-content: center;
+  gap: 5px;
+}
+.sanduiche span{
+  display: block;
+  width: 19px; height: 2.2px;
+  border-radius: 2px;
+  background: var(--vinho);
+  transition: transform .25s, opacity .2s;
+}
+.sanduiche[aria-expanded="true"] span:nth-child(1){ transform: translateY(7.2px) rotate(45deg); }
+.sanduiche[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+.sanduiche[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7.2px) rotate(-45deg); }
+.acoes button{
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--vinho);
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.acoes button:hover{ background: var(--vinho); color: var(--rosa-claro); }
+.acoes svg{ width: 19px; height: 19px; }
+
+/* risquinho separando as ações de compra da área da loja */
+.acoes .divisor{
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: rgba(138,20,80,.25);
+}
+
+/* botão da área da loja: pílula com texto, vira só ícone em tela estreita */
+.btn-login-topo{
+  width: auto !important;
+  gap: 7px;
+  padding: 0 15px 0 12px;
+  border-radius: 999px !important;
+  font-family: var(--fonte-corpo);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex !important;
+  align-items: center;
+  border: 1.5px solid rgba(138,20,80,.3) !important;
+}
+.btn-login-topo .i-sair{ display: none; }
+.btn-login-topo:hover{ border-color: var(--vinho) !important; }
+
+/* logado: o botão muda de cara e passa a ser "sair" */
+body.admin .btn-login-topo{
+  background: var(--vinho);
+  color: var(--rosa-claro);
+  border-color: var(--vinho) !important;
+}
+body.admin .btn-login-topo .i-entrar{ display: none; }
+body.admin .btn-login-topo .i-sair{ display: block; }
+.btn-login-topo .t-sair{ display: none; }
+body.admin .btn-login-topo .t-entrar{ display: none; }
+body.admin .btn-login-topo .t-sair{ display: inline; }
+
+@media (max-width: 1140px){
+  .btn-login-topo .rotulo-login{ display: none; }
+  .btn-login-topo{ width: 40px !important; padding: 0; justify-content: center; }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 26px 32px 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  min-height: 560px;
+}
+
+/* ---------- coluna de texto ---------- */
+.selo{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+  margin-bottom: 20px;
+}
+.selo svg{ width: 14px; height: 14px; }
+
+.titulo{
+  /* mesma serifada dos títulos de seção */
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(38px, 4.6vw, 62px);
+  letter-spacing: normal;
+  line-height: 1.1;
+  color: var(--vinho);
+}
+.titulo .script{
+  display: block;
+  font-family: var(--fonte-script);
+  font-weight: 400;
+  font-size: clamp(32px, 4vw, 54px);
+  letter-spacing: normal;        /* zera o tracking negativo do H1 */
+  line-height: 1.25;
+  color: var(--rosa-forte);
+  margin-top: 6px;
+}
+
+.sub{
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--escuro);
+  opacity: .82;
+  max-width: 420px;
+  margin: 18px 0 34px;
+}
+
+.botoes{ display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 15px 32px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s, box-shadow .18s, background .18s, color .18s;
+}
+.btn svg{ width: 17px; height: 17px; }
+
+.btn-cheio{
+  background: var(--rosa-forte);
+  color: var(--branco);
+  border: 2px solid var(--rosa-forte);
+  box-shadow: 0 10px 24px rgba(138,20,80,.28);
+}
+.btn-cheio:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(138,20,80,.36); }
+
+.btn-vazio{
+  background: transparent;
+  color: var(--vinho);
+  border: 2px solid var(--vinho);
+}
+.btn-vazio:hover{ background: var(--vinho); color: var(--rosa-claro); transform: translateY(-2px); }
+
+.pontos{ display: flex; gap: 9px; margin-top: 44px; }
+.pontos span{
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(138,20,80,.28);
+  cursor: pointer;
+  transition: width .25s, background .25s;
+}
+.pontos span.ativo{ width: 26px; border-radius: 999px; background: var(--rosa-forte); }
+
+/* ============================================================
+   COLUNA DA IMAGEM  <-- É AQUI QUE ENTRA A SUA FOTO
+   ============================================================ */
+.midia{
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 480px;
+}
+
+/* Sem fundo atrás do bolo: o PNG é recortado e flutua direto na página.
+   Atrás dele, blocos de cor orgânicos da Sweet Land (rosa + laranja). */
+.midia::before{
+  content: "";
+  position: absolute;
+  width: min(430px, 84%);
+  aspect-ratio: 1;
+  border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+  background: var(--rosa);
+  box-shadow: 0 30px 70px rgba(255,79,163,.28);
+}
+.midia::after{
+  content: "";
+  position: absolute;
+  right: 6%; bottom: 8%;
+  width: min(150px, 30%);
+  aspect-ratio: 1;
+  border-radius: 46% 54% 38% 62% / 55% 40% 60% 45%;
+  background: var(--laranja);
+  box-shadow: -210px -250px 0 -40px var(--verde-agua);
+}
+
+.moldura{
+  position: relative;
+  z-index: 1;
+  width: min(430px, 100%);
+  aspect-ratio: 1 / 1.06;
+  border-radius: var(--raio);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* a foto real, quando você colocar */
+/* PNG recortado: aparece inteiro, flutuando sobre o bloco rosa.
+   Se um dia trocar por foto retangular com fundo, use "cover" e
+   arredonde as bordas — aí vale esconder o disco do .midia::before. */
+.moldura img{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Sombra de chão, não de contorno.
+   O drop-shadow copiava a silhueta recortada do bolo — com o topo cheio
+   de picos de chantilly, virava um borrão sujo em volta. Esta elipse
+   fica embaixo do prato e só sugere o apoio. */
+.moldura::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 11%;
+  transform: translateX(-50%);
+  width: 56%;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+              rgba(58,26,44,.20) 0%,
+              rgba(58,26,44,.09) 48%,
+              transparent 72%);
+  filter: blur(7px);
+}
+
+/* placeholder — some sozinho quando existir um <img> antes dele */
+.placeholder{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 26px;
+  border: 2.5px dashed var(--rosa-forte);
+  border-radius: var(--raio);
+  background: rgba(255,255,255,.55);
+  color: var(--vinho);
+}
+.moldura img ~ .placeholder{ display: none; }
+
+.placeholder .icone{ width: 52px; height: 52px; opacity: .9; }
+.placeholder .t{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.3;
+}
+.placeholder .d{
+  font-size: 12.5px;
+  line-height: 1.6;
+  opacity: .78;
+  max-width: 270px;
+}
+.placeholder code{
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 11.5px;
+  background: var(--vinho);
+  color: var(--rosa-claro);
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+/* ============================================================
+   RESPONSIVO DO TOPO E DO HERO
+   A ideia é manter a cara do desktop: nada some, o menu vira
+   painel e o hero só reempilha quando não cabe mesmo.
+   ============================================================ */
+
+/* menu não cabe mais na pílula: vira painel abaixo dela */
+@media (max-width: 1040px){
+  .sanduiche{ display: grid; }
+  .topbar{ gap: 12px; }
+
+  nav{
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0; right: 0;
+    z-index: 41;
+    padding: 10px;
+    border-radius: 22px;
+    background: rgba(245,216,232,.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 36px rgba(138,20,80,.22);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity .2s, transform .2s, visibility .2s;
+  }
+  nav.aberto{ opacity: 1; visibility: visible; transform: translateY(0); }
+
+  .menu{
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+  }
+  .menu li + li{ border-top: 1px solid rgba(138,20,80,.16); }
+  .menu a{
+    display: block;
+    padding: 13px 16px;
+    font-size: 14.5px;
+    border-bottom: none;
+    border-radius: 12px;
+  }
+  .menu a:hover,
+  .menu a.ativo{
+    background: var(--vinho);
+    color: var(--rosa-claro);
+  }
+}
+
+/* duas colunas no hero enquanto couber */
+@media (max-width: 900px){
+  .hero{
+    grid-template-columns: 1fr;
+    padding-bottom: 50px;
+    gap: 22px;
+  }
+  /* o texto continua alinhado à esquerda, como no desktop */
+  .midia{ order: -1; min-height: 330px; }
+  .moldura{ width: min(340px, 84%); }
+  .pontos{ margin-top: 30px; }
+}
+
+@media (max-width: 560px){
+  .topbar{
+    top: 10px;
+    margin: 10px auto 0;
+    max-width: calc(100% - 20px);
+    padding: 10px 10px 10px 16px;
+    gap: 8px;
+  }
+  .logo img{ width: 34px; height: 34px; }
+  .logo-texto{ font-size: 16px; }
+  .acoes{ gap: 2px; }
+  .acoes button{ width: 36px; height: 36px; }
+  .acoes svg{ width: 17px; height: 17px; }
+  .acoes .divisor{ margin: 0 2px; }
+  .btn-login-topo{ width: 36px !important; }
+  .sanduiche{ width: 36px; height: 36px; }
+
+  .hero{ padding: 16px 16px 40px; gap: 18px; }
+  .btn{ padding: 13px 22px; font-size: 13.5px; }
+  .sub{ font-size: 14.5px; }
+  .midia{ min-height: 280px; }
+  .moldura{ width: min(300px, 88%); }
+}
+
+/* ============================================================
+   SEÇÃO 2 — ÓRBITA DE BENEFÍCIOS + MAIS PEDIDOS
+   ============================================================ */
+.secao{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 72px 32px;
+}
+
+/* faixa amarela — o único bloco de cor cheia da página branca */
+.faixa-clara{
+  position: relative;
+  background: var(--rosa);
+  margin-top: 24px;   /* abre espaço pro babado subir no branco */
+}
+
+/* divisor em babado (meias-luas), tipo borda de bolo.
+   Cada "onda" é um semicírculo rosa desenhado em cima do branco.
+   Pra ondas maiores/menores, mexa nos dois números (largura = 2× altura). */
+.faixa-clara::before{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: -23px;          /* = altura da onda, -1px pra não deixar fresta */
+  height: 24px;
+  background:
+    radial-gradient(circle 24px at 24px 24px, var(--rosa) 98%, transparent 100%)
+    0 0 / 48px 24px repeat-x;
+}
+
+/* ---------- cabeçalho de seção ---------- */
+.cabecalho{
+  text-align: center;
+  margin-bottom: 46px;
+}
+.pill{
+  display: inline-block;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: var(--vinho);
+  color: var(--rosa-claro);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.cabecalho h2{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.15;
+  color: var(--vinho);
+}
+.cabecalho h2 em{
+  font-family: var(--fonte-script);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--rosa-forte);
+  font-size: .92em;
+}
+.cabecalho p{
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--escuro);
+  opacity: .75;
+}
+
+/* ---------- órbita de benefícios ---------- */
+.orbita{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  margin-top: 30px;
+}
+.lado{ display: grid; gap: 56px; }
+.beneficio{ display: flex; align-items: center; }
+.esq .beneficio{ justify-content: flex-end; text-align: right; }
+.dir .beneficio{ justify-content: flex-start; text-align: left; }
+.beneficio .txt{
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--vinho);
+  max-width: 175px;
+  flex-shrink: 0;
+}
+.beneficio .linha{
+  flex: 1;
+  min-width: 24px;
+  height: 1.5px;
+  background: rgba(138,20,80,.35);
+}
+.esq .beneficio .linha{ margin-left: 14px; }
+.dir .beneficio .linha{ margin-right: 14px; }
+.beneficio .ponto{
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--rosa-forte);
+  box-shadow: 0 0 0 4px rgba(229,51,140,.16);
+  flex-shrink: 0;
+}
+/* as pontas de cima e de baixo entram um pouco, acompanhando a curva do anel */
+.esq .beneficio:first-child,
+.esq .beneficio:last-child{ margin-right: -32px; }
+.dir .beneficio:first-child,
+.dir .beneficio:last-child{ margin-left: -32px; }
+
+/* anéis concêntricos com a foto no miolo */
+.aneis{
+  position: relative;
+  width: clamp(240px, 26vw, 330px);
+  aspect-ratio: 1;
+  margin: 0 10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(138,20,80,.22);
+  background: radial-gradient(circle, rgba(255,79,163,.2) 0%, rgba(255,79,163,0) 72%);
+  display: grid;
+  place-items: center;
+}
+.aneis::before{
+  content: "";
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(138,20,80,.16);
+}
+/* PNG recortado: o bolo já é redondo, então não leva máscara nem fundo —
+   flutua no centro dos anéis com sombra que segue o próprio contorno. */
+.miolo{
+  width: 72%;
+  aspect-ratio: 1;
+}
+.miolo img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  /* visto de cima, sombra de contorno também suja a borda rendada:
+     fica só um apoio bem discreto */
+  filter: drop-shadow(0 10px 16px rgba(58,26,44,.14));
+}
+
+/* ---------- cards de produto ---------- */
+.produtos{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
+}
+.produto{
+  position: relative;
+  background: var(--branco);
+  border: 1.5px solid rgba(138,20,80,.14);
+  border-radius: 20px;
+  padding: 14px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.produto:hover{
+  transform: translateY(-6px);
+  border-color: var(--rosa-forte);
+  box-shadow: 0 18px 38px rgba(58,26,44,.13);
+}
+
+/* espaço da foto do produto */
+.produto-foto{
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #FDEEF5;
+}
+.produto-foto img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.selo-card{
+  position: absolute;
+  top: 22px; left: 22px;
+  z-index: 2;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  background: var(--vinho);
+  color: var(--rosa-claro);
+}
+.selo-card.novo{ background: var(--rosa-claro); color: var(--vinho); }
+
+.estrelas{
+  color: var(--rosa-forte);
+  font-size: 13px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.produto h3{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--vinho);
+  line-height: 1.25;
+}
+.produto .desc{
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--escuro);
+  opacity: .72;
+  flex-grow: 1;
+}
+.produto .rodape{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.preco{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--vinho);
+}
+.btn-mini{
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--rosa-forte);
+  color: var(--branco);
+  font-family: var(--fonte-corpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-mini:hover{ background: var(--vinho); }
+
+.coracao{
+  position: absolute;
+  top: 22px; right: 22px;
+  z-index: 2;
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  color: var(--rosa-forte);
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.coracao:hover{ background: var(--rosa-forte); color: var(--branco); transform: scale(1.1); }
+.coracao svg{ width: 15px; height: 15px; }
+
+.ver-tudo{
+  text-align: center;
+  margin-top: 46px;
+}
+
+/* ---------- placeholder de imagem dentro dos cards ---------- */
+.ph{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 12px;
+  border: 2px dashed currentColor;
+  border-radius: inherit;
+}
+.ph svg{ width: 26px; height: 26px; opacity: .85; }
+.ph b{
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  line-height: 1.35;
+  word-break: break-all;
+}
+
+.produto-foto .ph{ color: var(--rosa-forte); }
+img ~ .ph{ display: none; }
+
+/* ============================================================
+   SEÇÃO CONVITE — "Prove antes de encomendar"
+   Card vermelho com colagem de fotos à esquerda e 3 tiles à direita
+   ============================================================ */
+.convite{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 32px 30px;
+}
+.convite-card{
+  background: var(--vinho);
+  border-radius: 30px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  gap: 14px;
+}
+
+/* ---------- painel de texto ---------- */
+.convite-painel{
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-height: 340px;
+  padding: 48px 44px 48px 190px;
+  text-align: center;
+}
+.convite-painel h2{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.18;
+  color: var(--branco);
+}
+.convite-painel h2 em{
+  display: block;
+  font-family: var(--fonte-script);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.12em;
+  color: var(--rosa-claro);
+  margin-top: 6px;
+}
+.convite-painel p{
+  margin: 18px 0 30px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--branco);
+  opacity: .8;
+  max-width: 400px;
+}
+.btn-claro{
+  display: inline-block;
+  padding: 13px 34px;
+  border-radius: 999px;
+  background: var(--branco);
+  color: var(--vinho);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .2s, color .2s, transform .2s;
+}
+.btn-claro:hover{
+  background: var(--rosa-claro);
+  transform: translateY(-2px);
+}
+
+/* ---------- colagem de fotos à esquerda ---------- */
+.deco{
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 160px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  padding: 8px 0;
+}
+.deco-foto{
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.1);
+}
+.deco-foto img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- coluna de 3 tiles à direita ---------- */
+.tiles{
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 12px;
+  min-height: 340px;
+}
+.tile{
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.1);
+}
+.tile img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* placeholders claros, já que o fundo aqui é vermelho */
+.deco-foto .ph,
+.tile .ph{ color: var(--rosa-claro); }
+
+@media (max-width: 980px){
+  .convite{ padding: 10px 24px 24px; }
+  .convite-card{ grid-template-columns: 1fr; }
+  .convite-painel{ padding: 40px 28px; min-height: 0; }
+  .deco{
+    position: static;
+    width: auto;
+    grid-template-rows: none;
+    grid-template-columns: 1fr 1fr;
+    height: 120px;
+    margin-bottom: 26px;
+    order: -1;
+  }
+  .convite-painel{ display: flex; flex-direction: column; align-items: center; }
+  .tiles{
+    grid-template-rows: none;
+    grid-template-columns: repeat(3, 1fr);
+    min-height: 150px;
+  }
+}
+@media (max-width: 560px){
+  .convite{ padding: 6px 16px 18px; }
+  .convite-card{ border-radius: 22px; padding: 10px; }
+  .convite-painel{ padding: 30px 18px; }
+}
+
+/* ---------- responsivo da seção 2 ---------- */
+
+/* a órbita mantém os dois lados e as linhas o máximo que dá */
+@media (max-width: 980px){
+  .secao{ padding: 56px 24px; }
+  .lado{ gap: 40px; }
+  .beneficio .txt{ font-size: 13px; max-width: 140px; }
+  .esq .beneficio:first-child,
+  .esq .beneficio:last-child{ margin-right: -22px; }
+  .dir .beneficio:first-child,
+  .dir .beneficio:last-child{ margin-left: -22px; }
+  .aneis{ width: clamp(190px, 30vw, 250px); margin: 0 4px; }
+}
+
+/* Os dois lados e as linhas continuam até no celular — é o que faz
+   a seção parecer um diagrama e não uma lista. O que encolhe é o
+   anel, o corpo do texto e o comprimento das linhas. */
+@media (max-width: 680px){
+  .orbita{ margin-top: 20px; }
+  .aneis{ width: clamp(140px, 27vw, 180px); margin: 0 2px; }
+  .lado{ gap: 30px; }
+  .beneficio .txt{ font-size: 11.5px; line-height: 1.35; max-width: 108px; }
+  .beneficio .linha{ min-width: 12px; }
+  .esq .beneficio .linha{ margin-left: 8px; }
+  .dir .beneficio .linha{ margin-right: 8px; }
+  .beneficio .ponto{ width: 8px; height: 8px; box-shadow: 0 0 0 3px rgba(229,51,140,.16); }
+  .esq .beneficio:first-child,
+  .esq .beneficio:last-child{ margin-right: -14px; }
+  .dir .beneficio:first-child,
+  .dir .beneficio:last-child{ margin-left: -14px; }
+}
+
+@media (max-width: 460px){
+  .aneis{ width: clamp(104px, 29vw, 132px); margin: 0; }
+  .lado{ gap: 22px; }
+  .beneficio .txt{ font-size: 10.5px; max-width: 88px; }
+  .beneficio .linha{ min-width: 8px; }
+  .esq .beneficio .linha{ margin-left: 5px; }
+  .dir .beneficio .linha{ margin-right: 5px; }
+  .esq .beneficio:first-child,
+  .esq .beneficio:last-child{ margin-right: -9px; }
+  .dir .beneficio:first-child,
+  .dir .beneficio:last-child{ margin-left: -9px; }
+}
+
+@media (max-width: 560px){
+  .secao{ padding: 46px 16px; }
+  .cabecalho{ margin-bottom: 34px; }
+
+  /* ondas menores no celular */
+  .faixa-clara{ margin-top: 16px; }
+  .faixa-clara::before{
+    top: -15px;
+    height: 16px;
+    background:
+      radial-gradient(circle 16px at 16px 16px, var(--rosa) 98%, transparent 100%)
+      0 0 / 32px 16px repeat-x;
+  }
+
+  /* os cards mantêm tudo que têm no desktop, inclusive a descrição */
+  .produtos{ grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .produto{ padding: 10px 10px 14px; border-radius: 16px; }
+  .produto h3{ font-size: 14px; }
+  .produto .desc{ font-size: 11.5px; line-height: 1.5; }
+  .produto .rodape{ flex-direction: column; align-items: stretch; gap: 8px; }
+  .preco{ font-size: 17px; text-align: center; }
+  .btn-mini{ width: 100%; padding: 9px 12px; }
+  .selo-card{ top: 16px; left: 16px; font-size: 9px; padding: 4px 9px; }
+  .coracao{ top: 16px; right: 16px; width: 28px; height: 28px; }
+  .coracao svg{ width: 13px; height: 13px; }
+  .estrelas{ font-size: 11px; letter-spacing: 1px; }
+  .ver-tudo{ margin-top: 32px; }
+}
+
+/* telas bem estreitas: uma coluna, senão o card fica ilegível */
+@media (max-width: 400px){
+  .produtos{ grid-template-columns: 1fr; }
+  .rodape-grade{ grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   RODAPÉ
+   ============================================================ */
+.rodape-site{
+  background: var(--vinho);
+  color: var(--branco);
+  border-radius: 40px 40px 0 0;
+}
+.rodape-conteudo{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 58px 32px 26px;
+}
+
+/* ---------- grade principal ---------- */
+.rodape-grade{
+  display: grid;
+  grid-template-columns: 1.4fr .8fr .8fr .8fr 1.5fr;
+  gap: 34px;
+  padding-bottom: 40px;
+}
+
+/* coluna da marca */
+.rodape-marca{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.selo-logo{
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--rosa-claro);
+}
+.selo-logo img{ width: 72%; height: 72%; object-fit: contain; display: block; }
+.rodape-marca .nome{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: .6px;
+  color: var(--branco);
+  line-height: 1.1;
+}
+.rodape-marca .tag{
+  display: block;
+  font-family: var(--fonte-corpo);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--rosa-claro);
+  margin-top: 3px;
+}
+
+/* colunas de links */
+.rodape-site h4{
+  font-family: var(--fonte-corpo);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--rosa-claro);
+  margin-bottom: 14px;
+}
+.rodape-site ul{ list-style: none; display: grid; gap: 9px; }
+.rodape-site li{
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255,255,255,.76);
+}
+.rodape-site a{
+  color: rgba(255,255,255,.76);
+  text-decoration: none;
+  transition: color .2s;
+}
+.rodape-site a:hover{ color: var(--rosa-claro); }
+
+/* ---------- captura de e-mail ---------- */
+.news h4{ color: var(--rosa-claro); }
+.news p{
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+  margin-bottom: 14px;
+}
+.news-form{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  border: 1.5px solid rgba(255,255,255,.2);
+  transition: border-color .2s;
+}
+.news-form:focus-within{ border-color: var(--rosa-claro); }
+.news-form input{
+  flex: 1;
+  min-width: 0;
+  padding: 9px 14px;
+  border: none;
+  background: transparent;
+  color: var(--branco);
+  font-family: var(--fonte-corpo);
+  font-size: 13px;
+}
+.news-form input::placeholder{ color: rgba(255,255,255,.5); }
+.news-form input:focus{ outline: none; }
+.news-form button{
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 999px;
+  background: var(--rosa-claro);
+  color: var(--vinho);
+  font-family: var(--fonte-corpo);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.news-form button:hover{ background: var(--branco); }
+
+/* ---------- linha de baixo ---------- */
+.rodape-base{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.16);
+  font-size: 12px;
+  color: rgba(255,255,255,.52);
+}
+
+@media (max-width: 980px){
+  .rodape-conteudo{ padding: 46px 24px 22px; }
+  .rodape-grade{
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .news{ grid-column: 1 / -1; }
+}
+@media (max-width: 560px){
+  .rodape-site{ border-radius: 28px 28px 0 0; }
+  .rodape-conteudo{ padding: 38px 16px 20px; }
+  /* segue em duas colunas, como no desktop — não vira lista comprida */
+  .rodape-grade{ grid-template-columns: 1fr 1fr; gap: 24px 18px; }
+  .rodape-base{ justify-content: center; text-align: center; }
+  .rodape-site li{ font-size: 12.5px; }
+  /* o campo e o botão continuam na mesma pílula */
+  .news-form{ padding: 5px; }
+  .news-form input{ padding: 9px 10px; font-size: 12.5px; }
+  .news-form button{ padding: 9px 14px; font-size: 11.5px; }
+}
+
+/* ============================================================
+   CARRINHO + FAVORITOS
+   ============================================================ */
+
+/* contador em cima dos ícones do topo */
+.acoes button{ position: relative; }
+.contador{
+  position: absolute;
+  top: 1px; right: 1px;
+  min-width: 17px; height: 17px;
+  padding: 0 4px;
+  display: none;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--rosa-forte);
+  color: var(--branco);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+.contador.visivel{ display: grid; }
+.acoes button:hover .contador{ background: var(--rosa-claro); color: var(--vinho); }
+
+/* coração ativo no card */
+.coracao.ativo{
+  background: var(--rosa-forte);
+  color: var(--branco);
+}
+
+/* ---------- gaveta ---------- */
+.fundo-gaveta{
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(58,26,44,.5);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s, visibility .25s;
+}
+.fundo-gaveta.aberta{ opacity: 1; visibility: visible; }
+
+.gaveta{
+  position: fixed;
+  top: 0; right: 0;
+  z-index: 61;
+  width: min(420px, 100%);
+  height: 100%;
+  background: var(--branco);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  box-shadow: -20px 0 50px rgba(58,26,44,.2);
+}
+.gaveta.aberta{ transform: translateX(0); }
+
+.gaveta-topo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid rgba(138,20,80,.14);
+}
+.gaveta-topo h3{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--vinho);
+}
+.fechar{
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(138,20,80,.08);
+  color: var(--vinho);
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.fechar:hover{ background: var(--vinho); color: var(--rosa-claro); }
+.fechar svg{ width: 16px; height: 16px; }
+
+.gaveta-corpo{
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 22px;
+}
+
+/* ---------- item do carrinho ---------- */
+.item{
+  display: grid;
+  grid-template-columns: 62px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(138,20,80,.1);
+}
+.item-foto{
+  width: 62px; height: 62px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FDEEF5;
+  display: grid;
+  place-items: center;
+  color: var(--rosa-forte);
+  flex-shrink: 0;
+}
+.item-foto img{ width: 100%; height: 100%; object-fit: cover; }
+.item-foto svg{ width: 22px; height: 22px; opacity: .5; }
+.item-nome{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 14.5px;
+  line-height: 1.3;
+  color: var(--vinho);
+}
+.item-preco{
+  font-size: 12.5px;
+  color: var(--escuro);
+  opacity: .7;
+  margin-top: 3px;
+}
+.qtd{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.qtd button{
+  width: 24px; height: 24px;
+  display: grid; place-items: center;
+  border: 1.5px solid rgba(138,20,80,.3);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--vinho);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.qtd button:hover{ background: var(--rosa-forte); border-color: var(--rosa-forte); color: var(--branco); }
+.qtd span{
+  min-width: 18px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--vinho);
+}
+
+/* ---------- estado vazio ---------- */
+.vazio{
+  text-align: center;
+  padding: 42px 16px;
+  color: var(--escuro);
+}
+.vazio svg{ width: 44px; height: 44px; color: var(--rosa-forte); opacity: .45; margin-bottom: 12px; }
+.vazio p{ font-size: 14px; opacity: .65; line-height: 1.6; }
+
+/* ---------- bloco de favoritos recomendados ---------- */
+.recomendados{
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 2px dashed rgba(138,20,80,.18);
+}
+.recomendados h4{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--fonte-corpo);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+  margin-bottom: 4px;
+}
+.recomendados h4 svg{ width: 13px; height: 13px; }
+.recomendados .dica{
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--escuro);
+  opacity: .6;
+  margin-bottom: 12px;
+}
+.rec{
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 0;
+}
+.rec .item-foto{ width: 46px; height: 46px; border-radius: 10px; }
+.rec .item-nome{ font-size: 13.5px; }
+.btn-add{
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1.5px solid var(--rosa-forte);
+  background: transparent;
+  color: var(--rosa-forte);
+  font-family: var(--fonte-corpo);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.btn-add:hover{ background: var(--rosa-forte); color: var(--branco); }
+
+/* ---------- pé da gaveta ---------- */
+.gaveta-pe{
+  padding: 18px 22px 22px;
+  border-top: 1px solid rgba(138,20,80,.14);
+  background: #FFF7FB;
+}
+.total{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.total .rotulo{
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--escuro);
+  opacity: .75;
+}
+.total .valor{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 25px;
+  color: var(--vinho);
+}
+.btn-whats{
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 999px;
+  border: none;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--fonte-corpo);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter .2s, transform .2s;
+}
+.btn-whats:hover{ filter: brightness(.93); transform: translateY(-2px); }
+.btn-whats:disabled{ opacity: .45; cursor: not-allowed; transform: none; }
+.btn-whats svg{ width: 19px; height: 19px; }
+.aviso-pe{
+  margin-top: 10px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--escuro);
+  opacity: .55;
+}
+
+/* ---------- abas da gaveta ---------- */
+.abas{
+  display: flex;
+  gap: 6px;
+  padding: 12px 22px 0;
+}
+.abas button{
+  flex: 1;
+  padding: 9px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(138,20,80,.07);
+  color: var(--vinho);
+  font-family: var(--fonte-corpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.abas button.ativa{ background: var(--vinho); color: var(--rosa-claro); }
+
+/* ---------- avisinho flutuante ---------- */
+.toast{
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 70;
+  transform: translate(-50%, 90px);
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: var(--vinho);
+  color: var(--branco);
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: 0 14px 34px rgba(58,26,44,.3);
+  opacity: 0;
+  transition: transform .3s, opacity .3s;
+  pointer-events: none;
+}
+.toast.visivel{ transform: translate(-50%, 0); opacity: 1; }
+
+/* ---------- bolhas flutuantes: favoritos em cima, carrinho embaixo ---------- */
+.flutuantes{
+  position: fixed;
+  /* 84px de folga: o selo do Netlify mora no canto de baixo */
+  right: 20px; bottom: 84px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bolha{
+  position: relative;
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .2s, background .2s, color .2s;
+}
+.bolha:hover{ transform: scale(1.08); }
+.bolha svg{ width: 24px; height: 24px; }
+
+/* favoritos: círculo claro */
+.bolha-clara{
+  background: var(--branco);
+  color: var(--rosa-forte);
+  box-shadow: 0 8px 22px rgba(58,26,44,.16);
+}
+.bolha-clara:hover{ background: var(--rosa-forte); color: var(--branco); }
+
+/* carrinho: círculo cheio */
+.bolha-cheia{
+  background: var(--rosa-forte);
+  color: var(--branco);
+  box-shadow: 0 10px 26px rgba(229,51,140,.42);
+}
+.bolha-cheia:hover{ background: var(--vinho); }
+
+/* contador colado no canto de cada bolha */
+.bolha .contador{
+  top: -3px; right: -3px;
+  min-width: 22px; height: 22px;
+  font-size: 11px;
+  border: 2px solid var(--branco);
+  background: var(--vinho);
+  color: var(--branco);
+}
+.bolha-clara .contador{ background: var(--rosa-forte); }
+
+@media (max-width: 560px){
+  .gaveta{ width: 100%; }
+  .flutuantes{ right: 14px; bottom: 78px; gap: 10px; }
+  .bolha{ width: 50px; height: 50px; }
+  .bolha svg{ width: 21px; height: 21px; }
+}
+
+/* ============================================================
+   LOGIN + PAINEL DE ADMINISTRAÇÃO
+   ============================================================ */
+
+/* faixa que avisa que você está no modo edição */
+.barra-admin{
+  position: sticky;
+  top: 0;
+  z-index: 45;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 10px 18px;
+  background: var(--vinho);
+  color: var(--branco);
+  font-size: 13px;
+  font-weight: 500;
+}
+body.admin .barra-admin{ display: flex; }
+.barra-admin strong{ color: var(--rosa-claro); }
+.barra-admin button{
+  padding: 6px 14px;
+  border: 1.5px solid rgba(255,255,255,.45);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--branco);
+  font-family: var(--fonte-corpo);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.barra-admin button:hover{ background: var(--rosa-claro); color: var(--vinho); border-color: var(--rosa-claro); }
+
+/* botões de editar/excluir em cima do card */
+.acoes-card{
+  position: absolute;
+  top: 22px; left: 22px;
+  z-index: 3;
+  display: none;
+  gap: 6px;
+}
+body.admin .acoes-card{ display: flex; }
+body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
+.acoes-card button{
+  padding: 5px 11px;
+  border: none;
+  border-radius: 999px;
+  background: var(--vinho);
+  color: var(--rosa-claro);
+  font-family: var(--fonte-corpo);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(58,26,44,.25);
+  transition: background .2s, color .2s;
+}
+.acoes-card button:hover{ background: var(--rosa-claro); color: var(--vinho); }
+.acoes-card .excluir:hover{ background: var(--rosa-forte); color: var(--branco); }
+
+.admin-add{ text-align: center; margin-top: 30px; }
+
+/* ---------- janela modal (login e edição) ---------- */
+.modal-fundo{
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(58,26,44,.55);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .22s, visibility .22s;
+}
+.modal-fundo.aberto{ opacity: 1; visibility: visible; }
+
+.modal{
+  width: min(460px, 100%);
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--branco);
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 30px 70px rgba(58,26,44,.3);
+  transform: translateY(14px);
+  transition: transform .22s;
+}
+.modal-fundo.aberto .modal{ transform: translateY(0); }
+
+.modal h3{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--vinho);
+  margin-bottom: 6px;
+}
+.modal .legenda{
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--escuro);
+  opacity: .7;
+  margin-bottom: 20px;
+}
+/* aviso do primeiro acesso, quando ainda não existe senha de administrador */
+.modal .dica-login{
+  background: rgba(0,0,0,.04);
+  border-left: 3px solid var(--rosa-claro);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  opacity: 1;
+}
+
+.campo{ margin-bottom: 15px; }
+.campo label{
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--vinho);
+  margin-bottom: 6px;
+}
+/* vale pra qualquer campo de digitar — listar tipo por tipo deixava
+   um input novo (senha, por exemplo) sem estilo nenhum */
+.campo input:not([type=checkbox]):not([type=radio]):not([type=file]),
+.campo textarea,
+.campo select{
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(138,20,80,.22);
+  border-radius: 12px;
+  background: #FFF7FB;
+  font-family: var(--fonte-corpo);
+  font-size: 14px;
+  color: var(--escuro);
+  transition: border-color .2s;
+}
+.campo textarea{ resize: vertical; min-height: 74px; line-height: 1.5; }
+/* as bolinhas da senha nascem grudadas; um respiro deixa elas legíveis */
+.campo input[type=password]{ letter-spacing: 3px; }
+.campo input[type=password]::placeholder{ letter-spacing: 0; }
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus{ outline: none; border-color: var(--rosa-forte); }
+.campo .ajuda{
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--escuro);
+  opacity: .6;
+}
+
+/* ---------- área de envio de foto ---------- */
+.dropzone{
+  position: relative;
+  border: 2px dashed rgba(138,20,80,.3);
+  border-radius: 16px;
+  background: #FFF7FB;
+  transition: border-color .2s, background .2s;
+}
+.dropzone.sobre{
+  border-color: var(--rosa-forte);
+  background: rgba(229,51,140,.06);
+}
+
+/* --- sem foto --- */
+.dz-vazio{
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  padding: 26px 18px;
+  text-align: center;
+  cursor: pointer;
+}
+.dz-vazio svg{
+  width: 34px; height: 34px;
+  color: var(--rosa-forte);
+  opacity: .8;
+  margin-bottom: 6px;
+}
+.dz-titulo{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--vinho);
+}
+.dz-sub{ font-size: 12.5px; color: var(--escuro); opacity: .75; }
+.dz-link{
+  color: var(--rosa-forte);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.dz-formatos{
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: .3px;
+  color: var(--escuro);
+  opacity: .5;
+}
+
+/* o atributo hidden precisa vencer os display: grid/flex daqui de baixo */
+.dropzone [hidden]{ display: none !important; }
+
+/* --- com foto: prévia ocupa o lugar da caixa de upload --- */
+.dz-cheio{ padding: 12px; }
+.dz-previa{
+  width: 100%;
+  height: 156px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--branco);
+  border: 1.5px solid rgba(138,20,80,.14);
+}
+.dz-previa img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.dz-info{ text-align: center; margin-top: 11px; }
+.dz-nome{
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vinho);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dz-peso{
+  display: block;
+  font-size: 11.5px;
+  color: var(--escuro);
+  opacity: .6;
+  margin-top: 3px;
+}
+/* botões embaixo da prévia */
+.dz-acoes{ display: flex; justify-content: center; gap: 7px; margin-top: 12px; }
+.dz-acoes button{
+  padding: 7px 14px;
+  border: 1.5px solid var(--rosa-forte);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--rosa-forte);
+  font-family: var(--fonte-corpo);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.dz-acoes button:hover{ background: var(--rosa-forte); color: var(--branco); }
+.dz-acoes .desfazer{
+  border-color: rgba(138,20,80,.3);
+  color: var(--escuro);
+}
+.dz-acoes .desfazer:hover{ background: var(--escuro); border-color: var(--escuro); color: var(--branco); }
+
+.modal-botoes{
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+.modal-botoes .btn{ flex: 1; justify-content: center; padding: 13px 18px; font-size: 14px; }
+
+.erro-modal{
+  display: none;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(229,51,140,.1);
+  color: var(--rosa-forte);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.erro-modal.visivel{ display: block; }
+
+@media (max-width: 560px){
+  .modal{ padding: 20px; border-radius: 20px; }
+  .modal-botoes{ flex-direction: column; }
+}
+
+/* ---------- permissões: cada botão só aparece pra quem pode ---------- */
+.acoes-card .editar{ display: none; }
+.acoes-card .excluir{ display: none; }
+body.pode-editar  .acoes-card .editar{ display: block; }
+body.pode-excluir .acoes-card .excluir{ display: block; }
+.barra-admin .so-equipe{ display: none; }
+body.pode-equipe .barra-admin .so-equipe{ display: inline-block; }
+body:not(.pode-fotos) .campo-foto{ display: none; }
+
+#admin-quem{ opacity: .85; }
+
+/* ---------- janela da equipe ---------- */
+.modal-largo{ width: min(600px, 100%); }
+.sub-titulo{
+  font-family: var(--fonte-corpo);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+  margin-bottom: 14px;
+}
+.divisor-modal{
+  border: none;
+  border-top: 2px dashed rgba(138,20,80,.18);
+  margin: 22px 0 18px;
+}
+
+.lista-equipe{ display: grid; gap: 8px; }
+.pessoa{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(138,20,80,.16);
+  border-radius: 14px;
+  background: #FFF7FB;
+}
+.pessoa.dono{ border-color: var(--vinho); background: rgba(138,20,80,.05); }
+.pessoa-email{
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--vinho);
+  word-break: break-all;
+}
+.pessoa-funcao{ font-size: 12px; opacity: .7; margin-top: 2px; }
+.chips{ display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+.chip{
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--rosa-claro);
+  color: var(--vinho);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.chip.vazio{ background: rgba(138,20,80,.1); color: var(--escuro); font-weight: 500; }
+.travado{
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--vinho);
+  opacity: .55;
+  white-space: nowrap;
+}
+.pessoa-acoes{ display: flex; gap: 6px; flex-shrink: 0; }
+.pessoa-acoes button{
+  padding: 6px 12px;
+  border: 1.5px solid rgba(138,20,80,.3);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vinho);
+  font-family: var(--fonte-corpo);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.pessoa-acoes button:hover{ background: var(--vinho); color: var(--rosa-claro); border-color: var(--vinho); }
+.pessoa-acoes .excluir:hover{ background: var(--rosa-forte); border-color: var(--rosa-forte); color: var(--branco); }
+
+.dupla{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.permissoes{ display: grid; gap: 8px; }
+.marcar{
+  display: flex !important;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 9px 12px;
+  border: 1.5px solid rgba(138,20,80,.16);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.marcar:hover{ border-color: var(--rosa-forte); }
+.marcar input{ margin-top: 2px; accent-color: var(--rosa-forte); flex-shrink: 0; }
+.marcar span{
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--escuro);
+  text-transform: none;
+  letter-spacing: normal;
+}
+.marcar:has(input:checked){ border-color: var(--rosa-forte); background: rgba(229,51,140,.05); }
+
+@media (max-width: 560px){
+  .dupla{ grid-template-columns: 1fr; }
+  .pessoa{ flex-direction: column; align-items: flex-start; }
+}
+
+/* ============================================================
+   BUSCA
+   ============================================================ */
+.modal-busca{ width: min(560px, 100%); padding: 0; overflow: hidden; }
+
+.busca-topo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 14px;
+  border-bottom: 1.5px solid rgba(138,20,80,.14);
+}
+.busca-topo > svg{ width: 19px; height: 19px; color: var(--rosa-forte); flex-shrink: 0; }
+#busca-campo{
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: var(--fonte-corpo);
+  font-size: 15.5px;
+  color: var(--escuro);
+}
+#busca-campo:focus{ outline: none; }
+#busca-campo::placeholder{ color: rgba(58,26,44,.42); }
+
+.busca-resultado{
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px 16px 16px;
+}
+.busca-conta{
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+  padding: 8px 2px 10px;
+}
+
+.achado{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(138,20,80,.1);
+}
+.achado:last-child{ border-bottom: none; }
+.achado-foto{
+  width: 54px; height: 54px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FDEEF5;
+}
+.achado-foto img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.achado-txt{ flex: 1; min-width: 0; }
+.achado-nome{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--vinho);
+  line-height: 1.25;
+}
+.achado-desc{
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--escuro);
+  opacity: .65;
+  margin-top: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.achado-fim{
+  display: grid;
+  gap: 7px;
+  justify-items: end;
+  flex-shrink: 0;
+}
+.achado-preco{
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--vinho);
+}
+
+.busca-dicas{ padding: 26px 4px 14px; text-align: center; }
+.busca-vazia{
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--escuro);
+  opacity: .65;
+  margin-bottom: 16px;
+}
+.sugestoes{ display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+.sugestao{
+  padding: 8px 15px;
+  border: 1.5px solid rgba(138,20,80,.25);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--vinho);
+  font-family: var(--fonte-corpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.sugestao:hover{ background: var(--vinho); color: var(--rosa-claro); border-color: var(--vinho); }
+
+@media (max-width: 560px){
+  .modal-busca{ padding: 0; }
+  .busca-resultado{ max-height: 66vh; padding: 8px 12px 14px; }
+  .achado-desc{ display: none; }
+}
+
+/* ============================================================
+   FICHA DO PRODUTO
+   ============================================================ */
+.modal-detalhe{
+  width: min(520px, 100%);
+  max-height: 88vh;
+  padding: 0;
+  position: relative;
+  /* o card não rola: quem rola é o corpo, assim o X fica parado
+     e os cantos arredondados continuam cortando a foto */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#detalhe-corpo{
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;   /* não arrasta a página atrás */
+}
+.fechar-flutua{
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 3;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(58,26,44,.2);
+}
+
+/* ---------- foto com o selo ---------- */
+.det-foto{
+  position: relative;
+  height: 230px;
+  background: #FDEEF5;
+}
+.det-foto img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.selo-artesanal{
+  position: absolute;
+  left: 18px; bottom: -26px;
+  z-index: 2;
+  width: 86px; height: 86px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0;
+  border-radius: 50%;
+  background: var(--rosa-claro);
+  border: 2.5px solid var(--vinho);
+  box-shadow: 0 10px 24px rgba(58,26,44,.24);
+  transform: rotate(-8deg);
+}
+.selo-artesanal svg{
+  width: 17px; height: 17px;
+  color: var(--rosa-forte);
+  margin-bottom: 1px;
+}
+.selo-artesanal b{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 19px;
+  line-height: 1;
+  color: var(--vinho);
+}
+.selo-artesanal span{
+  font-family: var(--fonte-corpo);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--vinho);
+  margin-top: 2px;
+}
+
+/* ---------- cabeçalho ---------- */
+.det-cabeca{ padding: 38px 24px 0; }
+.det-cabeca .estrelas{ margin-bottom: 6px; }
+.det-cabeca h3{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--vinho);
+}
+.det-desc{
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--escuro);
+  opacity: .78;
+}
+
+/* ---------- especificações ---------- */
+.det-ficha{
+  display: grid;
+  gap: 2px;
+  margin: 20px 24px 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #FFF7FB;
+  border: 1.5px solid rgba(138,20,80,.14);
+}
+.ficha-item{
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 9px 0;
+}
+.ficha-item + .ficha-item{ border-top: 1px solid rgba(138,20,80,.1); }
+.ficha-item svg{
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--rosa-forte);
+}
+.ficha-rotulo{
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+}
+.ficha-valor{
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--escuro);
+  margin-top: 2px;
+}
+
+/* ---------- modo de preparo ---------- */
+.det-feito{ padding: 22px 24px 0; }
+.det-feito h4{
+  font-family: var(--fonte-corpo);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+  margin-bottom: 12px;
+}
+.det-feito ol{
+  list-style: none;
+  counter-reset: passo;
+  display: grid;
+  gap: 11px;
+}
+.det-feito li{
+  counter-increment: passo;
+  position: relative;
+  padding-left: 32px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--escuro);
+  opacity: .85;
+}
+.det-feito li::before{
+  content: counter(passo);
+  position: absolute;
+  left: 0; top: -1px;
+  width: 21px; height: 21px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--vinho);
+  color: var(--rosa-claro);
+  font-family: var(--fonte-corpo);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ---------- pé ---------- */
+.det-rodape{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 16px 24px 22px;
+  border-top: 1.5px solid rgba(138,20,80,.14);
+  background: #FFF7FB;
+}
+.det-preco .rotulo{
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--escuro);
+  opacity: .6;
+}
+.det-preco .valor{
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--vinho);
+}
+.det-acoes{ display: flex; align-items: center; gap: 10px; }
+.det-coracao{
+  position: static;
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(138,20,80,.25);
+  background: var(--branco);
+}
+.det-coracao svg{ width: 18px; height: 18px; }
+.det-acoes .btn{ padding: 14px 24px; font-size: 14px; }
+
+/* o card inteiro vira clicável */
+.produto{ cursor: pointer; }
+.produto .btn-mini,
+.produto .coracao,
+.produto .acoes-card button{ cursor: pointer; }
+
+@media (max-width: 560px){
+  .det-foto{ height: 190px; }
+  .selo-artesanal{ width: 74px; height: 74px; left: 14px; bottom: -22px; }
+  .selo-artesanal b{ font-size: 16px; }
+  .det-cabeca{ padding: 32px 18px 0; }
+  .det-cabeca h3{ font-size: 20px; }
+  .det-ficha{ margin: 16px 18px 0; padding: 12px 14px; }
+  .det-feito{ padding: 18px 18px 0; }
+  .det-rodape{ padding: 14px 18px 18px; }
+  .det-acoes{ width: 100%; }
+  .det-acoes .btn{ flex: 1; justify-content: center; }
+}
+
+/* ============================================================
+   DADOS DO PEDIDO (dentro da gaveta)
+   ============================================================ */
+.pedido-form{
+  flex-shrink: 0;
+  padding: 14px 22px 4px;
+  border-top: 1px solid rgba(138,20,80,.14);
+  background: var(--branco);
+}
+.pedido-form[hidden]{ display: none; }
+
+.pedido-form h4{
+  font-family: var(--fonte-corpo);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--rosa-forte);
+  margin-bottom: 10px;
+}
+
+.campo-ped{ margin-bottom: 10px; }
+.campo-ped label{
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--vinho);
+  margin-bottom: 4px;
+}
+.campo-ped .opcional{
+  font-weight: 500;
+  color: var(--escuro);
+  opacity: .5;
+}
+.campo-ped input,
+.campo-ped textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid rgba(138,20,80,.22);
+  border-radius: 12px;
+  background: #FFF7FB;
+  font-family: var(--fonte-corpo);
+  font-size: 13.5px;
+  color: var(--escuro);
+  transition: border-color .2s, background .2s;
+}
+.campo-ped textarea{ resize: vertical; min-height: 44px; line-height: 1.45; }
+.campo-ped input::placeholder,
+.campo-ped textarea::placeholder{ color: rgba(58,26,44,.4); }
+.campo-ped input:focus,
+.campo-ped textarea:focus{
+  outline: none;
+  border-color: var(--rosa-forte);
+  background: var(--branco);
+}
+
+/* campo obrigatório em branco na hora de enviar */
+.campo-ped.falta input,
+.campo-ped.falta textarea{
+  border-color: var(--rosa-forte);
+  background: rgba(229,51,140,.06);
+}
+.campo-ped.falta label::after{
+  content: " — preencha";
+  color: var(--rosa-forte);
+  font-weight: 600;
+}
+
+.dupla-ped{ display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+
+@media (max-width: 560px){
+  .pedido-form{ padding: 12px 16px 2px; }
+  .dupla-ped{ grid-template-columns: 1fr; gap: 0; }
+}
+
+/* ---------- seletor de idioma ---------- */
+.troca-idioma{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 5px 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+}
+.troca-idioma > svg{
+  width: 15px; height: 15px;
+  color: var(--rosa-claro);
+  margin-right: 3px;
+  flex-shrink: 0;
+}
+.opcao-idioma{
+  padding: 5px 11px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255,255,255,.7);
+  font-family: var(--fonte-corpo);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.opcao-idioma:hover{ color: var(--rosa-claro); }
+.opcao-idioma.ativa{
+  background: var(--rosa-claro);
+  color: var(--vinho);
+}
+
+/* ============================================================
+   SWEET LAND — toques da marca
+   Rosa vibrante como bloco de cor, contorno circular multicolorido
+   e pontos de laranja, vermelho e verde-água.
+   ============================================================ */
+.logo img{ border-radius: 50%; }
+.logo-texto{ font-style: italic; letter-spacing: 0; }
+
+/* faixa dos produtos em rosa cheio */
+.faixa-clara .cabecalho h2{ color: var(--branco); }
+.faixa-clara .cabecalho h2 em{ color: var(--vinho); }
+.faixa-clara .cabecalho p{ color: var(--branco); opacity: .95; }
+.faixa-clara .pill{ background: var(--branco); color: var(--rosa-forte); }
+.faixa-clara .btn-vazio{ color: var(--branco); border-color: var(--branco); }
+.faixa-clara .btn-vazio:hover{ background: var(--branco); color: var(--rosa-forte); }
+.faixa-clara .produto{ border-color: transparent; box-shadow: 0 10px 26px rgba(138,20,80,.18); }
+.faixa-clara .produto:hover{ border-color: var(--laranja); box-shadow: 0 18px 38px rgba(138,20,80,.28); }
+
+/* estrelas e selos com as cores de apoio */
+.estrelas{ color: var(--laranja); }
+.selo-card.novo{ background: var(--verde-agua); color: var(--escuro); }
+
+/* anel da órbita com o contorno multicolorido do logo */
+.aneis{
+  border: 4px solid transparent;
+  background:
+    radial-gradient(circle, rgba(255,79,163,.2) 0%, rgba(255,255,255,1) 72%) padding-box,
+    conic-gradient(var(--rosa), var(--laranja), var(--vermelho), var(--verde-agua), var(--rosa)) border-box;
+}
+.aneis::before{ border: 2px dashed rgba(138,20,80,.2); }
+
+/* cada benefício ganha uma cor da paleta */
+.beneficio .ponto{
+  background: var(--c, var(--rosa-forte));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c, var(--rosa-forte)) 22%, transparent);
+}
+.esq .beneficio:nth-child(1), .dir .beneficio:nth-child(3){ --c: var(--rosa); }
+.esq .beneficio:nth-child(2), .dir .beneficio:nth-child(1){ --c: var(--laranja); }
+.esq .beneficio:nth-child(3), .dir .beneficio:nth-child(2){ --c: var(--verde-agua); }
+@media (max-width: 680px){
+  .beneficio .ponto{ box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--rosa-forte)) 22%, transparent); }
+}
+
+/* bolinhas do hero nas cores da marca */
+.pontos span:nth-child(2){ background: rgba(245,130,32,.45); }
+.pontos span:nth-child(3){ background: rgba(66,199,177,.5); }
+.pontos span.ativo{ background: var(--rosa-forte); }
+
+/* rodapé vinho com blocos de cor orgânicos */
+.rodape-site{
+  background:
+    radial-gradient(520px 300px at 96% 0%, rgba(255,79,163,.38) 0%, transparent 70%),
+    radial-gradient(420px 260px at 0% 100%, rgba(245,130,32,.24) 0%, transparent 70%),
+    var(--vinho);
+}
+.selo-logo{ background: transparent; width: 52px; height: 52px; }
+.selo-logo img{ width: 100%; height: 100%; }
+.rodape-marca .nome{ font-style: italic; letter-spacing: 0; }
+
+/* selo "artesanal" da ficha em laranja */
+.selo-artesanal{ background: var(--laranja); border-color: var(--branco); }
+.selo-artesanal svg{ color: var(--branco); }
+
+/* no celular o bloco rosa encolhe pra não invadir o texto */
+@media (max-width: 900px){
+  .midia::before{ width: min(300px, 76%); }
+  .midia::after{ width: min(90px, 22%); right: 10%; bottom: 6%; box-shadow: none; }
+}
+/* a sombra da gaveta só existe com ela aberta (fechada, vazava na borda da tela) */
+.gaveta:not(.aberta){ box-shadow: none; }
+
+/* ============================================================
+   SWEET LAND — fotos reais
+   ============================================================ */
+/* nome da marca na serifada pesada e retrô do copo e dos posts */
+.logo-texto, .rodape-marca .nome{ font-weight: 900; font-style: normal; }
+
+/* hero: a foto vira um bloco orgânico, com o rosa deslocado atrás */
+.midia::before{ transform: rotate(-9deg) translate(22px, 14px); }
+.moldura{
+  width: min(400px, 88%);
+  border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+  border: 8px solid var(--branco);
+  box-shadow: 0 24px 60px rgba(138,20,80,.25);
+}
+.moldura::before{ content: none; }
+.moldura img{ object-fit: cover; object-position: 50% 40%; }
+@media (max-width: 900px){
+  .moldura{ width: min(300px, 80%); border-width: 6px; }
+}
+
+/* órbita: brigadeiros recortados em círculo */
+.miolo{ border-radius: 50%; overflow: hidden; box-shadow: 0 10px 24px rgba(58,26,44,.18); }
+.miolo img{ object-fit: cover; object-position: 50% 62%; filter: none; }
+.aneis{
+  background:
+    radial-gradient(circle, rgba(255,79,163,.2) 0%, var(--creme) 72%) padding-box,
+    conic-gradient(var(--rosa), var(--laranja), var(--vermelho), var(--verde-agua), var(--rosa)) border-box;
+}
+
+/* seis doces: três por linha no computador, foto maior */
+@media (min-width: 901px){
+  .produtos{ grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .produto .desc{ font-size: 13px; }
+  .produto h3{ font-size: 19px; }
+}
+
+/* ============================================================
+   HOSPEDAGEM ESTÁTICA (GitHub Pages)
+   O painel da loja depende da função do Netlify, que não existe
+   aqui. Esconde o login pra não ficar um botão quebrado.
+   Voltou pro Netlify? Apague este bloco.
+   ============================================================ */
+#btn-login-topo, .acoes .divisor, #link-login{ display: none !important; }
+</style>
+</head>
+
+<body>
+
+<!-- faixa do modo edição -->
+<div class="barra-admin">
+  <span><strong>Modo edição</strong> · <span id="admin-quem"></span></span>
+  <button id="btn-equipe" class="so-equipe">Equipe</button>
+  <button id="btn-minha-senha">Minha senha</button>
+  <button id="btn-restaurar">Restaurar catálogo</button>
+  <button id="btn-sair">Sair</button>
+</div>
+<div class="wrap">
+
+  <!-- ==================== TOPO ==================== -->
+  <header class="topbar">
+
+    <a class="logo" href="#topo">
+      <img src="imagens/logo-sweetland.svg" alt="" aria-hidden="true">
+      <span class="logo-texto">Sweet <span>Land</span></span>
+    </a>
+
+    <button class="sanduiche" id="btn-menu" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="nav">
+      <ul class="menu">
+        <li><a href="#topo" class="ativo">Home</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#bolos">Doces</a></li>
+        <li><a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Quero%20um%20bolo%20personalizado." target="_blank" rel="noopener">Personalizados</a></li>
+        <li><a href="#" data-embreve="Blog">Blog</a></li>
+        <li><a href="#" data-embreve="Galeria">Galeria</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div class="acoes">
+      <button id="btn-busca" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button id="btn-favoritos" aria-label="Favoritos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>
+        <span class="contador" id="contador-favoritos">0</span>
+      </button>
+      <button id="btn-carrinho" aria-label="Carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="contador" id="contador-carrinho">0</span>
+      </button>
+
+      <span class="divisor" aria-hidden="true"></span>
+
+      <!-- área da loja: abre o login; logado, vira o botão de sair -->
+      <button id="btn-login-topo" class="btn-login-topo" aria-label="Área da loja" title="Área da loja">
+        <svg class="i-entrar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <svg class="i-sair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h10"/></svg>
+        <span class="rotulo-login"><span class="t-entrar">Entrar</span><span class="t-sair">Sair</span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="topo">
+
+    <!-- ---------- coluna do texto ---------- -->
+    <div class="texto">
+      <p class="selo">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>
+        Doceria artesanal
+      </p>
+
+      <h1 class="titulo">
+        Brownies, cookies &amp; bolos
+        <span class="script">do jeito mais doce</span>
+      </h1>
+
+      <p class="sub">
+        Recheio cremoso, chocolate de verdade e aquele exagero gostoso.
+        Bem-vindo ao universo colorido da Sweet Land.
+      </p>
+
+      <div class="botoes">
+        <a href="#bolos" class="btn btn-cheio">Ver Doces</a>
+        <a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Quero%20encomendar%20na%20Sweet%20Land." target="_blank" rel="noopener" class="btn btn-vazio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20h14v-7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7Z"/><path d="M12 4v4"/><path d="M12 2.5c1.2 1 1.7 1.8 1.7 2.4a1.7 1.7 0 1 1-3.4 0c0-.6.5-1.4 1.7-2.4Z"/></svg>
+          Encomendar
+        </a>
+      </div>
+
+      <div class="pontos">
+        <span class="ativo"></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         COLUNA DA IMAGEM
+         Pra colocar sua foto:
+           1. salve o arquivo em  site/imagens/copinho-brownie.jpg
+           2. descomente a linha do <img> aqui embaixo
+         O placeholder tracejado some sozinho.
+         Dica: PNG com fundo transparente fica melhor sobre o disco branco.
+         ================================================================= -->
+    <div class="midia">
+      <div class="moldura">
+
+        <img src="imagens/copinho-brownie.jpg" alt="Copinho de brownie com granulado colorido no copo da Sweet Land">
+
+        <div class="placeholder">
+          <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <circle cx="8.5" cy="10" r="1.6"/>
+            <path d="m3 16.5 4.5-4 4 3.5 3.5-3L21 17"/>
+          </svg>
+          <p class="t">Sua foto do doce aqui</p>
+          <p class="d">Salve em <code>site/imagens/copinho-brownie.jpg</code> e descomente a linha do <code>&lt;img&gt;</code> no HTML.</p>
+          <p class="d">Ideal: PNG sem fundo, quadrado, mínimo 900&times;900px.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ==================== SEÇÃO 2 — POR QUE A SWEET LAND ====================
+       Diagrama em órbita: foto no miolo, dois anéis e 6 benefícios ligados
+       por linhas. Pra trocar um texto, mexe só no <span class="txt">.
+  -->
+  <section class="secao" id="sobre">
+
+    <div class="cabecalho">
+      <span class="pill">Por que Sweet Land</span>
+      <h2>O que tem de bom num <em>docinho artesanal</em></h2>
+      <p>Seis motivos que a gente escuta toda semana no balcão.</p>
+    </div>
+
+    <div class="orbita">
+
+      <!-- ---------- benefícios da esquerda ---------- -->
+      <div class="lado esq">
+        <div class="beneficio">
+          <span class="txt">Levanta o astral<br>de qualquer dia</span>
+          <span class="linha"></span>
+          <span class="ponto"></span>
+        </div>
+        <div class="beneficio">
+          <span class="txt">Mata a fome<br>rapidinho</span>
+          <span class="linha"></span>
+          <span class="ponto"></span>
+        </div>
+        <div class="beneficio">
+          <span class="txt">Deixa a casa<br>com cheiro bom</span>
+          <span class="linha"></span>
+          <span class="ponto"></span>
+        </div>
+      </div>
+
+      <!-- ---------- anéis com a foto no miolo ---------- -->
+      <div class="aneis">
+        <div class="miolo">
+          <img src="imagens/brigadeiro.jpg" alt="Brigadeiros da Sweet Land">
+        </div>
+      </div>
+
+      <!-- ---------- benefícios da direita ---------- -->
+      <div class="lado dir">
+        <div class="beneficio">
+          <span class="ponto"></span>
+          <span class="linha"></span>
+          <span class="txt">Enche de energia<br>pro resto do dia</span>
+        </div>
+        <div class="beneficio">
+          <span class="ponto"></span>
+          <span class="linha"></span>
+          <span class="txt">Enfeita<br>qualquer mesa</span>
+        </div>
+        <div class="beneficio">
+          <span class="ponto"></span>
+          <span class="linha"></span>
+          <span class="txt">Sempre dá vontade<br>de repetir</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== SEÇÃO 2b — MAIS PEDIDOS ==================== -->
+  <section class="faixa-clara" id="bolos">
+    <div class="secao">
+
+      <div class="cabecalho">
+        <span class="pill">Queridinhos da casa</span>
+        <h2>Os mais <em>pedidos</em></h2>
+        <p>Os que o pessoal volta pra pedir de novo, toda semana.</p>
+      </div>
+
+      <!-- Os cards são montados pelo JS a partir do catálogo.
+           Edite pelo painel (login de administrador) ou, no código,
+           na lista PRODUTOS_PADRAO lá embaixo. -->
+      <div class="produtos" id="produtos"></div>
+
+      <div class="admin-add" id="admin-add" hidden>
+        <button class="btn btn-vazio" id="btn-novo-produto">+ Adicionar produto</button>
+      </div>
+
+      <div class="ver-tudo">
+        <button class="btn btn-vazio" id="btn-ver-menu">Ver menu completo</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== RODAPÉ ==================== -->
+  <!-- ==================== RODAPÉ ==================== -->
+  <footer class="rodape-site" id="contato">
+    <div class="rodape-conteudo">
+
+      <div class="rodape-grade">
+
+        <!-- marca -->
+        <div>
+          <div class="rodape-marca">
+            <span class="selo-logo">
+              <img src="imagens/logo-sweetland.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="nome">Sweet Land
+              <span class="tag">Doceria artesanal</span>
+            </span>
+          </div>
+          <ul>
+            <li><a href="https://wa.me/5512997376348" target="_blank" rel="noopener">WhatsApp (12) 99737-6348</a></li>
+            <li><a href="https://www.instagram.com/sweetlanddoces/" target="_blank" rel="noopener">Instagram @sweetlanddoces</a></li>
+            <!-- coloque aqui o endereço da loja -->
+            <li>Endereço: <em>a preencher</em></li>
+          </ul>
+        </div>
+
+        <!-- conheça -->
+        <div>
+          <h4>Conheça</h4>
+          <ul>
+            <li><a href="#sobre">Nossa história</a></li>
+            <li><a href="#" data-embreve="Galeria">Galeria</a></li>
+            <li><a href="#" data-embreve="Blog">Blog</a></li>
+            <li><a href="#contato">Onde estamos</a></li>
+          </ul>
+        </div>
+
+        <!-- menu -->
+        <div>
+          <h4>Menu</h4>
+          <ul>
+            <li><a href="#" data-busca="cookie">Cookies</a></li>
+            <li><a href="#" data-busca="brownie">Brownies</a></li>
+            <li><a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Quero%20um%20bolo%20personalizado." target="_blank" rel="noopener">Personalizados</a></li>
+            <li><a href="#" data-busca="brigadeiro">Brigadeiros e bombons</a></li>
+          </ul>
+        </div>
+
+        <!-- ajuda -->
+        <div>
+          <h4>Ajuda</h4>
+          <ul>
+            <li><a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Como%20fa%C3%A7o%20para%20encomendar%3F" target="_blank" rel="noopener">Como encomendar</a></li>
+            <li><a href="#" data-embreve="Prazos e entrega">Prazos e entrega</a></li>
+            <li><a href="#" data-embreve="Trocas">Trocas</a></li>
+            <li><a href="#" id="link-login">Área da loja</a></li>
+          </ul>
+        </div>
+
+        <!-- captura de e-mail -->
+        <div class="news">
+          <h4>Receba as novidades</h4>
+          <p>Sabor novo, promoção e doce do dia. Sem encher sua caixa de entrada.</p>
+          <form class="news-form" id="form-news">
+            <input type="email" id="news-email" placeholder="Seu melhor e-mail" aria-label="Seu e-mail">
+            <button type="submit">Assinar</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="rodape-base">
+        <div class="troca-idioma" role="group" aria-label="Idioma">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18"/>
+            <path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z"/>
+          </svg>
+          <button class="opcao-idioma" data-idioma="pt" lang="pt-BR">PT</button>
+          <button class="opcao-idioma" data-idioma="en" lang="en">EN</button>
+        </div>
+        <span>© <span id="ano"></span> Sweet Land · Todos os direitos reservados</span>
+        <span>Feito com carinho, doce a doce.</span>
+      </div>
+
+    </div>
+  </footer>
+
+</div><!-- /.wrap -->
+
+<!-- ==================== GAVETA: CARRINHO + FAVORITOS ==================== -->
+<div class="fundo-gaveta" id="fundo-gaveta"></div>
+
+<aside class="gaveta" id="gaveta" aria-label="Carrinho e favoritos">
+
+  <div class="gaveta-topo">
+    <h3 id="gaveta-titulo">Seu pedido</h3>
+    <button class="fechar" id="btn-fechar" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="abas">
+    <button class="ativa" data-aba="carrinho">Carrinho</button>
+    <button data-aba="favoritos">Favoritos</button>
+  </div>
+
+  <div class="gaveta-corpo" id="gaveta-corpo"></div>
+
+  <!-- Dados do pedido. Fica fora do #gaveta-corpo de propósito: aquele
+       bloco é redesenhado a cada mudança no carrinho e apagaria o que
+       a pessoa digitou. -->
+  <div class="pedido-form" id="pedido-form">
+    <h4>Pra fechar o pedido</h4>
+
+    <div class="campo-ped">
+      <label for="ped-nome">Seu nome</label>
+      <input type="text" id="ped-nome" placeholder="Como podemos te chamar?" autocomplete="name">
+    </div>
+
+    <div class="dupla-ped">
+      <div class="campo-ped">
+        <label for="ped-entrega">Local de entrega</label>
+        <input type="text" id="ped-entrega" placeholder="Endereço ou &quot;retiro na loja&quot;">
+      </div>
+      <div class="campo-ped">
+        <label for="ped-data">Data que precisa</label>
+        <input type="date" id="ped-data">
+      </div>
+    </div>
+
+    <div class="campo-ped">
+      <label for="ped-obs">Observações <span class="opcional">(opcional)</span></label>
+      <textarea id="ped-obs" rows="2" placeholder="Recado no doce, restrição alimentar, horário…"></textarea>
+    </div>
+  </div>
+
+  <div class="gaveta-pe" id="gaveta-pe">
+    <div class="total">
+      <span class="rotulo">Total do pedido</span>
+      <span class="valor" id="valor-total">R$ 0,00</span>
+    </div>
+    <button class="btn-whats" id="btn-enviar" disabled>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.2 1.3-1.9 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.8-.6-3.1-1.3-5.1-4.4-5.3-4.6-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.5-.3.4c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .9 1.8 1.1 2.1 1.3.3.1.4.1.6-.1l.9-1c.2-.2.4-.2.6-.1l2.2 1c.2.1.4.2.5.3.1.1.1.7-.1 1.4Z"/></svg>
+      Enviar pedido pelo WhatsApp
+    </button>
+    <p class="aviso-pe">O pedido abre no WhatsApp da loja pra você confirmar entrega e pagamento.</p>
+  </div>
+
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<div class="flutuantes">
+  <button class="bolha bolha-clara" id="btn-favoritos-flutua" aria-label="Abrir favoritos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>
+    <span class="contador" id="contador-fav-flutua">0</span>
+  </button>
+
+  <button class="bolha bolha-cheia" id="btn-carrinho-flutua" aria-label="Abrir carrinho">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+    <span class="contador" id="contador-flutua">0</span>
+  </button>
+</div>
+
+<!-- ==================== JANELA DE LOGIN ==================== -->
+<div class="modal-fundo" id="modal-login">
+  <div class="modal">
+    <h3>Entrar</h3>
+    <p class="legenda">Área da loja. Entre com o e-mail e a senha que o administrador liberou — funciona em qualquer computador ou celular.</p>
+
+    <p class="legenda dica-login" id="login-dica" hidden></p>
+
+    <div class="campo">
+      <label for="login-email">Seu e-mail</label>
+      <input type="email" id="login-email" placeholder="voce@email.com" autocomplete="email">
+    </div>
+
+    <div class="campo">
+      <label for="login-senha">Sua senha</label>
+      <input type="password" id="login-senha" placeholder="sua senha" autocomplete="current-password">
+    </div>
+
+    <div class="erro-modal" id="login-erro"></div>
+
+    <div class="modal-botoes">
+      <button class="btn btn-vazio" data-fechar-modal>Cancelar</button>
+      <button class="btn btn-cheio" id="btn-entrar">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JANELA DA MINHA SENHA ==================== -->
+<div class="modal-fundo" id="modal-senha">
+  <div class="modal">
+    <h3>Trocar minha senha</h3>
+    <p class="legenda">Vale para todos os dispositivos onde você entra.</p>
+
+    <div class="campo">
+      <label for="s-atual">Senha atual</label>
+      <input type="password" id="s-atual" placeholder="a senha que você usa hoje" autocomplete="current-password">
+    </div>
+
+    <div class="campo">
+      <label for="s-nova">Senha nova</label>
+      <input type="password" id="s-nova" placeholder="pelo menos 6 caracteres" autocomplete="new-password">
+    </div>
+
+    <div class="erro-modal" id="senha-erro"></div>
+
+    <div class="modal-botoes">
+      <button class="btn btn-vazio" data-fechar-modal>Cancelar</button>
+      <button class="btn btn-cheio" id="btn-trocar-senha">Trocar senha</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JANELA DE EDIÇÃO DO PRODUTO ==================== -->
+<div class="modal-fundo" id="modal-produto">
+  <div class="modal">
+    <h3 id="produto-titulo">Editar produto</h3>
+    <p class="legenda">O que você mudar aqui aparece no catálogo na hora.</p>
+
+    <div class="campo">
+      <label for="p-nome">Nome</label>
+      <input type="text" id="p-nome" placeholder="Bolo de Chocolate">
+    </div>
+
+    <div class="campo">
+      <label for="p-preco">Preço (R$)</label>
+      <input type="number" id="p-preco" step="0.01" min="0" placeholder="89,90">
+    </div>
+
+    <div class="campo">
+      <label for="p-desc">Descrição</label>
+      <textarea id="p-desc" placeholder="Massa fofinha, recheio cremoso..."></textarea>
+    </div>
+
+    <div class="dupla">
+      <div class="campo">
+        <label for="p-porcoes">Serve</label>
+        <input type="text" id="p-porcoes" placeholder="20 a 25 pessoas">
+      </div>
+      <div class="campo">
+        <label for="p-peso">Peso</label>
+        <input type="text" id="p-peso" placeholder="2 kg">
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="p-antecedencia">Encomendar com quanta antecedência</label>
+      <input type="text" id="p-antecedencia" placeholder="3 dias">
+    </div>
+
+    <div class="campo">
+      <label for="p-ingredientes">O que leva</label>
+      <textarea id="p-ingredientes" placeholder="Massa de chocolate, brigadeiro cremoso, granulado belga"></textarea>
+    </div>
+
+    <div class="campo">
+      <label for="p-feito">Como é feito</label>
+      <textarea id="p-feito" rows="4" placeholder="Um passo por linha"></textarea>
+      <p class="ajuda">Um passo por linha. Deixe vazio pra usar o texto padrão da casa.</p>
+    </div>
+
+    <div class="campo">
+      <label for="p-selo">Selo</label>
+      <select id="p-selo">
+        <option value="">Nenhum</option>
+        <option value="Mais pedido">Mais pedido</option>
+        <option value="Novo">Novo</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="p-estrelas">Estrelas</label>
+      <select id="p-estrelas">
+        <option value="5">5 estrelas</option>
+        <option value="4">4 estrelas</option>
+        <option value="3">3 estrelas</option>
+      </select>
+    </div>
+
+    <div class="campo campo-foto">
+      <label>Foto</label>
+      <input type="file" id="p-foto" accept="image/*" hidden>
+
+      <div class="dropzone" id="p-dropzone">
+
+        <!-- estado sem foto -->
+        <div class="dz-vazio" id="dz-vazio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 16V4"/><path d="m7.5 8.5 4.5-4.5 4.5 4.5"/>
+            <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+          </svg>
+          <p class="dz-titulo">Arraste a foto do bolo aqui</p>
+          <p class="dz-sub">ou <span class="dz-link">clique para escolher</span></p>
+          <p class="dz-formatos">JPG, PNG ou WEBP · quadrada fica melhor</p>
+        </div>
+
+        <!-- estado com foto -->
+        <div class="dz-cheio" id="dz-cheio" hidden>
+          <div class="dz-previa"><img id="dz-img" alt=""></div>
+          <div class="dz-info">
+            <span class="dz-nome" id="dz-nome">foto atual</span>
+            <span class="dz-peso" id="dz-peso"></span>
+            <div class="dz-acoes">
+              <button type="button" id="btn-trocar-foto">Trocar foto</button>
+              <button type="button" class="desfazer" id="btn-desfazer-foto" hidden>Desfazer</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p class="ajuda">A foto é reduzida pra 900px e comprimida automaticamente antes de subir pro servidor.</p>
+    </div>
+
+    <div class="erro-modal" id="produto-erro"></div>
+
+    <div class="modal-botoes">
+      <button class="btn btn-vazio" data-fechar-modal>Cancelar</button>
+      <button class="btn btn-cheio" id="btn-salvar-produto">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JANELA DA EQUIPE ==================== -->
+<div class="modal-fundo" id="modal-equipe">
+  <div class="modal modal-largo">
+    <h3>Equipe e permissões</h3>
+    <p class="legenda">Quem entra com um destes e-mails e a senha que você definir recebe exatamente o que estiver marcado aqui — de qualquer computador ou celular.</p>
+
+    <div class="lista-equipe" id="lista-equipe"></div>
+
+    <hr class="divisor-modal">
+
+    <h4 class="sub-titulo">Adicionar ou editar pessoa</h4>
+
+    <div class="campo">
+      <label for="e-email">E-mail</label>
+      <input type="email" id="e-email" placeholder="pessoa@email.com">
+    </div>
+
+    <div class="dupla">
+      <div class="campo">
+        <label for="e-sugestao">Partir de uma função</label>
+        <select id="e-sugestao">
+          <option value="">Escolher…</option>
+          <option value="Gerente">Gerente</option>
+          <option value="TI">TI</option>
+          <option value="Assistente">Assistente</option>
+          <option value="Membro">Membro</option>
+          <option value="Visitante">Visitante</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="e-funcao">Função (texto livre)</label>
+        <input type="text" id="e-funcao" placeholder="Ex: Confeiteira-chefe">
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="e-senha">Senha de acesso</label>
+      <input type="password" id="e-senha" placeholder="pelo menos 6 caracteres" autocomplete="new-password">
+      <p class="ajuda" id="e-senha-dica">Ela vai usar esse e-mail e essa senha pra entrar de qualquer computador ou celular.</p>
+    </div>
+
+    <div class="campo">
+      <label>Permissões</label>
+      <div class="permissoes" id="e-permissoes">
+        <label class="marcar"><input type="checkbox" value="editar"><span>Editar produtos (nome, preço, descrição)</span></label>
+        <label class="marcar"><input type="checkbox" value="fotos"><span>Trocar fotos dos produtos</span></label>
+        <label class="marcar"><input type="checkbox" value="criar"><span>Adicionar produtos novos</span></label>
+        <label class="marcar"><input type="checkbox" value="excluir"><span>Excluir produtos</span></label>
+        <label class="marcar"><input type="checkbox" value="equipe"><span>Gerenciar a equipe e as permissões</span></label>
+      </div>
+    </div>
+
+    <div class="erro-modal" id="equipe-erro"></div>
+
+    <div class="modal-botoes">
+      <button class="btn btn-vazio" data-fechar-modal>Fechar</button>
+      <button class="btn btn-cheio" id="btn-salvar-pessoa">Adicionar pessoa</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JANELA DA BUSCA ==================== -->
+<div class="modal-fundo" id="modal-busca">
+  <div class="modal modal-busca">
+    <div class="busca-topo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" id="busca-campo" placeholder="Sabor, ingrediente ou preço…" autocomplete="off">
+      <button class="fechar" data-fechar-modal aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="busca-resultado" id="busca-resultado"></div>
+  </div>
+</div>
+
+<!-- ==================== FICHA DO PRODUTO ==================== -->
+<div class="modal-fundo" id="modal-detalhe">
+  <div class="modal modal-detalhe">
+    <button class="fechar fechar-flutua" data-fechar-modal aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div id="detalhe-corpo"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   SWEET LAND — carrinho, favoritos e envio pro WhatsApp
+   ------------------------------------------------------------
+   O número da loja está logo abaixo. Pra trocar, muda só essa linha
+   (formato: código do país + DDD + número, só dígitos).
+   ============================================================ */
+const WHATSAPP = '5512997376348';
+
+/* Os produtos são lidos direto dos cards da página.
+   Card novo que você adicionar com a mesma estrutura (.produto)
+   entra no carrinho sozinho — não precisa mexer aqui. */
+
+const carrinho   = {};   // { nome: {nome, preco, img, qtd} }
+const favoritos  = {};   // { nome: {nome, preco, img} }
+let   abaAtiva   = 'carrinho';
+
+/* ---------- utilidades ---------- */
+
+// "R$ 1.234,56" -> 1234.56   |   "R$ 00,00" -> 0
+function lerPreco(txt){
+  const n = parseFloat(String(txt).replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.'));
+  return isNaN(n) ? 0 : n;
+}
+function moeda(v){
+  return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+function dadosDoCard(card){
+  const img = card.querySelector('.produto-foto img');
+  return {
+    nome:  card.querySelector('h3').textContent.trim(),
+    preco: lerPreco(card.querySelector('.preco').textContent),
+    img:   img ? img.getAttribute('src') : null
+  };
+}
+
+/* ---------- memória do navegador (opcional, não quebra se falhar) ---------- */
+function salvar(){
+  try{
+    localStorage.setItem('kon-carrinho',  JSON.stringify(carrinho));
+    localStorage.setItem('kon-favoritos', JSON.stringify(favoritos));
+  }catch(e){ /* navegação privada, cookies bloqueados: segue sem salvar */ }
+}
+function carregar(){
+  try{
+    Object.assign(carrinho,  JSON.parse(localStorage.getItem('kon-carrinho')  || '{}'));
+    Object.assign(favoritos, JSON.parse(localStorage.getItem('kon-favoritos') || '{}'));
+  }catch(e){ /* idem */ }
+}
+
+/* ---------- ações ---------- */
+function addCarrinho(item){
+  if(carrinho[item.nome]) carrinho[item.nome].qtd++;
+  else carrinho[item.nome] = Object.assign({}, item, { qtd: 1 });
+  salvar(); render();
+  aviso(item.nome + ' no carrinho');
+}
+function mudarQtd(nome, delta){
+  const it = carrinho[nome];
+  if(!it) return;
+  it.qtd += delta;
+  if(it.qtd <= 0) delete carrinho[nome];
+  salvar(); render();
+}
+function toggleFavorito(item, botao){
+  if(favoritos[item.nome]){
+    delete favoritos[item.nome];
+    botao && botao.classList.remove('ativo');
+    aviso(item.nome + ' saiu dos favoritos');
+  }else{
+    favoritos[item.nome] = item;
+    botao && botao.classList.add('ativo');
+    aviso(item.nome + ' nos favoritos ♥');
+  }
+  salvar(); render();
+}
+
+/* ---------- gaveta ---------- */
+const gaveta = document.getElementById('gaveta');
+const fundo  = document.getElementById('fundo-gaveta');
+
+function abrirGaveta(aba){
+  abaAtiva = aba || 'carrinho';
+  document.querySelectorAll('.abas button').forEach(b =>
+    b.classList.toggle('ativa', b.dataset.aba === abaAtiva));
+  render();
+  gaveta.classList.add('aberta');
+  fundo.classList.add('aberta');
+  document.body.style.overflow = 'hidden';
+}
+function fecharGaveta(){
+  gaveta.classList.remove('aberta');
+  fundo.classList.remove('aberta');
+  document.body.style.overflow = '';
+}
+
+/* ---------- avisinho ---------- */
+let timerToast;
+function aviso(txt){
+  const t = document.getElementById('toast');
+  t.textContent = txt;
+  t.classList.add('visivel');
+  clearTimeout(timerToast);
+  timerToast = setTimeout(() => t.classList.remove('visivel'), 2200);
+}
+
+/* ---------- desenhar a tela ---------- */
+const semFoto = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="m3 16.5 4.5-4 4 3.5 3.5-3L21 17"/></svg>';
+
+function foto(item){
+  return item.img
+    ? '<div class="item-foto"><img src="' + item.img + '" alt=""></div>'
+    : '<div class="item-foto">' + semFoto + '</div>';
+}
+
+function render(){
+  const itens = Object.values(carrinho);
+  const favs  = Object.values(favoritos);
+  const total = itens.reduce((s,i) => s + i.preco * i.qtd, 0);
+  const qtds  = itens.reduce((s,i) => s + i.qtd, 0);
+
+  // contadores do topo
+  const cC = document.getElementById('contador-carrinho');
+  const cF = document.getElementById('contador-favoritos');
+  const cB = document.getElementById('contador-flutua');
+  const cFB = document.getElementById('contador-fav-flutua');
+  cC.textContent  = qtds;  cC.classList.toggle('visivel', qtds > 0);
+  cB.textContent  = qtds;  cB.classList.toggle('visivel', qtds > 0);
+  cF.textContent  = favs.length;  cF.classList.toggle('visivel', favs.length > 0);
+  cFB.textContent = favs.length;  cFB.classList.toggle('visivel', favs.length > 0);
+
+  // corações dos cards
+  document.querySelectorAll('.produto').forEach(card => {
+    const nome = card.querySelector('h3').textContent.trim();
+    card.querySelector('.coracao').classList.toggle('ativo', !!favoritos[nome]);
+  });
+
+  const corpo = document.getElementById('gaveta-corpo');
+  const pe    = document.getElementById('gaveta-pe');
+  document.getElementById('gaveta-titulo').textContent =
+    abaAtiva === 'carrinho' ? 'Seu pedido' : 'Seus favoritos';
+
+  /* ----- aba favoritos ----- */
+  if(abaAtiva === 'favoritos'){
+    pe.style.display = 'none';
+    document.getElementById('pedido-form').hidden = true;
+    corpo.innerHTML = favs.length
+      ? favs.map(f =>
+          '<div class="rec">' + foto(f) +
+          '<div><div class="item-nome">' + f.nome + '</div>' +
+          '<div class="item-preco">' + moeda(f.preco) + '</div></div>' +
+          '<button class="btn-add" data-add="' + f.nome + '">Adicionar</button></div>'
+        ).join('')
+      : '<div class="vazio"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>' +
+        '<p>Nenhum favorito ainda.<br>Toque no coração dos doces que você ama.</p></div>';
+    return;
+  }
+
+  /* ----- aba carrinho ----- */
+  pe.style.display = '';
+  // só faz sentido pedir os dados quando há algo no carrinho
+  document.getElementById('pedido-form').hidden = (itens.length === 0);
+  let html = '';
+
+  if(itens.length){
+    html += itens.map(i =>
+      '<div class="item">' + foto(i) +
+      '<div><div class="item-nome">' + i.nome + '</div>' +
+      '<div class="item-preco">' + moeda(i.preco) + ' cada</div></div>' +
+      '<div class="qtd">' +
+        '<button data-menos="' + i.nome + '" aria-label="Tirar um">−</button>' +
+        '<span>' + i.qtd + '</span>' +
+        '<button data-mais="' + i.nome + '" aria-label="Somar um">+</button>' +
+      '</div></div>'
+    ).join('');
+  }else{
+    html += '<div class="vazio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>' +
+            '<p>Seu carrinho está vazio.<br>Escolha um doce ali em cima.</p></div>';
+  }
+
+  /* favoritos recomendados — só os que ainda não estão no carrinho */
+  const sugestoes = favs.filter(f => !carrinho[f.nome]);
+  if(sugestoes.length){
+    html += '<div class="recomendados">' +
+      '<h4><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg> Dos seus favoritos</h4>' +
+      '<p class="dica">Você curtiu esses. Leva junto?</p>' +
+      sugestoes.map(f =>
+        '<div class="rec">' + foto(f) +
+        '<div><div class="item-nome">' + f.nome + '</div>' +
+        '<div class="item-preco">' + moeda(f.preco) + '</div></div>' +
+        '<button class="btn-add" data-add="' + f.nome + '">Adicionar</button></div>'
+      ).join('') + '</div>';
+  }
+
+  corpo.innerHTML = html;
+  if(typeof aplicarIdioma === 'function') aplicarIdioma();
+  document.getElementById('valor-total').textContent = moeda(total);
+  document.getElementById('btn-enviar').disabled = itens.length === 0;
+}
+
+/* ---------- monta a mensagem e abre o WhatsApp ---------- */
+function enviarWhatsApp(){
+  const itens = Object.values(carrinho);
+  if(!itens.length) return;
+
+  // nome, local e data são obrigatórios: é o que faz a mensagem chegar pronta
+  const obrigatorios = [
+    { id: 'ped-nome',    aviso: 'Diga como podemos te chamar' },
+    { id: 'ped-entrega', aviso: 'Informe o local de entrega' },
+    { id: 'ped-data',    aviso: 'Escolha a data que você precisa' }
+  ];
+
+  document.querySelectorAll('.campo-ped.falta').forEach(c => c.classList.remove('falta'));
+
+  for(const campo of obrigatorios){
+    const el = document.getElementById(campo.id);
+    if(!el.value.trim()){
+      el.closest('.campo-ped').classList.add('falta');
+      el.focus();
+      aviso(campo.aviso);
+      return;
+    }
+  }
+
+  const nome    = document.getElementById('ped-nome').value.trim();
+  const entrega = document.getElementById('ped-entrega').value.trim();
+  const data    = document.getElementById('ped-data').value;      // vem AAAA-MM-DD
+  const obs     = document.getElementById('ped-obs').value.trim();
+
+  guardarDadosPedido();
+
+  const total = itens.reduce((s,i) => s + i.preco * i.qtd, 0);
+
+  let msg = 'Olá, Sweet Land! Quero fazer um pedido:\n\n';
+  itens.forEach(i => {
+    msg += '• ' + i.qtd + 'x ' + i.nome + ' — ' + moeda(i.preco * i.qtd) + '\n';
+  });
+  msg += '\nTotal: ' + moeda(total);
+  msg += '\n\nMeu nome: ' + nome;
+  msg += '\nLocal de entrega: ' + entrega;
+  msg += '\nData que preciso: ' + dataBR(data);
+  if(obs) msg += '\n\nObservações: ' + obs;
+
+  window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// AAAA-MM-DD -> DD/MM/AAAA
+function dataBR(iso){
+  if(!iso) return '';
+  const p = iso.split('-');
+  return p.length === 3 ? (p[2] + '/' + p[1] + '/' + p[0]) : iso;
+}
+
+/* Guarda nome e endereço pra quem pedir de novo não redigitar.
+   Data e observações mudam a cada pedido, então não ficam salvas. */
+function guardarDadosPedido(){
+  try{
+    localStorage.setItem('kon-cliente', JSON.stringify({
+      nome:    document.getElementById('ped-nome').value.trim(),
+      entrega: document.getElementById('ped-entrega').value.trim()
+    }));
+  }catch(e){}
+}
+
+function carregarDadosPedido(){
+  try{
+    const d = JSON.parse(localStorage.getItem('kon-cliente') || '{}');
+    if(d.nome)    document.getElementById('ped-nome').value = d.nome;
+    if(d.entrega) document.getElementById('ped-entrega').value = d.entrega;
+  }catch(e){}
+}
+
+// a data não pode ser no passado
+(function(){
+  const hoje = new Date();
+  hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
+  document.getElementById('ped-data').min = hoje.toISOString().slice(0, 10);
+})();
+
+// ao corrigir um campo, o aviso de falta some
+document.querySelectorAll('.campo-ped input, .campo-ped textarea').forEach(el => {
+  el.addEventListener('input', () => el.closest('.campo-ped').classList.remove('falta'));
+});
+
+/* ---------- ligações ---------- */
+
+// (o "Pedir" e o coração dos cards são tratados por delegação, no painel abaixo)
+
+// cliques dentro da gaveta
+document.getElementById('gaveta-corpo').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+  if(b.dataset.mais)  mudarQtd(b.dataset.mais, 1);
+  if(b.dataset.menos) mudarQtd(b.dataset.menos, -1);
+  if(b.dataset.add){
+    const f = favoritos[b.dataset.add];
+    if(f) addCarrinho(f);
+  }
+});
+
+document.querySelectorAll('.abas button').forEach(b =>
+  b.addEventListener('click', () => abrirGaveta(b.dataset.aba)));
+
+document.getElementById('btn-carrinho' ).addEventListener('click', () => abrirGaveta('carrinho'));
+document.getElementById('btn-carrinho-flutua').addEventListener('click', () => abrirGaveta('carrinho'));
+document.getElementById('btn-favoritos-flutua').addEventListener('click', () => abrirGaveta('favoritos'));
+document.getElementById('btn-favoritos').addEventListener('click', () => abrirGaveta('favoritos'));
+document.getElementById('btn-fechar'   ).addEventListener('click', fecharGaveta);
+document.getElementById('fundo-gaveta' ).addEventListener('click', fecharGaveta);
+document.getElementById('btn-enviar'   ).addEventListener('click', enviarWhatsApp);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') fecharGaveta(); });
+
+/* ============================================================
+   FICHA DO PRODUTO
+   ------------------------------------------------------------
+   Abre ao clicar no card. Mostra especificações e o modo de
+   preparo. Produto sem ficha própria usa os valores abaixo.
+   ============================================================ */
+
+const FICHA_PADRAO = {
+  porcoes: 'Consulte no WhatsApp',
+  peso: 'Consulte no WhatsApp',
+  antecedencia: '3 dias',
+  ingredientes: 'Ingredientes frescos, selecionados no dia'
+};
+
+/* Como a casa faz — vale pra todos, a menos que o produto
+   traga a própria lista em "feito". */
+const FEITO_PADRAO = [
+  'Feito no dia, com chocolate de verdade e manteiga — nunca pré-mistura.',
+  'Recheios cremosos cozidos na panela, no ponto certo.',
+  'Montado à mão, um por um, só depois do pedido confirmado.',
+  'Finalizado e embalado no mesmo dia da entrega.'
+];
+
+function abrirDetalhe(id){
+  const p = Catalogo.lista().find(x => x.id === id);
+  if(!p) return;
+
+  const ficha = Object.assign({}, FICHA_PADRAO, p.ficha || {});
+  const feito = (p.feito && p.feito.length) ? p.feito : FEITO_PADRAO;
+  const favorito = !!favoritos[p.nome];
+
+  document.getElementById('detalhe-corpo').innerHTML =
+    '<div class="det-foto">' +
+      '<img src="' + esc(p.img) + '" alt="' + esc(p.nome) + '">' +
+      '<span class="selo-artesanal">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M12 3.5 14.1 8l4.9.6-3.6 3.4.9 4.8L12 14.5 7.7 16.8l.9-4.8L5 8.6 9.9 8 12 3.5Z"/>' +
+        '</svg>' +
+        '<b>100%</b><span>artesanal</span>' +
+      '</span>' +
+    '</div>' +
+
+    '<div class="det-cabeca">' +
+      '<div class="estrelas">' + estrelasHtml(p.estrelas) + '</div>' +
+      '<h3>' + esc(p.nome) + '</h3>' +
+      '<p class="det-desc">' + esc(p.desc) + '</p>' +
+    '</div>' +
+
+    '<div class="det-ficha">' +
+      linhaFicha('Serve', ficha.porcoes,
+        '<circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-5 7-5s7 1.7 7 5"/><path d="M17 8.5a3 3 0 0 0 0-5"/><path d="M18 20c0-2.6-1-4.2-2.5-5"/>') +
+      linhaFicha('Peso', ficha.peso,
+        '<path d="M4 20h16l-2.5-9h-11L4 20Z"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/>') +
+      linhaFicha('Encomende com', ficha.antecedencia + ' de antecedência',
+        '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/>') +
+      linhaFicha('Leva', ficha.ingredientes,
+        '<path d="M12 21s-7-4.4-7-9a4.2 4.2 0 0 1 7-3 4.2 4.2 0 0 1 7 3c0 4.6-7 9-7 9Z"/>') +
+    '</div>' +
+
+    '<div class="det-feito">' +
+      '<h4>Como é feito</h4>' +
+      '<ol>' + feito.map(passo => '<li>' + esc(passo) + '</li>').join('') + '</ol>' +
+    '</div>' +
+
+    '<div class="det-rodape">' +
+      '<div class="det-preco">' +
+        '<span class="rotulo">A partir de</span>' +
+        '<span class="valor">' + moeda(Number(p.preco) || 0) + '</span>' +
+      '</div>' +
+      '<div class="det-acoes">' +
+        '<button class="coracao det-coracao' + (favorito ? ' ativo' : '') + '" data-det-fav="' + esc(p.id) + '" aria-label="Favoritar">' +
+          '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>' +
+        '</button>' +
+        '<button class="btn btn-cheio" data-det-add="' + esc(p.id) + '">Adicionar ao carrinho</button>' +
+      '</div>' +
+    '</div>';
+
+  if(typeof aplicarIdioma === 'function') aplicarIdioma();
+  abrirModal('modal-detalhe');
+}
+
+function linhaFicha(rotulo, valor, caminhoSvg){
+  return '<div class="ficha-item">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + caminhoSvg + '</svg>' +
+    '<div><span class="ficha-rotulo">' + esc(rotulo) + '</span>' +
+    '<span class="ficha-valor">' + esc(valor) + '</span></div>' +
+  '</div>';
+}
+
+/* ---------- cliques dentro da ficha ---------- */
+document.getElementById('detalhe-corpo').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+
+  const id = b.dataset.detAdd || b.dataset.detFav;
+  const p = id ? Catalogo.lista().find(x => x.id === id) : null;
+  if(!p) return;
+
+  const item = { nome: p.nome, preco: Number(p.preco) || 0, img: p.img };
+
+  if(b.dataset.detAdd){
+    addCarrinho(item);
+    fecharModais();
+  }
+  if(b.dataset.detFav){
+    toggleFavorito(item, b);
+  }
+});
+
+/* ============================================================
+   BUSCA POR SIGNIFICADO
+   ------------------------------------------------------------
+   Não é IA: é casamento de palavras com três ajudas.
+   1) normaliza (tira acento, caixa e plural simples)
+   2) expande sinônimos — "cacau" acha "Chocolate com Brigadeiro"
+   3) compara por semelhança — "chocolatte" ainda acha "chocolate"
+   Também entende faixa de preço: "até 100", "menos de 90".
+   ============================================================ */
+
+/* Palavras que querem dizer a mesma coisa. Cada linha é um grupo:
+   digitar qualquer palavra do grupo procura por todas as outras. */
+const GRUPOS_SINONIMOS = [
+  ['chocolate','choco','cacau','brigadeiro','nutella','meio amargo','amargo'],
+  ['trufa','trufas','trufado','ganache'],
+  ['morango','morangos','fruta','frutas','vermelha','vermelhas','frutas vermelhas','strawberry'],
+  ['coco','cocada'],
+  ['doce de leite','caramelo','condensado','ninho'],
+  ['pessego','pêssego','nozes','noz','castanha'],
+  ['chantilly','nata'],
+  ['cereja','cerejas','marrasquino'],
+  ['confete','confeito','colorido','colorida','infantil','crianca','criança'],
+  ['festa','aniversario','aniversário','comemoracao','comemoração','encomenda','mesa','kit','combo','variados'],
+  ['classico','clássico','tradicional','caseiro','simples','vo','vó'],
+  ['gourmet','premium','especial','luxo','sofisticado']
+];
+
+/* Palavras genéricas demais pra buscar: casam com quase tudo no cardápio
+   de uma confeitaria, então não valem ponto sozinhas. */
+const PALAVRAS_VAZIAS = new Set(['bolo','bolos','doce','doces','torta','tortas','sobremesa','fatia','com','de','da','do','para','pra','um','uma','quero','queria','tem','voce','vocês']);
+
+/* tira acento, pontuação e caixa */
+function normalizar(txt){
+  return String(txt || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/* reduz a palavra ao miolo: tira diminutivo e plural.
+   "moranguinho" vira "morangu", que já se parece com "morango". */
+function raiz(palavra){
+  let r = palavra.replace(/(zinh|inh)[oa]s?$/, '');
+  if(r.length < 4) r = palavra;
+  if(r.length > 4 && r.endsWith('s')) r = r.slice(0, -1);
+  return r;
+}
+
+/* índice: palavra -> todas as palavras do mesmo grupo */
+const MAPA_SINONIMOS = (() => {
+  const mapa = {};
+  GRUPOS_SINONIMOS.forEach(grupo => {
+    const todas = grupo.map(normalizar);
+    todas.forEach(p => {
+      if(!mapa[p]) mapa[p] = new Set();
+      todas.forEach(q => mapa[p].add(q));
+    });
+  });
+  return mapa;
+})();
+
+/* semelhança entre duas palavras, 0 a 1, por pares de letras (Dice) */
+function semelhanca(a, b){
+  if(a === b) return 1;
+  if(a.length < 2 || b.length < 2) return 0;
+  const pares = t => {
+    const s = [];
+    for(let i = 0; i < t.length - 1; i++) s.push(t.slice(i, i + 2));
+    return s;
+  };
+  const pa = pares(a), pb = pares(b);
+  let iguais = 0;
+  const usados = new Array(pb.length).fill(false);
+  pa.forEach(par => {
+    for(let i = 0; i < pb.length; i++){
+      if(!usados[i] && pb[i] === par){ usados[i] = true; iguais++; break; }
+    }
+  });
+  return (2 * iguais) / (pa.length + pb.length);
+}
+
+/* lê faixa de preço escrita em português */
+function lerFaixaPreco(consulta){
+  let m = consulta.match(/(?:ate|abaixo de|menos de|no maximo|max)\s*(?:r\$)?\s*(\d+)/);
+  if(m) return { max: parseFloat(m[1]) };
+  m = consulta.match(/(?:acima de|mais de|a partir de|min)\s*(?:r\$)?\s*(\d+)/);
+  if(m) return { min: parseFloat(m[1]) };
+  m = consulta.match(/(?:entre)\s*(?:r\$)?\s*(\d+)\s*(?:e|a)\s*(?:r\$)?\s*(\d+)/);
+  if(m) return { min: parseFloat(m[1]), max: parseFloat(m[2]) };
+  return null;
+}
+
+/* pontua um produto contra a consulta */
+function pontuar(produto, termos){
+  const nome = normalizar(produto.nome);
+  const desc = normalizar(produto.desc);
+  const palavrasNome = nome.split(' ').filter(Boolean).map(raiz);
+  const palavrasDesc = desc.split(' ').filter(Boolean).map(raiz);
+
+  let total = 0;
+
+  termos.forEach(termo => {
+    const t = raiz(termo);
+    let melhor = 0;
+
+    if(nome.includes(termo))      melhor = Math.max(melhor, 100);
+    else if(desc.includes(termo)) melhor = Math.max(melhor, 45);
+
+    // sinônimos do termo
+    const grupo = MAPA_SINONIMOS[termo] || MAPA_SINONIMOS[t];
+    if(grupo){
+      grupo.forEach(sin => {
+        if(sin === termo) return;
+        if(nome.includes(sin))      melhor = Math.max(melhor, 70);
+        else if(desc.includes(sin)) melhor = Math.max(melhor, 38);
+      });
+    }
+
+    // erro de digitação: peso alto se o parecido está no nome,
+    // baixo se só aparece na descrição — senão um typo traz o cardápio todo
+    if(melhor === 0){
+      palavrasNome.forEach(pp => {
+        const sim = semelhanca(t, pp);
+        if(sim >= 0.72) melhor = Math.max(melhor, Math.round(sim * 88));
+      });
+      palavrasDesc.forEach(pp => {
+        const sim = semelhanca(t, pp);
+        if(sim >= 0.72) melhor = Math.max(melhor, Math.round(sim * 38));
+      });
+    }
+
+    total += melhor;
+  });
+
+  return total;
+}
+
+function buscarProdutos(consulta){
+  const limpa = normalizar(consulta);
+  const faixa = lerFaixaPreco(limpa);
+
+  // tira as palavras da faixa de preço da busca por texto
+  const semPreco = limpa.replace(/(?:ate|abaixo de|menos de|no maximo|max|acima de|mais de|a partir de|min|entre)\s*(?:r\$)?\s*\d+(\s*(?:e|a)\s*(?:r\$)?\s*\d+)?/g, ' ').trim();
+
+  let termos = semPreco.split(' ').filter(p => p.length > 1 && !PALAVRAS_VAZIAS.has(p));
+  // se o usuário só digitou palavra genérica, devolve o cardápio todo
+  if(!termos.length && semPreco) return Catalogo.lista();
+  let lista = Catalogo.lista();
+
+  if(faixa){
+    lista = lista.filter(p => {
+      const v = Number(p.preco) || 0;
+      if(faixa.max != null && v > faixa.max) return false;
+      if(faixa.min != null && v < faixa.min) return false;
+      return true;
+    });
+  }
+
+  // só faixa de preço, sem palavras: devolve do mais barato pro mais caro
+  if(!termos.length){
+    return faixa ? lista.slice().sort((a,b) => a.preco - b.preco) : [];
+  }
+
+  const notas = lista
+    .map(p => ({ p: p, nota: pontuar(p, termos) }))
+    .filter(x => x.nota >= 35)
+    .sort((a,b) => b.nota - a.nota);
+
+  if(!notas.length) return [];
+
+  // só vale quem chega perto do melhor — senão "chocolate" traz o cardápio inteiro
+  const corte = Math.max(35, notas[0].nota * 0.55);
+  return notas.filter(x => x.nota >= corte).map(x => x.p);
+}
+
+/* ---------- tela da busca ---------- */
+function abrirBusca(termoInicial){
+  abrirModal('modal-busca');
+  const campo = document.getElementById('busca-campo');
+  if(termoInicial != null) campo.value = termoInicial;
+  renderBusca();
+  setTimeout(() => campo.focus(), 120);
+}
+
+function renderBusca(){
+  const consulta = document.getElementById('busca-campo').value.trim();
+  const alvo = document.getElementById('busca-resultado');
+
+  if(!consulta){
+    if(typeof aplicarIdioma === 'function') setTimeout(aplicarIdioma, 0);
+  alvo.innerHTML = '<div class="busca-dicas">' +
+      '<p class="busca-vazia">Procure por sabor, ingrediente ou preço.</p>' +
+      '<div class="sugestoes">' +
+        ['chocolate','morango','cookie','brigadeiro','até 20'].map(t =>
+          '<button class="sugestao" data-termo="' + esc(t) + '">' + esc(t) + '</button>').join('') +
+      '</div></div>';
+    return;
+  }
+
+  const achados = buscarProdutos(consulta);
+
+  if(!achados.length){
+    if(typeof aplicarIdioma === 'function') setTimeout(aplicarIdioma, 0);
+  alvo.innerHTML = '<div class="busca-dicas">' +
+      '<p class="busca-vazia">Nada encontrado para "' + esc(consulta) + '".</p>' +
+      '<div class="sugestoes">' +
+        ['chocolate','morango','cookie','brigadeiro','até 20'].map(t =>
+          '<button class="sugestao" data-termo="' + esc(t) + '">' + esc(t) + '</button>').join('') +
+      '</div></div>';
+    return;
+  }
+
+  alvo.innerHTML =
+    '<p class="busca-conta">' + molde(achados.length > 1 ? 'achadosN' : 'achados1', achados.length) + '</p>' +
+    achados.map(p =>
+      '<div class="achado">' +
+        '<div class="achado-foto"><img src="' + esc(p.img) + '" alt=""></div>' +
+        '<div class="achado-txt">' +
+          '<div class="achado-nome">' + esc(p.nome) + '</div>' +
+          '<div class="achado-desc">' + esc(p.desc) + '</div>' +
+        '</div>' +
+        '<div class="achado-fim">' +
+          '<span class="achado-preco">' + moeda(Number(p.preco) || 0) + '</span>' +
+          '<button class="btn-add" data-busca-add="' + esc(p.id) + '">Pedir</button>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+}
+
+/* ---------- ligações da busca ---------- */
+document.getElementById('btn-busca').addEventListener('click', () => abrirBusca(''));
+document.getElementById('busca-campo').addEventListener('input', renderBusca);
+
+document.getElementById('busca-resultado').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+
+  if(b.dataset.termo){
+    document.getElementById('busca-campo').value = b.dataset.termo;
+    renderBusca();
+    return;
+  }
+
+  if(b.dataset.buscaAdd){
+    const p = Catalogo.lista().find(x => x.id === b.dataset.buscaAdd);
+    if(p) addCarrinho({ nome: p.nome, preco: Number(p.preco) || 0, img: p.img });
+  }
+});
+
+/* ============================================================
+   LINKS DO MENU E DO RODAPÉ
+   ============================================================ */
+
+// links que ainda não têm página: avisa em vez de não fazer nada
+document.querySelectorAll('[data-embreve]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    aviso(a.dataset.embreve + ' — em breve');
+  });
+});
+
+// links de categoria: abrem a busca já com o termo
+document.querySelectorAll('[data-busca]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    abrirBusca(a.dataset.busca);
+  });
+});
+
+// menu sanduíche do topo
+const btnMenu = document.getElementById('btn-menu');
+const navTopo = document.getElementById('nav');
+
+function fecharMenu(){
+  navTopo.classList.remove('aberto');
+  btnMenu.setAttribute('aria-expanded', 'false');
+  btnMenu.setAttribute('aria-label', 'Abrir menu');
+}
+
+btnMenu.addEventListener('click', () => {
+  const abrindo = !navTopo.classList.contains('aberto');
+  navTopo.classList.toggle('aberto', abrindo);
+  btnMenu.setAttribute('aria-expanded', abrindo ? 'true' : 'false');
+  btnMenu.setAttribute('aria-label', abrindo ? 'Fechar menu' : 'Abrir menu');
+});
+
+// fecha ao escolher um item, ao clicar fora ou com Esc
+navTopo.addEventListener('click', e => { if(e.target.closest('a')) fecharMenu(); });
+document.addEventListener('click', e => {
+  if(!e.target.closest('.topbar')) fecharMenu();
+});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') fecharMenu(); });
+
+// captura de e-mail do rodapé
+// ATENÇÃO: isto só guarda no navegador. Pra virar lista de verdade,
+// aponte para um serviço de e-mail (Mailchimp, Brevo) ou para o Supabase.
+document.getElementById('form-news').addEventListener('submit', e => {
+  e.preventDefault();
+  const campo = document.getElementById('news-email');
+  const email = campo.value.trim();
+  if(!email || email.indexOf('@') < 1){ aviso('Confere o e-mail'); return; }
+  try{
+    const l = JSON.parse(localStorage.getItem('kon-newsletter') || '[]');
+    if(l.indexOf(email) < 0){ l.push(email); localStorage.setItem('kon-newsletter', JSON.stringify(l)); }
+  }catch(err){}
+  campo.value = '';
+  aviso('Pronto! Você vai receber as novidades.');
+});
+
+// ano do rodapé
+document.getElementById('ano').textContent = new Date().getFullYear();
+
+/* ============================================================
+   CATÁLOGO + PAINEL DE ADMINISTRAÇÃO
+   ------------------------------------------------------------
+   TROQUE AQUI o e-mail que pode editar o catálogo:
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   AVISO HONESTO SOBRE ESTE LOGIN
+   Esta verificação acontece no navegador, então NÃO é segurança:
+   quem abrir o código da página vê o e-mail de admin. Serve pra
+   demonstração e pra evitar edição acidental — não pra proteger
+   dados. As alterações também ficam guardadas só neste navegador,
+   ou seja, o cliente que visita o site continua vendo o catálogo
+   original.
+
+   Quando o projeto fechar, é só trocar o objeto "Catalogo" abaixo
+   por chamadas ao Supabase (ou outro backend): o resto da página,
+   inclusive todo o painel, continua igual. Os três métodos que
+   precisam mudar são lista(), salvar() e restaurar().
+   ------------------------------------------------------------ */
+
+/* catálogo de fábrica — usado enquanto ninguém editou nada */
+const PRODUTOS_PADRAO = [
+  {
+    id: 'sl1',
+    nome: 'Bombom de Morango',
+    preco: 14.90,
+    desc: 'Morango fresco envolto em creme branco e casquinha de chocolate ao leite.',
+    selo: 'Mais pedido',
+    estrelas: 5,
+    img: 'imagens/bombom-morango.jpg',
+    ficha: {
+      porcoes: '1 unidade',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Morango fresco, creme branco, chocolate ao leite'
+    }
+  },
+  {
+    id: 'sl2',
+    nome: 'Cookie Recheado',
+    preco: 16.90,
+    desc: 'Crocante por fora, macio por dentro, com recheio cremoso de avelã, gotas de chocolate e nozes.',
+    selo: 'Novo',
+    estrelas: 5,
+    img: 'imagens/cookie-recheado.jpg',
+    ficha: {
+      porcoes: '1 unidade',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Massa amanteigada, creme de avelã, gotas de chocolate ao leite, nozes'
+    }
+  },
+  {
+    id: 'sl3',
+    nome: 'Copinho de Brownie',
+    preco: 18.90,
+    desc: 'Brownie molhadinho com creme de chocolate e granulado colorido, no copinho Sweet Land.',
+    selo: '',
+    estrelas: 5,
+    img: 'imagens/copinho-brownie.jpg',
+    ficha: {
+      porcoes: '1 copinho',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Brownie de chocolate, creme de chocolate, granulado colorido'
+    }
+  },
+  {
+    id: 'sl4',
+    nome: 'Brigadeiro Tradicional',
+    preco: 24.90,
+    desc: 'Caixa com 6 brigadeiros de panela, enrolados na hora e cobertos de granulado.',
+    selo: '',
+    estrelas: 5,
+    img: 'imagens/brigadeiro.jpg',
+    ficha: {
+      porcoes: '6 unidades',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Leite condensado, chocolate, manteiga, granulado de chocolate'
+    }
+  },
+  {
+    id: 'sl5',
+    nome: 'Ovo de Colher Brownie',
+    preco: 79.90,
+    desc: 'Casca de chocolate recheada com creme branco, creme de avelã e pedaços de brownie.',
+    selo: '',
+    estrelas: 5,
+    img: 'imagens/ovo-de-colher.jpg',
+    ficha: {
+      porcoes: '2 a 3 pessoas',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '3 dias',
+      ingredientes: 'Chocolate ao leite, creme branco, creme de avelã, brownie'
+    }
+  },
+  {
+    id: 'sl6',
+    nome: 'Bolo Ursinho',
+    preco: 129.90,
+    desc: 'Mini bolo de chocolate decorado de ursinho, com bico de chocolate e detalhes em chocolate branco.',
+    selo: 'Mais pedido',
+    estrelas: 5,
+    img: 'imagens/bolo-ursinho.jpg',
+    ficha: {
+      porcoes: '8 a 10 pessoas',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '3 dias',
+      ingredientes: 'Massa de chocolate, recheio cremoso, cobertura de chocolate, chocolate branco'
+    }
+  }
+];
+
+/* quantos produtos aparecem antes de clicar em "Ver menu completo" */
+const VITRINE = 6;
+let menuAberto = false;
+
+/* ------------------------------------------------------------
+   Conversa com o servidor
+   Todo acesso e toda edição passam por aqui. É o que faz o painel
+   valer em qualquer dispositivo: nada importante fica guardado no
+   navegador, só o bilhete de sessão.
+   ------------------------------------------------------------ */
+const Painel = {
+  CHAVE_SESSAO: 'kon-sessao',
+
+  bilhete(){
+    try{ return localStorage.getItem(this.CHAVE_SESSAO) || null; }catch(e){ return null; }
+  },
+
+  guardarBilhete(token){
+    try{
+      if(token) localStorage.setItem(this.CHAVE_SESSAO, token);
+      else localStorage.removeItem(this.CHAVE_SESSAO);
+    }catch(e){}
+  },
+
+  /* Faz um pedido ao painel. Erro vira exceção com a mensagem que o
+     servidor mandou, pra tela poder mostrar ela sem traduzir nada. */
+  async pedir(corpo, endereco){
+    let r;
+    try{
+      r = await fetch(endereco || '/api/painel', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(Object.assign({ token: this.bilhete() }, corpo))
+      });
+    }catch(e){
+      throw new Error('Sem conexão com o servidor.');
+    }
+
+    const dados = await r.json().catch(() => ({}));
+    if(!r.ok){
+      // acesso vencido ou revogado: cai fora do modo edição na hora
+      if(r.status === 401 || r.status === 403) encerrarSessao();
+      throw new Error(dados.erro || 'Não consegui falar com o servidor.');
+    }
+    return dados;
+  },
+
+  enviarFoto(dataUrl){
+    return this.pedir({ dataUrl: dataUrl }, '/api/foto');
+  }
+};
+
+/* ------------------------------------------------------------
+   Camada de dados do catálogo
+   A lista vive no servidor. Aqui fica uma cópia em memória pra
+   tela desenhar na hora, sem esperar a rede a cada clique.
+   ------------------------------------------------------------ */
+const Catalogo = {
+  _guardados: null,   // null = o servidor ainda não respondeu, ou nunca editaram
+
+  lista(){
+    const base = this._guardados || PRODUTOS_PADRAO;
+    /* O catálogo guardado pode ser mais antigo que o código — foi
+       salvo antes de a ficha técnica existir, por exemplo. Completa
+       os campos que faltam com o padrão do mesmo produto, sem tocar
+       no que a pessoa editou de propósito. */
+    return base.map(item => {
+      const padrao = PRODUTOS_PADRAO.find(d => d.id === item.id);
+      return Object.assign({}, padrao || {}, item);
+    });
+  },
+
+  // busca no servidor: é isso que faz a edição de um aparecer pros outros
+  async carregar(){
+    try{
+      const r = await fetch('/api/catalogo', { cache: 'no-store' });
+      const d = await r.json();
+      this._guardados = Array.isArray(d.lista) ? d.lista : null;
+      renderCatalogo();
+    }catch(e){ /* sem rede: a página continua com o catálogo de fábrica */ }
+  },
+
+  /* Grava otimista: a tela muda na hora e o servidor confirma depois.
+     Se ele recusar (permissão, sessão vencida), volta como estava. */
+  salvar(lista){
+    const anterior = this._guardados;
+    this._guardados = lista;
+    renderCatalogo();
+
+    Painel.pedir({ acao: 'catalogo-salvar', lista: lista, padrao: PRODUTOS_PADRAO })
+      .catch(e => {
+        this._guardados = anterior;
+        renderCatalogo();
+        aviso(e.message);
+      });
+
+    return true;
+  },
+
+  restaurar(){
+    const anterior = this._guardados;
+    this._guardados = null;
+    renderCatalogo();
+
+    Painel.pedir({ acao: 'catalogo-restaurar' })
+      .catch(e => {
+        this._guardados = anterior;
+        renderCatalogo();
+        aviso(e.message);
+      });
+  }
+};
+
+/* ---------- utilidades ---------- */
+
+// impede que texto digitado vire HTML/script dentro do card
+function esc(txt){
+  return String(txt == null ? '' : txt)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function estrelasHtml(n){
+  const cheias = Math.max(1, Math.min(5, parseInt(n,10) || 5));
+  return '★'.repeat(cheias) + '☆'.repeat(5 - cheias);
+}
+
+/* ---------- desenha o catálogo ---------- */
+function renderCatalogo(){
+  const todos = Catalogo.lista();
+
+  // quem está editando vê tudo, senão só a vitrine até clicar em "Ver menu completo"
+  const mostrarTudo = menuAberto || estaLogado();
+  const lista = mostrarTudo ? todos : todos.slice(0, VITRINE);
+
+  const botao = document.getElementById('btn-ver-menu');
+  if(botao){
+    const sobra = todos.length - VITRINE;
+    botao.parentElement.hidden = (sobra <= 0 || estaLogado());
+    botao.textContent = menuAberto ? (idioma === 'en' ? 'Show less' : 'Ver menos') : molde('verMenu', sobra);
+  }
+
+  document.getElementById('produtos').innerHTML = lista.map(p => {
+    const selo = p.selo
+      ? '<span class="selo-card' + (p.selo === 'Novo' ? ' novo' : '') + '">' + esc(p.selo) + '</span>'
+      : '';
+
+    return '<article class="produto" data-id="' + esc(p.id) + '">' +
+      '<div class="acoes-card">' +
+        '<button class="editar" data-editar="' + esc(p.id) + '">Editar</button>' +
+        '<button class="excluir" data-excluir="' + esc(p.id) + '">Excluir</button>' +
+      '</div>' +
+      selo +
+      '<button class="coracao" aria-label="Favoritar">' +
+        '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>' +
+      '</button>' +
+      '<div class="produto-foto"><img src="' + esc(p.img) + '" alt="' + esc(p.nome) + '"></div>' +
+      '<div class="estrelas">' + estrelasHtml(p.estrelas) + '</div>' +
+      '<h3>' + esc(p.nome) + '</h3>' +
+      '<p class="desc">' + esc(p.desc) + '</p>' +
+      '<div class="rodape">' +
+        '<span class="preco">' + moeda(Number(p.preco) || 0) + '</span>' +
+        '<button class="btn-mini">Pedir</button>' +
+      '</div>' +
+    '</article>';
+  }).join('');
+
+  render();   // reaplica os corações dos favoritos
+  if(typeof aplicarIdioma === 'function') aplicarIdioma();
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+/* ============================================================
+   ACESSO: administrador geral + equipe com permissões
+   ------------------------------------------------------------
+   O administrador geral é fixo no código e não pode ser removido
+   nem rebaixado por ninguém — nem por ele mesmo. Todo o resto da
+   equipe é cadastrado pelo painel.
+   ============================================================ */
+const ADMIN_GERAL = 'witor.lemos7@gmail.com';
+
+/* O que cada permissão libera. Para criar uma permissão nova,
+   acrescente aqui e use pode('chave') onde ela deve valer. */
+const PERMISSOES = {
+  editar:  'Editar produtos (nome, preço, descrição)',
+  fotos:   'Trocar fotos dos produtos',
+  criar:   'Adicionar produtos novos',
+  excluir: 'Excluir produtos',
+  equipe:  'Gerenciar a equipe e as permissões'
+};
+
+/* Sugestões de função. O campo é livre — dá pra escrever qualquer
+   coisa. Isto aqui só preenche as permissões de partida ao escolher. */
+const FUNCOES_SUGERIDAS = {
+  'Gerente':    { editar:1, fotos:1, criar:1, excluir:1, equipe:1 },
+  'TI':         { editar:1, fotos:1, criar:1, excluir:1, equipe:1 },
+  'Assistente': { editar:1, fotos:1, criar:1, excluir:0, equipe:0 },
+  'Membro':     { editar:1, fotos:0, criar:0, excluir:0, equipe:0 },
+  'Visitante':  { editar:0, fotos:0, criar:0, excluir:0, equipe:0 }
+};
+
+/* ------------------------------------------------------------
+   Camada de dados da equipe
+   A lista mora no servidor. O navegador só guarda uma cópia do que
+   o painel está mostrando — e nunca as senhas.
+   ------------------------------------------------------------ */
+const Equipe = {
+  _pessoas: [],
+
+  lista(){ return this._pessoas; },
+
+  guardar(pessoas){ this._pessoas = Array.isArray(pessoas) ? pessoas : []; },
+
+  buscar(email){
+    if(!email) return null;
+    const alvo = email.trim().toLowerCase();
+    return this._pessoas.find(u => (u.email || '').toLowerCase() === alvo) || null;
+  },
+
+  async carregar(){
+    const d = await Painel.pedir({ acao: 'equipe-listar' });
+    this.guardar(d.pessoas);
+  }
+};
+
+/* ---------- quem está logado e o que pode ----------
+   Quem manda é o servidor: ele devolve as permissões a cada entrada
+   e a cada abertura da página. O que está aqui só decide qual botão
+   aparece — bloquear de verdade é trabalho da API. */
+let SESSAO = null;   // { email, funcao, permissoes } ou null
+
+function usuarioAtual(){ return SESSAO ? SESSAO.email : null; }
+
+function ehAdminGeral(email){
+  return (email || usuarioAtual() || '').trim().toLowerCase() === ADMIN_GERAL.toLowerCase();
+}
+
+function estaLogado(){ return SESSAO !== null; }
+function pode(chave){ return !!(SESSAO && SESSAO.permissoes && SESSAO.permissoes[chave]); }
+
+// como o usuário aparece na faixa do topo
+function papelAtual(){ return SESSAO ? (SESSAO.funcao || 'Equipe') : ''; }
+
+function aplicarModoAdmin(){
+  const on = estaLogado();
+  const p  = on ? (SESSAO.permissoes || {}) : {};
+
+  document.body.classList.toggle('admin', on);
+  Object.keys(PERMISSOES).forEach(k =>
+    document.body.classList.toggle('pode-' + k, on && !!p[k]));
+
+  document.getElementById('admin-add').hidden = !(on && p.criar);
+
+  const quem = document.getElementById('admin-quem');
+  if(quem){
+    quem.textContent = on ? (usuarioAtual() + ' · ' + papelAtual()) : '';
+  }
+}
+
+/* Abre a sessão com o que o servidor devolveu. */
+function abrirSessao(d){
+  SESSAO = { email: d.email, funcao: d.funcao, permissoes: d.permissoes || {} };
+  if(d.token) Painel.guardarBilhete(d.token);
+  aplicarModoAdmin();
+}
+
+/* Fecha a sessão sem avisar nada — usado quando o servidor recusa. */
+function encerrarSessao(){
+  SESSAO = null;
+  Painel.guardarBilhete(null);
+  aplicarModoAdmin();
+}
+
+/* Ao abrir a página, confere o bilhete guardado. Se o administrador
+   mudou as permissões enquanto isso, as novas chegam aqui. */
+async function retomarSessao(){
+  if(!Painel.bilhete()) return;
+  try{
+    abrirSessao(await Painel.pedir({ acao: 'sessao' }));
+  }catch(e){
+    encerrarSessao();
+  }
+}
+
+/* ---------- entrar e sair ---------- */
+
+// no primeiro acesso de todos, o administrador geral escolhe a própria senha
+let primeiroAcesso = false;
+
+async function conferirPrimeiroAcesso(){
+  const dica = document.getElementById('login-dica');
+  try{
+    const d = await Painel.pedir({ acao: 'estado' });
+    primeiroAcesso = !!d.precisaCriarSenha;
+  }catch(e){
+    primeiroAcesso = false;
+  }
+  document.getElementById('btn-entrar').textContent = primeiroAcesso ? 'Criar senha e entrar' : 'Entrar';
+  if(dica){
+    dica.textContent = primeiroAcesso
+      ? 'Primeiro acesso: entre com o e-mail do administrador e escolha a senha que vai usar daqui pra frente.'
+      : '';
+    dica.hidden = !primeiroAcesso;
+  }
+}
+
+async function entrar(){
+  const campoEmail = document.getElementById('login-email');
+  const campoSenha = document.getElementById('login-senha');
+  const botao = document.getElementById('btn-entrar');
+  const erro  = document.getElementById('login-erro');
+
+  const email = campoEmail.value.trim().toLowerCase();
+  const senha = campoSenha.value;
+
+  const reclamar = txt => {
+    erro.textContent = txt;
+    erro.classList.add('visivel');
+  };
+
+  if(!email){ reclamar('Digite seu e-mail.'); return; }
+  if(!senha){ reclamar('Digite sua senha.'); return; }
+
+  botao.disabled = true;
+  try{
+    // no primeiro acesso o administrador não tem senha ainda: ele cria agora
+    const criando = primeiroAcesso && ehAdminGeral(email);
+    if(primeiroAcesso && !criando){
+      reclamar('A loja ainda não foi configurada. O administrador geral precisa entrar primeiro.');
+      return;
+    }
+
+    const d = criando
+      ? await Painel.pedir({ acao: 'criar-senha-admin', senha: senha })
+      : await Painel.pedir({ acao: 'entrar', email: email, senha: senha });
+
+    abrirSessao(d);
+    primeiroAcesso = false;
+    erro.classList.remove('visivel');
+    campoEmail.value = '';
+    campoSenha.value = '';
+    fecharModais();
+    Catalogo.carregar();
+    aviso('Bem-vindo, ' + papelAtual().toLowerCase());
+  }catch(e){
+    reclamar(e.message);
+  }finally{
+    botao.disabled = false;
+  }
+}
+
+function sair(){
+  encerrarSessao();
+  aviso('Você saiu do modo edição');
+}
+
+/* ---------- trocar a própria senha ---------- */
+async function trocarMinhaSenha(){
+  const erro   = document.getElementById('senha-erro');
+  const atual  = document.getElementById('s-atual');
+  const nova   = document.getElementById('s-nova');
+  const botao  = document.getElementById('btn-trocar-senha');
+
+  if(nova.value.length < 6){
+    erro.textContent = 'A senha nova precisa de pelo menos 6 caracteres.';
+    erro.classList.add('visivel');
+    return;
+  }
+
+  botao.disabled = true;
+  try{
+    await Painel.pedir({ acao: 'trocar-minha-senha', senhaAtual: atual.value, senhaNova: nova.value });
+    atual.value = '';
+    nova.value = '';
+    fecharModais();
+    aviso('Senha trocada');
+  }catch(e){
+    erro.textContent = e.message;
+    erro.classList.add('visivel');
+  }finally{
+    botao.disabled = false;
+  }
+}
+
+/* ============================================================
+   PAINEL DA EQUIPE
+   ============================================================ */
+let editandoEmail = null;   // null = cadastrando alguém novo
+
+async function abrirEquipe(){
+  if(!pode('equipe')){ aviso('Você não tem permissão pra isso'); return; }
+  editandoEmail = null;
+  limparFormEquipe();
+  document.getElementById('lista-equipe').innerHTML = '<p class="legenda">Carregando…</p>';
+  abrirModal('modal-equipe');
+
+  try{
+    await Equipe.carregar();
+    renderEquipe();
+  }catch(e){
+    document.getElementById('lista-equipe').innerHTML = '<p class="legenda">' + esc(e.message) + '</p>';
+  }
+}
+
+function limparFormEquipe(){
+  document.getElementById('e-email').value  = '';
+  document.getElementById('e-email').disabled = false;
+  document.getElementById('e-funcao').value = '';
+  document.getElementById('e-senha').value = '';
+  document.getElementById('e-sugestao').value = '';
+  document.getElementById('e-senha-dica').textContent = 'Ela vai usar esse e-mail e essa senha pra entrar de qualquer computador ou celular.';
+  document.querySelectorAll('#e-permissoes input').forEach(c => c.checked = false);
+  document.getElementById('btn-salvar-pessoa').textContent = 'Adicionar pessoa';
+  document.getElementById('equipe-erro').classList.remove('visivel');
+}
+
+function renderEquipe(){
+  const lista = Equipe.lista();
+
+  const linhaAdmin =
+    '<div class="pessoa dono">' +
+      '<div>' +
+        '<div class="pessoa-email">' + esc(ADMIN_GERAL) + '</div>' +
+        '<div class="pessoa-funcao">Administrador geral · acesso total</div>' +
+      '</div>' +
+      '<span class="travado">fixo</span>' +
+    '</div>';
+
+  const linhas = lista.map(u => {
+    const chaves = Object.keys(PERMISSOES).filter(k => u.permissoes && u.permissoes[k]);
+    const chips = chaves.length
+      ? chaves.map(k => '<span class="chip">' + esc(k) + '</span>').join('')
+      : '<span class="chip vazio">só visualiza</span>';
+
+    return '<div class="pessoa">' +
+      '<div>' +
+        '<div class="pessoa-email">' + esc(u.email) + '</div>' +
+        '<div class="pessoa-funcao">' + esc(u.funcao || 'Equipe') + '</div>' +
+        '<div class="chips">' + chips + '</div>' +
+      '</div>' +
+      '<div class="pessoa-acoes">' +
+        '<button data-editar-pessoa="' + esc(u.email) + '">Editar</button>' +
+        '<button class="excluir" data-remover-pessoa="' + esc(u.email) + '">Remover</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  document.getElementById('lista-equipe').innerHTML = linhaAdmin + linhas;
+}
+
+function editarPessoa(email){
+  const u = Equipe.buscar(email);
+  if(!u) return;
+  editandoEmail = u.email;
+
+  document.getElementById('e-email').value = u.email;
+  document.getElementById('e-email').disabled = true;   // o e-mail é a identidade
+  document.getElementById('e-funcao').value = u.funcao || '';
+  document.getElementById('e-senha').value = '';
+  document.getElementById('e-senha-dica').textContent = 'Deixe em branco pra manter a senha atual. Preencha só se ela esqueceu e você quer criar uma nova.';
+  document.querySelectorAll('#e-permissoes input').forEach(c => {
+    c.checked = !!(u.permissoes && u.permissoes[c.value]);
+  });
+  document.getElementById('btn-salvar-pessoa').textContent = 'Salvar alterações';
+  document.getElementById('e-funcao').focus();
+}
+
+async function salvarPessoa(){
+  const erro   = document.getElementById('equipe-erro');
+  const botao  = document.getElementById('btn-salvar-pessoa');
+  const email  = document.getElementById('e-email').value.trim().toLowerCase();
+  const funcao = document.getElementById('e-funcao').value.trim();
+  const senha  = document.getElementById('e-senha').value;
+
+  const reclamar = txt => {
+    erro.textContent = txt;
+    erro.classList.add('visivel');
+  };
+
+  if(!email || email.indexOf('@') < 1){ reclamar('Coloque um e-mail válido.'); return; }
+  if(ehAdminGeral(email)){ reclamar('Esse é o administrador geral — o acesso dele é fixo.'); return; }
+  if(!editandoEmail && Equipe.buscar(email)){ reclamar('Esse e-mail já está na equipe.'); return; }
+  if(!editandoEmail && !senha){ reclamar('Defina uma senha pra essa pessoa poder entrar.'); return; }
+
+  const permissoes = {};
+  document.querySelectorAll('#e-permissoes input').forEach(c => {
+    if(c.checked) permissoes[c.value] = true;
+  });
+
+  botao.disabled = true;
+  try{
+    const d = await Painel.pedir({
+      acao: 'equipe-salvar',
+      email: email,
+      funcao: funcao,
+      permissoes: permissoes,
+      senha: senha
+    });
+
+    Equipe.guardar(d.pessoas);
+    const era = editandoEmail;
+    editandoEmail = null;
+    limparFormEquipe();
+    renderEquipe();
+
+    // se mexeu nas próprias permissões, recarrega as suas do servidor
+    if(era && era.toLowerCase() === (usuarioAtual() || '').toLowerCase()) await retomarSessao();
+
+    aviso(d.criada ? 'Pessoa adicionada' : 'Permissões atualizadas');
+  }catch(e){
+    reclamar(e.message);
+  }finally{
+    botao.disabled = false;
+  }
+}
+
+async function removerPessoa(email){
+  const u = Equipe.buscar(email);
+  if(!u) return;
+  if(!confirm('Tirar ' + u.email + ' da equipe?')) return;
+
+  try{
+    const d = await Painel.pedir({ acao: 'equipe-remover', email: email });
+    Equipe.guardar(d.pessoas);
+
+    // se a pessoa se removeu, cai pra fora do modo edição
+    if((usuarioAtual() || '').toLowerCase() === email.toLowerCase()){
+      sair();
+      fecharModais();
+      return;
+    }
+
+    editandoEmail = null;
+    limparFormEquipe();
+    renderEquipe();
+    aviso('Pessoa removida');
+  }catch(e){
+    aviso(e.message);
+  }
+}
+
+/* ---------- ligações da equipe ---------- */
+document.getElementById('btn-equipe').addEventListener('click', abrirEquipe);
+
+// abre e fecha o resto do catálogo
+document.getElementById('btn-ver-menu').addEventListener('click', () => {
+  menuAberto = !menuAberto;
+  renderCatalogo();
+  if(!menuAberto){
+    document.getElementById('produtos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+document.getElementById('btn-salvar-pessoa').addEventListener('click', salvarPessoa);
+
+// escolher uma função sugerida já marca as permissões típicas dela
+document.getElementById('e-sugestao').addEventListener('change', e => {
+  const base = FUNCOES_SUGERIDAS[e.target.value];
+  if(!base) return;
+  document.getElementById('e-funcao').value = e.target.value;
+  document.querySelectorAll('#e-permissoes input').forEach(c => {
+    c.checked = !!base[c.value];
+  });
+});
+
+document.getElementById('lista-equipe').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+  if(b.dataset.editarPessoa)  editarPessoa(b.dataset.editarPessoa);
+  if(b.dataset.removerPessoa) removerPessoa(b.dataset.removerPessoa);
+});
+
+/* ============================================================
+   JANELAS
+   ============================================================ */
+function abrirModal(id){
+  document.getElementById(id).classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
+function fecharModais(){
+  document.querySelectorAll('.modal-fundo').forEach(m => m.classList.remove('aberto'));
+  document.querySelectorAll('.erro-modal').forEach(e => e.classList.remove('visivel'));
+  document.body.style.overflow = '';
+}
+
+/* ============================================================
+   EDITAR PRODUTO
+   ============================================================ */
+let editandoId = null;
+let fotoNova   = null;   // dataURL da foto escolhida nesta edição
+let fotoAtual  = null;   // foto que o produto já tinha
+let nomeArquivo = '';    // nome do arquivo escolhido, só pra mostrar
+
+function abrirEditor(id){
+  const lista = Catalogo.lista();
+  const p = id ? lista.find(x => x.id === id) : null;
+
+  editandoId  = id;
+  fotoNova    = null;
+  nomeArquivo = '';
+
+  document.getElementById('produto-titulo').textContent = p ? 'Editar produto' : 'Novo produto';
+  document.getElementById('p-nome').value     = p ? p.nome : '';
+  document.getElementById('p-preco').value    = p ? p.preco : '';
+  document.getElementById('p-desc').value     = p ? p.desc : '';
+  document.getElementById('p-selo').value     = p ? (p.selo || '') : '';
+
+  const f = (p && p.ficha) || {};
+  document.getElementById('p-porcoes').value      = f.porcoes || '';
+  document.getElementById('p-peso').value         = f.peso || '';
+  document.getElementById('p-antecedencia').value = f.antecedencia || '';
+  document.getElementById('p-ingredientes').value = f.ingredientes || '';
+  document.getElementById('p-feito').value        = (p && p.feito && p.feito.length) ? p.feito.join('\n') : '';
+  document.getElementById('p-estrelas').value = p ? (p.estrelas || 5) : 5;
+  document.getElementById('p-foto').value     = '';
+  fotoAtual = p && p.img ? p.img : null;
+  pintarFoto();
+
+  abrirModal('modal-produto');
+}
+
+// reduz a foto antes de guardar, senão a cota do navegador estoura
+function reduzirImagem(file, maxLado, cb){
+  const leitor = new FileReader();
+  leitor.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      let w = img.width, h = img.height;
+      if(w > maxLado || h > maxLado){
+        const r = Math.min(maxLado / w, maxLado / h);
+        w = Math.round(w * r);
+        h = Math.round(h * r);
+      }
+      const tela = document.createElement('canvas');
+      tela.width = w; tela.height = h;
+      const ctx = tela.getContext('2d');
+      ctx.fillStyle = '#fff';           // JPEG não tem transparência
+      ctx.fillRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+      cb(tela.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => cb(null);
+    img.src = leitor.result;
+  };
+  leitor.onerror = () => cb(null);
+  leitor.readAsDataURL(file);
+}
+
+async function salvarProduto(){
+  const erro  = document.getElementById('produto-erro');
+  const botao = document.getElementById('btn-salvar-produto');
+  const nome  = document.getElementById('p-nome').value.trim();
+  const preco = parseFloat(document.getElementById('p-preco').value);
+
+  if(!nome){
+    erro.textContent = 'O produto precisa de um nome.';
+    erro.classList.add('visivel');
+    return;
+  }
+  if(isNaN(preco) || preco < 0){
+    erro.textContent = 'Coloque um preço válido.';
+    erro.classList.add('visivel');
+    return;
+  }
+
+  /* A foto sobe antes do resto: o catálogo guarda só o endereço dela.
+     Assim a lista fica leve e a imagem vale pra quem visitar o site. */
+  let enderecoFoto = null;
+  if(fotoNova){
+    botao.disabled = true;
+    aviso('Enviando a foto…');
+    try{
+      enderecoFoto = (await Painel.enviarFoto(fotoNova)).url;
+    }catch(e){
+      erro.textContent = e.message;
+      erro.classList.add('visivel');
+      return;
+    }finally{
+      botao.disabled = false;
+    }
+  }
+
+  const lista = Catalogo.lista();
+  const dados = {
+    nome: nome,
+    preco: preco,
+    desc: document.getElementById('p-desc').value.trim(),
+    selo: document.getElementById('p-selo').value,
+    estrelas: parseInt(document.getElementById('p-estrelas').value, 10) || 5,
+    ficha: {
+      porcoes:      document.getElementById('p-porcoes').value.trim(),
+      peso:         document.getElementById('p-peso').value.trim(),
+      antecedencia: document.getElementById('p-antecedencia').value.trim(),
+      ingredientes: document.getElementById('p-ingredientes').value.trim()
+    },
+    // um passo por linha; vazio faz a ficha usar o texto padrão da casa
+    feito: document.getElementById('p-feito').value
+             .split('\n').map(l => l.trim()).filter(Boolean)
+  };
+
+  // campo em branco não apaga o que já existia: some da ficha e volta ao padrão
+  Object.keys(dados.ficha).forEach(k => { if(!dados.ficha[k]) delete dados.ficha[k]; });
+
+  if(editandoId){
+    const i = lista.findIndex(x => x.id === editandoId);
+    if(i < 0) return;
+    lista[i] = Object.assign(lista[i], dados);
+    if(enderecoFoto) lista[i].img = enderecoFoto;
+  }else{
+    dados.id  = 'p' + Date.now();
+    dados.img = enderecoFoto || 'imagens/brigadeiro.jpg';
+    lista.push(dados);
+  }
+
+  if(Catalogo.salvar(lista)){
+    fecharModais();
+    renderCatalogo();
+    aviso(editandoId ? 'Produto atualizado' : 'Produto adicionado');
+  }
+}
+
+function excluirProduto(id){
+  const lista = Catalogo.lista();
+  const p = lista.find(x => x.id === id);
+  if(!p) return;
+  if(!confirm('Tirar "' + p.nome + '" do catálogo?')) return;
+
+  if(Catalogo.salvar(lista.filter(x => x.id !== id))){
+    renderCatalogo();
+    aviso('Produto removido');
+  }
+}
+
+/* ============================================================
+   LIGAÇÕES DO PAINEL
+   ============================================================ */
+
+// entrar / sair
+function alternarLogin(e){
+  if(e) e.preventDefault();
+  if(estaLogado()){ sair(); return; }
+  document.getElementById('login-senha').value = '';
+  abrirModal('modal-login');
+  conferirPrimeiroAcesso();   // descobre se a loja ainda não tem senha de admin
+}
+document.getElementById('link-login').addEventListener('click', alternarLogin);
+document.getElementById('btn-login-topo').addEventListener('click', alternarLogin);
+document.getElementById('btn-entrar').addEventListener('click', entrar);
+['login-email', 'login-senha'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if(e.key === 'Enter') entrar();
+  });
+});
+document.getElementById('btn-sair').addEventListener('click', sair);
+
+document.getElementById('btn-minha-senha').addEventListener('click', () => {
+  document.getElementById('s-atual').value = '';
+  document.getElementById('s-nova').value  = '';
+  abrirModal('modal-senha');
+});
+document.getElementById('btn-trocar-senha').addEventListener('click', trocarMinhaSenha);
+document.getElementById('s-nova').addEventListener('keydown', e => {
+  if(e.key === 'Enter') trocarMinhaSenha();
+});
+
+document.getElementById('btn-restaurar').addEventListener('click', () => {
+  if(!confirm('Voltar o catálogo para o original? As edições da equipe serão perdidas, pra todo mundo.')) return;
+  Catalogo.restaurar();
+  aviso('Catálogo restaurado');
+});
+
+// novo produto
+document.getElementById('btn-novo-produto').addEventListener('click', () => abrirEditor(null));
+
+// editar / excluir dentro dos cards (delegação: funciona nos cards recriados)
+document.getElementById('produtos').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if(!b) return;
+
+  if(b.dataset.editar){ abrirEditor(b.dataset.editar); return; }
+  if(b.dataset.excluir){ excluirProduto(b.dataset.excluir); return; }
+
+  const card = b.closest('.produto');
+  if(!card) return;
+  if(b.classList.contains('btn-mini')) addCarrinho(dadosDoCard(card));
+  if(b.classList.contains('coracao'))  toggleFavorito(dadosDoCard(card), b);
+});
+
+// clique em qualquer outro ponto do card abre a ficha do produto
+document.getElementById('produtos').addEventListener('click', e => {
+  if(e.target.closest('button')) return;      // botões já foram tratados acima
+  const card = e.target.closest('.produto');
+  if(card && card.dataset.id) abrirDetalhe(card.dataset.id);
+});
+
+/* ---------- área de envio de foto ---------- */
+
+// mostra o estado certo: caixa de arrastar, ou prévia com os botões
+function pintarFoto(){
+  const temNova  = !!fotoNova;
+  const mostrada = fotoNova || fotoAtual;
+
+  document.getElementById('dz-vazio').hidden = !!mostrada;
+  document.getElementById('dz-cheio').hidden = !mostrada;
+  document.getElementById('btn-desfazer-foto').hidden = !temNova;
+
+  // sem foto: limpa o src pra nunca sobrar ícone de imagem quebrada
+  if(!mostrada){
+    document.getElementById('dz-img').removeAttribute('src');
+    return;
+  }
+
+  document.getElementById('dz-img').src = mostrada;
+  document.getElementById('dz-nome').textContent = temNova ? (nomeArquivo || 'foto nova') : 'foto atual do produto';
+  document.getElementById('dz-peso').textContent = temNova ? ('pronta pra salvar · ' + pesoDataUrl(fotoNova)) : 'clique em Trocar foto para substituir';
+}
+
+// tamanho aproximado do que vai ser guardado (base64 tem ~33% de excesso)
+function pesoDataUrl(url){
+  const bytes = Math.round((url.length - (url.indexOf(',') + 1)) * 0.75);
+  return bytes > 1024*1024
+    ? (bytes/1024/1024).toFixed(1).replace('.', ',') + ' MB'
+    : Math.round(bytes/1024) + ' KB';
+}
+
+function receberArquivo(file){
+  if(!file) return;
+  if(!/^image\//.test(file.type)){
+    aviso('Esse arquivo não é uma imagem');
+    return;
+  }
+  nomeArquivo = file.name;
+  aviso('Preparando a foto…');
+  reduzirImagem(file, 900, dataUrl => {
+    if(!dataUrl){ aviso('Não consegui ler essa imagem'); return; }
+    fotoNova = dataUrl;
+    pintarFoto();
+  });
+}
+
+const dz = document.getElementById('p-dropzone');
+const inputFoto = document.getElementById('p-foto');
+
+document.getElementById('dz-vazio').addEventListener('click', () => inputFoto.click());
+document.getElementById('btn-trocar-foto').addEventListener('click', () => inputFoto.click());
+
+document.getElementById('btn-desfazer-foto').addEventListener('click', () => {
+  fotoNova = null;
+  nomeArquivo = '';
+  inputFoto.value = '';
+  pintarFoto();
+});
+
+inputFoto.addEventListener('change', e => {
+  receberArquivo(e.target.files && e.target.files[0]);
+});
+
+// arrastar e soltar
+['dragenter','dragover'].forEach(ev =>
+  dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('sobre'); }));
+['dragleave','drop'].forEach(ev =>
+  dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('sobre'); }));
+dz.addEventListener('drop', e => {
+  receberArquivo(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
+});
+
+// salvar e fechar
+document.getElementById('btn-salvar-produto').addEventListener('click', salvarProduto);
+document.querySelectorAll('[data-fechar-modal]').forEach(b =>
+  b.addEventListener('click', fecharModais));
+document.querySelectorAll('.modal-fundo').forEach(m =>
+  m.addEventListener('click', e => { if(e.target === m) fecharModais(); }));
+
+
+/* ============================================================
+   PORTUGUÊS / INGLÊS
+   ------------------------------------------------------------
+   Em vez de marcar cada texto no HTML, o dicionário é PT -> EN e
+   um passeio pelos nós de texto troca o que casar por inteiro.
+   Assim nada meio-traduzido aparece, e nome de bolo — que é dado
+   da loja, não interface — fica como está.
+
+   Pra traduzir algo novo, basta acrescentar o par aqui embaixo.
+   ============================================================ */
+const DICIONARIO = {
+  /* topo */
+  'Home': 'Home',
+  'Sobre': 'About',
+  'Doces': 'Sweets',
+  'Personalizados': 'Custom',
+  'Blog': 'Blog',
+  'Galeria': 'Gallery',
+  'Contato': 'Contact',
+  'Entrar': 'Sign in',
+  'Sair': 'Sign out',
+
+  /* hero */
+  'Doceria artesanal': 'Artisan sweet shop',
+  'Brownies, cookies & bolos': 'Brownies, cookies & cakes',
+  'do jeito mais doce': 'the sweetest way',
+  'Recheio cremoso, chocolate de verdade e aquele exagero gostoso. Bem-vindo ao universo colorido da Sweet Land.':
+    'Creamy fillings, real chocolate and that tasty bit of excess. Welcome to the colorful world of Sweet Land.',
+  'Ver menu completo': 'See full menu',
+  'Ver Doces': 'See Sweets',
+  'Encomendar': 'Order now',
+
+  /* seção dos benefícios */
+  'Por que Sweet Land': 'Why Sweet Land',
+  'O que tem de bom num': "What's so good about a",
+  'docinho artesanal': 'handmade treat',
+  'Seis motivos que a gente escuta toda semana no balcão.':
+    'Six reasons we hear at the counter every week.',
+  'Levanta o astral': 'Lifts the mood',
+  'de qualquer dia': 'of any day',
+  'Mata a fome': 'Kills the hunger',
+  'rapidinho': 'in no time',
+  'Deixa a casa': 'Fills the house',
+  'com cheiro bom': 'with a good smell',
+  'Enche de energia': 'Gives you energy',
+  'pro resto do dia': 'for the rest of the day',
+  'Enfeita': 'Brightens up',
+  'qualquer mesa': 'any table',
+  'Sempre dá vontade': 'You always want',
+  'de repetir': 'a second slice',
+
+  /* catálogo */
+  'Queridinhos da casa': 'House favorites',
+  'Os mais': 'Our', 'pedidos': 'bestsellers',
+  'Os que o pessoal volta pra pedir de novo, toda semana.':
+    'The ones people come back for, week after week.',
+  'Pedir': 'Order',
+  'Mais pedido': 'Bestseller',
+  'Novo': 'New',
+  'Ver menos': 'Show less',
+  '+ Adicionar produto': '+ Add product',
+
+  /* ficha do produto */
+  'Serve': 'Serves',
+  'Peso': 'Weight',
+  'Encomende com': 'Order ahead',
+  'Leva': 'Contains',
+  'Como é feito': "How it's made",
+  'artesanal': 'handmade',
+  'A partir de': 'From',
+  'Adicionar ao carrinho': 'Add to cart',
+  'Feito no dia, com chocolate de verdade e manteiga — nunca pré-mistura.':
+    'Made the same day, with real chocolate and butter — never a pre-mix.',
+  'Recheios cremosos cozidos na panela, no ponto certo.':
+    'Creamy fillings cooked on the stove, just right.',
+  'Montado à mão, um por um, só depois do pedido confirmado.':
+    'Assembled by hand, one by one, only after the order is confirmed.',
+  'Finalizado e embalado no mesmo dia da entrega.':
+    'Finished and packed on the same day as delivery.',
+
+  /* carrinho e favoritos */
+  'Seu pedido': 'Your order',
+  'Seus favoritos': 'Your favorites',
+  'Carrinho': 'Cart',
+  'Favoritos': 'Favorites',
+  'Total do pedido': 'Order total',
+  'Enviar pedido pelo WhatsApp': 'Send order on WhatsApp',
+  'O pedido abre no WhatsApp da loja pra você confirmar entrega e pagamento.':
+    'The order opens in the shop WhatsApp so you can confirm delivery and payment.',
+  'Dos seus favoritos': 'From your favorites',
+  'Você curtiu esses. Leva junto?': 'You liked these. Add them too?',
+  'Adicionar': 'Add',
+  'Seu carrinho está vazio.': 'Your cart is empty.',
+  'Escolha um doce ali em cima.': 'Pick a treat up there.',
+  'Nenhum favorito ainda.': 'No favorites yet.',
+  'Toque no coração dos doces que você ama.': 'Tap the heart on the treats you love.',
+
+  /* dados do pedido */
+  'Pra fechar o pedido': 'To place your order',
+  'Seu nome': 'Your name',
+  'Local de entrega': 'Delivery address',
+  'Data que precisa': 'Date you need it',
+  'Observações': 'Notes',
+  '(opcional)': '(optional)',
+  'Como podemos te chamar?': 'What should we call you?',
+  'Endereço ou "retiro na loja"': 'Address or "pick up at the shop"',
+  'Recado no doce, restrição alimentar, horário…':
+    'Message on the treat, dietary restriction, time…',
+
+  /* busca */
+  'Sabor, ingrediente ou preço…': 'Flavor, ingredient or price…',
+  'Procure por sabor, ingrediente ou preço.': 'Search by flavor, ingredient or price.',
+
+  /* rodapé */
+  'Conheça': 'About us',
+  'Menu': 'Menu',
+  'Ajuda': 'Help',
+  'Nossa história': 'Our story',
+  'Onde estamos': 'Find us',
+  'Cookies': 'Cookies',
+  'Brownies': 'Brownies',
+  'Brigadeiros e bombons': 'Brigadeiros and bonbons',
+  'Como encomendar': 'How to order',
+  'Prazos e entrega': 'Delivery times',
+  'Trocas': 'Returns',
+  'Área da loja': 'Staff area',
+  'Receba as novidades': 'Get our news',
+  'Sabor novo, promoção e doce do dia. Sem encher sua caixa de entrada.':
+    'New flavors, deals and treat of the day. No inbox flooding.',
+  'Seu melhor e-mail': 'Your best email',
+  'Assinar': 'Subscribe',
+  'Todos os direitos reservados': 'All rights reserved',
+  'Feito com carinho, doce a doce.': 'Made with love, one treat at a time.',
+  'Endereço:': 'Address:',
+  'a preencher': 'to be filled in',
+  'Idioma': 'Language'
+};
+
+/* textos com número no meio: montados na hora, não dá pra casar direto */
+const MOLDES = {
+  verMenu:  { pt: 'Ver menu completo (+N)', en: 'See full menu (+N)' },
+  achados1: { pt: 'N doce encontrado',      en: 'N treat found' },
+  achadosN: { pt: 'N doces encontrados',    en: 'N treats found' }
+};
+
+function molde(chave, n){
+  return MOLDES[chave][idioma].replace('N', n);
+}
+
+let idioma = 'pt';
+try{ idioma = localStorage.getItem('kon-idioma') || 'pt'; }catch(e){}
+
+/* guarda o texto original de cada nó pra poder voltar ao português */
+const ORIGINAIS = new WeakMap();
+
+/* Mesmas chaves, com espaços e quebras de linha achatados. O HTML é
+   identado, então uma frase vira várias linhas dentro do nó de texto
+   e a comparação direta nunca casava. */
+const DIC_NORM = (() => {
+  const m = {};
+  Object.keys(DICIONARIO).forEach(k => {
+    m[k.replace(/\s+/g, ' ').trim()] = DICIONARIO[k];
+  });
+  return m;
+})();
+
+function traduzirNo(no){
+  const bruto = no.nodeValue;
+  const limpo = bruto.replace(/\s+/g, ' ').trim();
+  if(!limpo) return;
+
+  if(idioma === 'en'){
+    const en = DIC_NORM[limpo];
+    if(en){
+      if(!ORIGINAIS.has(no)) ORIGINAIS.set(no, bruto);
+      // preserva o espaço em volta pra não colar no texto vizinho
+      no.nodeValue = bruto.match(/^\s*/)[0] + en + bruto.match(/\s*$/)[0];
+    }
+  }else if(ORIGINAIS.has(no)){
+    no.nodeValue = ORIGINAIS.get(no);
+    ORIGINAIS.delete(no);
+  }
+}
+
+function traduzirAtributo(el, attr){
+  const bruto = el.getAttribute(attr);
+  if(!bruto) return;
+  const limpo = bruto.replace(/\s+/g, ' ').trim();
+
+  if(idioma === 'en'){
+    const en = DIC_NORM[limpo];
+    if(en){
+      // guarda o português uma vez só, pra poder voltar
+      if(!el.getAttribute('data-pt-' + attr)) el.setAttribute('data-pt-' + attr, bruto);
+      el.setAttribute(attr, en);
+    }
+  }else{
+    const pt = el.getAttribute('data-pt-' + attr);
+    if(pt){
+      el.setAttribute(attr, pt);
+      el.removeAttribute('data-pt-' + attr);
+    }
+  }
+}
+
+function aplicarIdioma(){
+  // textos
+  const passeio = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: no => {
+      const pai = no.parentNode;
+      if(!pai) return NodeFilter.FILTER_REJECT;
+      const tag = pai.nodeName;
+      if(tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nos = [];
+  while(passeio.nextNode()) nos.push(passeio.currentNode);
+  nos.forEach(traduzirNo);
+
+  // placeholders e rótulos de acessibilidade
+  document.querySelectorAll('[placeholder]').forEach(el => traduzirAtributo(el, 'placeholder'));
+  document.querySelectorAll('[aria-label]').forEach(el => traduzirAtributo(el, 'aria-label'));
+
+  document.documentElement.lang = (idioma === 'en') ? 'en' : 'pt-BR';
+  document.querySelectorAll('.opcao-idioma').forEach(b =>
+    b.classList.toggle('ativa', b.dataset.idioma === idioma));
+}
+
+function trocarIdioma(novo){
+  if(novo === idioma) return;
+  idioma = novo;
+  try{ localStorage.setItem('kon-idioma', idioma); }catch(e){}
+  renderCatalogo();   // redesenha o que o JS monta, já no idioma novo
+  render();
+  aplicarIdioma();
+  aviso(idioma === 'en' ? 'Language changed to English' : 'Idioma alterado para português');
+}
+
+document.querySelectorAll('.opcao-idioma').forEach(b =>
+  b.addEventListener('click', () => trocarIdioma(b.dataset.idioma)));
+
+/* ---------- partida ---------- */
+carregar();
+carregarDadosPedido();
+renderCatalogo();      // desenha o catálogo de fábrica pra página não nascer vazia
+aplicarModoAdmin();
+aplicarIdioma();
+
+// e então busca no servidor o que a equipe já editou e a sessão de quem voltou
+Catalogo.carregar();
+retomarSessao();
+</script>
+
+</body>
+</html>

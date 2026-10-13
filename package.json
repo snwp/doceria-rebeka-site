@@ -1,0 +1,13 @@
+{
+  "name": "kon-bolos-site",
+  "private": true,
+  "type": "module",
+  "description": "Site da KON BOLOS — catálogo e painel da equipe",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "@netlify/functions": "^3.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.25.5": true
+  }
+}

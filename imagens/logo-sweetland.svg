@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Sweet Land">
+  <defs>
+    <clipPath id="dentro"><circle cx="100" cy="100" r="86"/></clipPath>
+  </defs>
+
+  <!-- contorno multicolorido -->
+  <circle cx="100" cy="100" r="95" fill="#FFFFFF"/>
+  <g fill="none" stroke-width="9" transform="rotate(-90 100 100)">
+    <circle cx="100" cy="100" r="93" stroke="#FF4FA3" stroke-dasharray="146 438.4"/>
+    <circle cx="100" cy="100" r="93" stroke="#F58220" stroke-dasharray="146 438.4" stroke-dashoffset="-146.1"/>
+    <circle cx="100" cy="100" r="93" stroke="#E83B2E" stroke-dasharray="146 438.4" stroke-dashoffset="-292.2"/>
+    <circle cx="100" cy="100" r="93" stroke="#42C7B1" stroke-dasharray="146 438.4" stroke-dashoffset="-438.3"/>
+  </g>
+
+  <!-- miolo rosa com formas orgânicas -->
+  <g clip-path="url(#dentro)">
+    <rect width="200" height="200" fill="#FF4FA3"/>
+    <path d="M-10 150 C 30 120, 60 175, 105 150 S 175 120, 215 150 V 215 H -10 Z" fill="#E83B2E"/>
+    <path d="M-10 172 C 40 150, 80 200, 130 178 S 190 160, 215 175 V 215 H -10 Z" fill="#F58220"/>
+    <path d="M140 14 C 170 10, 196 35, 190 62 C 184 86, 156 80, 150 62 C 144 46, 118 20, 140 14 Z" fill="#F5D8E8" opacity=".55"/>
+    <circle cx="44" cy="52" r="10" fill="#42C7B1"/>
+  </g>
+
+  <!-- nome -->
+  <g fill="#FFFFFF" font-family="Fraunces, 'DM Serif Display', Georgia, 'Times New Roman', serif" font-weight="900" text-anchor="middle">
+    <text x="100" y="98" font-size="44">Sweet</text>
+    <text x="100" y="138" font-size="44">Land</text>
+  </g>
+  <text x="100" y="170" fill="#FFFFFF" font-family="Poppins, Arial, sans-serif" font-size="10.5" font-weight="600" letter-spacing="3" text-anchor="middle">DOCERIA</text>
+</svg>
