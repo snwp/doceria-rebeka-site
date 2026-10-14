@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="Foto em breve">
+  <!-- Ocupa o lugar da foto até a Rebeka mandar a foto real do produto -->
+  <rect width="900" height="900" fill="#F8DCE8"/>
+  <circle cx="760" cy="140" r="190" fill="#F72C83" opacity=".12"/>
+  <circle cx="120" cy="790" r="160" fill="#E8A52B" opacity=".14"/>
+
+  <g transform="translate(450 400)">
+    <circle r="190" fill="#FFFFFF"/>
+    <circle r="190" fill="none" stroke="#263A91" stroke-width="6" stroke-dasharray="4 14" stroke-linecap="round"/>
+    <!-- bolinho, igual ao do selo -->
+    <g transform="scale(4.2) translate(0 4)">
+      <rect x="-17" y="-2" width="34" height="14" rx="3" fill="#F72C83"/>
+      <path d="M-17 2 q4.25 5 8.5 0 q4.25 5 8.5 0 q4.25 5 8.5 0 q4.25 5 8.5 0" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+      <rect x="-11" y="-14" width="22" height="12" rx="3" fill="#F8DCE8" stroke="#F72C83" stroke-width="1.5"/>
+      <rect x="-21" y="11" width="42" height="4" rx="2" fill="#263A91"/>
+      <rect x="-1.4" y="-22" width="2.8" height="8" rx="1" fill="#263A91"/>
+      <path d="M0 -29 c2.6 2.4 3.4 4 3.4 5.2 a3.4 3.4 0 1 1 -6.8 0 c0 -1.2 .8 -2.8 3.4 -5.2Z" fill="#E8A52B"/>
+    </g>
+  </g>
+
+  <text x="450" y="700" fill="#263A91" font-family="'Playfair Display', Georgia, serif" font-size="52" font-weight="700" font-style="italic" text-anchor="middle">foto em breve</text>
+</svg>

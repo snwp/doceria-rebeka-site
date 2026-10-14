@@ -2780,8 +2780,8 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
         <div>
           <h4>Menu</h4>
           <ul>
-            <li><a href="#" data-busca="cookie">Cookies</a></li>
-            <li><a href="#" data-busca="brownie">Brownies</a></li>
+            <li><a href="#" data-busca="bolo">Bolos</a></li>
+            <li><a href="#" data-busca="festa">Docinhos de festa</a></li>
             <li><a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Quero%20um%20bolo%20personalizado." target="_blank" rel="noopener">Personalizados</a></li>
             <li><a href="#" data-busca="brigadeiro">Brigadeiros e bombons</a></li>
           </ul>
@@ -3909,11 +3909,101 @@ document.getElementById('ano').textContent = new Date().getFullYear();
 /* catálogo de fábrica — usado enquanto ninguém editou nada */
 const PRODUTOS_PADRAO = [
   {
-    id: 'sl1',
+    id: 'rb1',
+    nome: 'Bolo de Festa Ninho com Morango',
+    preco: 159.90,
+    desc: 'Massa branca fofinha, creme de leite Ninho e morangos frescos. O bolo das comemorações em família.',
+    selo: 'Mais pedido',
+    estrelas: 5,
+    img: 'imagens/foto-em-breve.svg',
+    ficha: {
+      porcoes: '20 a 25 pessoas',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '5 dias',
+      ingredientes: 'Massa branca, creme de leite Ninho, morangos frescos, chantilly'
+    }
+  },
+  {
+    id: 'rb2',
+    nome: 'Brigadeiro Gourmet',
+    preco: 29.90,
+    desc: 'Caixa com 6 brigadeiros de chocolate meio amargo, feitos na panela e enrolados à mão.',
+    selo: 'Mais pedido',
+    estrelas: 5,
+    img: 'imagens/brigadeiro.jpg',
+    ficha: {
+      porcoes: '6 unidades',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Leite condensado, chocolate meio amargo, manteiga, granulado de chocolate'
+    }
+  },
+  {
+    id: 'rb3',
+    nome: 'Cento de Docinhos de Festa',
+    preco: 189.90,
+    desc: '100 docinhos sortidos pra mesa da festa: brigadeiro, beijinho, cajuzinho e bicho-de-pé.',
+    selo: '',
+    estrelas: 5,
+    img: 'imagens/foto-em-breve.svg',
+    ficha: {
+      porcoes: '100 unidades',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '5 dias',
+      ingredientes: 'Leite condensado, chocolate, coco, amendoim, morango, açúcar cristal'
+    }
+  },
+  {
+    id: 'rb4',
+    nome: 'Bolo no Pote Ninho com Nutella',
+    preco: 16.90,
+    desc: 'Camadas de massa de chocolate, creme de Ninho e Nutella. Pra comer de colher, onde estiver.',
+    selo: 'Novo',
+    estrelas: 5,
+    img: 'imagens/foto-em-breve.svg',
+    ficha: {
+      porcoes: '1 pote',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Massa de chocolate, creme de leite Ninho, Nutella'
+    }
+  },
+  {
+    id: 'rb5',
+    nome: 'Torta de Limão',
+    preco: 14.90,
+    desc: 'Base crocante, creme de limão azedinho na medida e merengue maçaricado. Fatia generosa.',
+    selo: '',
+    estrelas: 5,
+    img: 'imagens/foto-em-breve.svg',
+    ficha: {
+      porcoes: '1 fatia',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Biscoito amanteigado, limão, leite condensado, merengue'
+    }
+  },
+  {
+    id: 'rb6',
+    nome: 'Brownie com Brigadeiro',
+    preco: 14.90,
+    desc: 'Brownie molhadinho de chocolate coberto com uma camada cremosa de brigadeiro.',
+    selo: '',
+    estrelas: 5,
+    img: 'imagens/foto-em-breve.svg',
+    ficha: {
+      porcoes: '1 unidade',
+      peso: 'Consulte no WhatsApp',
+      antecedencia: '1 dia',
+      ingredientes: 'Chocolate meio amargo, manteiga, ovos, brigadeiro cremoso'
+    }
+  },
+  {
+    id: 'rb7',
     nome: 'Bombom de Morango',
     preco: 14.90,
     desc: 'Morango fresco envolto em creme branco e casquinha de chocolate ao leite.',
-    selo: 'Mais pedido',
+    selo: '',
     estrelas: 5,
     img: 'imagens/bombom-morango.jpg',
     ficha: {
@@ -3924,71 +4014,11 @@ const PRODUTOS_PADRAO = [
     }
   },
   {
-    id: 'sl2',
-    nome: 'Cookie Recheado',
-    preco: 16.90,
-    desc: 'Crocante por fora, macio por dentro, com recheio cremoso de avelã, gotas de chocolate e nozes.',
-    selo: 'Novo',
-    estrelas: 5,
-    img: 'imagens/cookie-recheado.jpg',
-    ficha: {
-      porcoes: '1 unidade',
-      peso: 'Consulte no WhatsApp',
-      antecedencia: '1 dia',
-      ingredientes: 'Massa amanteigada, creme de avelã, gotas de chocolate ao leite, nozes'
-    }
-  },
-  {
-    id: 'sl3',
-    nome: 'Copinho de Brownie',
-    preco: 18.90,
-    desc: 'Brownie molhadinho com creme de chocolate e granulado colorido, no copinho da Rebeka.',
-    selo: '',
-    estrelas: 5,
-    img: 'imagens/copinho-brownie.jpg',
-    ficha: {
-      porcoes: '1 copinho',
-      peso: 'Consulte no WhatsApp',
-      antecedencia: '1 dia',
-      ingredientes: 'Brownie de chocolate, creme de chocolate, granulado colorido'
-    }
-  },
-  {
-    id: 'sl4',
-    nome: 'Brigadeiro Tradicional',
-    preco: 24.90,
-    desc: 'Caixa com 6 brigadeiros de panela, enrolados na hora e cobertos de granulado.',
-    selo: '',
-    estrelas: 5,
-    img: 'imagens/brigadeiro.jpg',
-    ficha: {
-      porcoes: '6 unidades',
-      peso: 'Consulte no WhatsApp',
-      antecedencia: '1 dia',
-      ingredientes: 'Leite condensado, chocolate, manteiga, granulado de chocolate'
-    }
-  },
-  {
-    id: 'sl5',
-    nome: 'Ovo de Colher Brownie',
-    preco: 79.90,
-    desc: 'Casca de chocolate recheada com creme branco, creme de avelã e pedaços de brownie.',
-    selo: '',
-    estrelas: 5,
-    img: 'imagens/ovo-de-colher.jpg',
-    ficha: {
-      porcoes: '2 a 3 pessoas',
-      peso: 'Consulte no WhatsApp',
-      antecedencia: '3 dias',
-      ingredientes: 'Chocolate ao leite, creme branco, creme de avelã, brownie'
-    }
-  },
-  {
-    id: 'sl6',
-    nome: 'Bolo Ursinho',
+    id: 'rb8',
+    nome: 'Bolo Infantil Ursinho',
     preco: 129.90,
-    desc: 'Mini bolo de chocolate decorado de ursinho, com bico de chocolate e detalhes em chocolate branco.',
-    selo: 'Mais pedido',
+    desc: 'Bolo de chocolate decorado de ursinho, pra deixar o aniversário dos pequenos ainda mais doce.',
+    selo: '',
     estrelas: 5,
     img: 'imagens/bolo-ursinho.jpg',
     ficha: {
@@ -4904,7 +4934,7 @@ const DICIONARIO = {
   'Confeitaria artesanal': 'Artisan confectionery',
   'Confeitaria • Doces • Momentos especiais': 'Confectionery • Sweets • Special moments',
   'Feitos à mão, com carinho e ingredientes de verdade, pra adoçar os momentos especiais da sua família.':
-    'Handmade with love and real ingredients, to sweeten your family's special moments.',
+    "Handmade with love and real ingredients, to sweeten your family's special moments.",
   'Ver menu completo': 'See full menu',
   'Ver Doces': 'See Sweets',
   'Encomendar': 'Order now',
@@ -4996,8 +5026,8 @@ const DICIONARIO = {
   'Ajuda': 'Help',
   'Nossa história': 'Our story',
   'Onde estamos': 'Find us',
-  'Cookies': 'Cookies',
-  'Brownies': 'Brownies',
+  'Bolos': 'Cakes',
+  'Docinhos de festa': 'Party sweets',
   'Brigadeiros e bombons': 'Brigadeiros and bonbons',
   'Como encomendar': 'How to order',
   'Prazos e entrega': 'Delivery times',
