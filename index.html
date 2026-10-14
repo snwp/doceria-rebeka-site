@@ -3,31 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sweet Land — Brownies, cookies, bolos e sobremesas artesanais</title>
+<title>Doceria da Rebeka — Confeitaria, doces e momentos especiais</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
-   SWEET LAND — paleta oficial (identidade/design-guide.md)
+   DOCERIA DA REBEKA — paleta da identidade visual
+   (hex aproximados a partir das peças da marca)
    Quer trocar cor ou fonte? Mexe só aqui embaixo.
    ============================================================ */
 :root{
-  --rosa:        #FF4FA3;  /* cor-assinatura: faixas, blocos, logo  */
-  --rosa-forte:  #E5338C;  /* CTA e destaques (rosa com leitura)    */
-  --vermelho:    #E83B2E;  /* energia, apetite                      */
-  --laranja:     #F58220;  /* calor, estrelas, selos                */
-  --rosa-claro:  #F5D8E8;  /* fundos suaves, texto sobre o vinho    */
-  --verde-agua:  #42C7B1;  /* contraste e frescor                   */
+  --rosa:        #F72C83;  /* rosa vibrante: cor principal, blocos, logo */
+  --rosa-forte:  #D81B6F;  /* CTA e destaques (rosa com leitura no branco) */
+  --azul:        #263A91;  /* azul royal: títulos, contornos, rodapé    */
+  --rosa-claro:  #F8DCE8;  /* fundos suaves, texto sobre o azul         */
+  --dourado:     #E8A52B;  /* detalhe complementar: estrelas, selos     */
   --branco:      #FFFFFF;
-  --creme:       #FFF5EA;  /* fundo das artes do Instagram          */
-  --vinho:       #8A1450;  /* títulos, placas, rodapé               */
-  --escuro:      #3A1A2C;  /* textos menores                        */
+  --creme:       #FFF6FA;  /* fundo geral, branco levemente rosado      */
+  --escuro:      #1F2A5C;  /* textos corridos (azul bem escuro)         */
 
-  --fonte-titulo: 'Fraunces', Georgia, serif;
-  --fonte-script: 'Pacifico', cursive;
+  /* títulos: serifada decorativa e elegante
+     nome da marca: a mesma serifada, robusta e em caixa alta
+     apoio: sem serifa, simples e legível */
+  --fonte-titulo: 'Playfair Display', Georgia, serif;
+  --fonte-script: 'Playfair Display', Georgia, serif;
   --fonte-corpo:  'Poppins', system-ui, -apple-system, sans-serif;
 
   --raio: 18px;
@@ -51,15 +53,15 @@ body{
   -webkit-font-smoothing: antialiased;
 }
 
-/* base branca com brilhos rosa e laranja suaves — a cor entra como detalhe */
+/* base clara com brilhos rosa e dourado suaves — a cor entra como detalhe */
 .wrap{
   position: relative;
   /* "clip" em vez de "hidden": corta o que vazar sem criar área de rolagem,
      senão o topo sticky deixa de grudar. */
   overflow: clip;
   background:
-    radial-gradient(980px 560px at 82% 18%, rgba(255,79,163,.16) 0%, transparent 64%),
-    radial-gradient(720px 500px at 4% 78%, rgba(245,130,32,.12) 0%, transparent 62%),
+    radial-gradient(980px 560px at 82% 18%, rgba(247,44,131,.16) 0%, transparent 64%),
+    radial-gradient(720px 500px at 4% 78%, rgba(232,165,43,.12) 0%, transparent 62%),
     var(--creme);
 }
 
@@ -77,11 +79,11 @@ body{
   display: flex;
   align-items: center;
   gap: 32px;
-  background: rgba(245,216,232,.94);
+  background: rgba(248,220,232,.94);
   backdrop-filter: blur(12px);
   border: none;
   border-radius: 999px;
-  box-shadow: 0 10px 30px rgba(138,20,80,.16);
+  box-shadow: 0 10px 30px rgba(38,58,145,.16);
 }
 
 .logo{
@@ -97,7 +99,7 @@ body{
   font-weight: 800;
   font-size: 21px;
   letter-spacing: .5px;
-  color: var(--vinho);
+  color: var(--azul);
   line-height: 1;
 }
 .logo-texto span{ color: var(--rosa-forte); }
@@ -111,7 +113,7 @@ body{
 .menu a{
   font-size: 14.5px;
   font-weight: 500;
-  color: var(--vinho);
+  color: var(--azul);
   text-decoration: none;
   padding-bottom: 4px;
   border-bottom: 2px solid transparent;
@@ -144,7 +146,7 @@ body{
   display: block;
   width: 19px; height: 2.2px;
   border-radius: 2px;
-  background: var(--vinho);
+  background: var(--azul);
   transition: transform .25s, opacity .2s;
 }
 .sanduiche[aria-expanded="true"] span:nth-child(1){ transform: translateY(7.2px) rotate(45deg); }
@@ -156,11 +158,11 @@ body{
   border: none;
   border-radius: 50%;
   background: transparent;
-  color: var(--vinho);
+  color: var(--azul);
   cursor: pointer;
   transition: background .2s, color .2s;
 }
-.acoes button:hover{ background: var(--vinho); color: var(--rosa-claro); }
+.acoes button:hover{ background: var(--azul); color: var(--rosa-claro); }
 .acoes svg{ width: 19px; height: 19px; }
 
 /* risquinho separando as ações de compra da área da loja */
@@ -168,7 +170,7 @@ body{
   width: 1px;
   height: 22px;
   margin: 0 4px;
-  background: rgba(138,20,80,.25);
+  background: rgba(38,58,145,.25);
 }
 
 /* botão da área da loja: pílula com texto, vira só ícone em tela estreita */
@@ -182,16 +184,16 @@ body{
   font-weight: 600;
   display: flex !important;
   align-items: center;
-  border: 1.5px solid rgba(138,20,80,.3) !important;
+  border: 1.5px solid rgba(38,58,145,.3) !important;
 }
 .btn-login-topo .i-sair{ display: none; }
-.btn-login-topo:hover{ border-color: var(--vinho) !important; }
+.btn-login-topo:hover{ border-color: var(--azul) !important; }
 
 /* logado: o botão muda de cara e passa a ser "sair" */
 body.admin .btn-login-topo{
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--rosa-claro);
-  border-color: var(--vinho) !important;
+  border-color: var(--azul) !important;
 }
 body.admin .btn-login-topo .i-entrar{ display: none; }
 body.admin .btn-login-topo .i-sair{ display: block; }
@@ -239,12 +241,13 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   font-size: clamp(38px, 4.6vw, 62px);
   letter-spacing: normal;
   line-height: 1.1;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .titulo .script{
   display: block;
   font-family: var(--fonte-script);
-  font-weight: 400;
+  font-style: italic;
+  font-weight: 600;
   font-size: clamp(32px, 4vw, 54px);
   letter-spacing: normal;        /* zera o tracking negativo do H1 */
   line-height: 1.25;
@@ -281,22 +284,22 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   background: var(--rosa-forte);
   color: var(--branco);
   border: 2px solid var(--rosa-forte);
-  box-shadow: 0 10px 24px rgba(138,20,80,.28);
+  box-shadow: 0 10px 24px rgba(38,58,145,.28);
 }
-.btn-cheio:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(138,20,80,.36); }
+.btn-cheio:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(38,58,145,.36); }
 
 .btn-vazio{
   background: transparent;
-  color: var(--vinho);
-  border: 2px solid var(--vinho);
+  color: var(--azul);
+  border: 2px solid var(--azul);
 }
-.btn-vazio:hover{ background: var(--vinho); color: var(--rosa-claro); transform: translateY(-2px); }
+.btn-vazio:hover{ background: var(--azul); color: var(--rosa-claro); transform: translateY(-2px); }
 
 .pontos{ display: flex; gap: 9px; margin-top: 44px; }
 .pontos span{
   width: 9px; height: 9px;
   border-radius: 50%;
-  background: rgba(138,20,80,.28);
+  background: rgba(38,58,145,.28);
   cursor: pointer;
   transition: width .25s, background .25s;
 }
@@ -313,7 +316,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
 }
 
 /* Sem fundo atrás do bolo: o PNG é recortado e flutua direto na página.
-   Atrás dele, blocos de cor orgânicos da Sweet Land (rosa + laranja). */
+   Atrás dele, blocos de cor orgânicos da Rebeka (rosa + dourado). */
 .midia::before{
   content: "";
   position: absolute;
@@ -321,7 +324,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   aspect-ratio: 1;
   border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
   background: var(--rosa);
-  box-shadow: 0 30px 70px rgba(255,79,163,.28);
+  box-shadow: 0 30px 70px rgba(247,44,131,.28);
 }
 .midia::after{
   content: "";
@@ -330,8 +333,8 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   width: min(150px, 30%);
   aspect-ratio: 1;
   border-radius: 46% 54% 38% 62% / 55% 40% 60% 45%;
-  background: var(--laranja);
-  box-shadow: -210px -250px 0 -40px var(--verde-agua);
+  background: var(--dourado);
+  box-shadow: -210px -250px 0 -40px var(--azul);
 }
 
 .moldura{
@@ -372,8 +375,8 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   height: 26px;
   border-radius: 50%;
   background: radial-gradient(ellipse at center,
-              rgba(58,26,44,.20) 0%,
-              rgba(58,26,44,.09) 48%,
+              rgba(31,42,92,.20) 0%,
+              rgba(31,42,92,.09) 48%,
               transparent 72%);
   filter: blur(7px);
 }
@@ -392,7 +395,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   border: 2.5px dashed var(--rosa-forte);
   border-radius: var(--raio);
   background: rgba(255,255,255,.55);
-  color: var(--vinho);
+  color: var(--azul);
 }
 .moldura img ~ .placeholder{ display: none; }
 
@@ -412,7 +415,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
 .placeholder code{
   font-family: ui-monospace, Consolas, monospace;
   font-size: 11.5px;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--rosa-claro);
   padding: 3px 8px;
   border-radius: 6px;
@@ -441,9 +444,9 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
     z-index: 41;
     padding: 10px;
     border-radius: 22px;
-    background: rgba(245,216,232,.97);
+    background: rgba(248,220,232,.97);
     backdrop-filter: blur(12px);
-    box-shadow: 0 16px 36px rgba(138,20,80,.22);
+    box-shadow: 0 16px 36px rgba(38,58,145,.22);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
@@ -456,7 +459,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
     gap: 0;
     margin: 0;
   }
-  .menu li + li{ border-top: 1px solid rgba(138,20,80,.16); }
+  .menu li + li{ border-top: 1px solid rgba(38,58,145,.16); }
   .menu a{
     display: block;
     padding: 13px 16px;
@@ -466,7 +469,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   }
   .menu a:hover,
   .menu a.ativo{
-    background: var(--vinho);
+    background: var(--azul);
     color: var(--rosa-claro);
   }
 }
@@ -547,7 +550,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   display: inline-block;
   padding: 7px 18px;
   border-radius: 999px;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--rosa-claro);
   font-size: 11px;
   font-weight: 600;
@@ -560,12 +563,12 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   font-weight: 800;
   font-size: clamp(30px, 3.6vw, 46px);
   line-height: 1.15;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .cabecalho h2 em{
   font-family: var(--fonte-script);
-  font-style: normal;
-  font-weight: 400;
+  font-style: italic;
+  font-weight: 600;
   color: var(--rosa-forte);
   font-size: .92em;
 }
@@ -592,7 +595,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   font-size: 14px;
   font-weight: 600;
   line-height: 1.45;
-  color: var(--vinho);
+  color: var(--azul);
   max-width: 175px;
   flex-shrink: 0;
 }
@@ -600,7 +603,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   flex: 1;
   min-width: 24px;
   height: 1.5px;
-  background: rgba(138,20,80,.35);
+  background: rgba(38,58,145,.35);
 }
 .esq .beneficio .linha{ margin-left: 14px; }
 .dir .beneficio .linha{ margin-right: 14px; }
@@ -608,7 +611,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   width: 10px; height: 10px;
   border-radius: 50%;
   background: var(--rosa-forte);
-  box-shadow: 0 0 0 4px rgba(229,51,140,.16);
+  box-shadow: 0 0 0 4px rgba(216,27,111,.16);
   flex-shrink: 0;
 }
 /* as pontas de cima e de baixo entram um pouco, acompanhando a curva do anel */
@@ -624,8 +627,8 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   aspect-ratio: 1;
   margin: 0 10px;
   border-radius: 50%;
-  border: 1.5px solid rgba(138,20,80,.22);
-  background: radial-gradient(circle, rgba(255,79,163,.2) 0%, rgba(255,79,163,0) 72%);
+  border: 1.5px solid rgba(38,58,145,.22);
+  background: radial-gradient(circle, rgba(247,44,131,.2) 0%, rgba(247,44,131,0) 72%);
   display: grid;
   place-items: center;
 }
@@ -634,7 +637,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   position: absolute;
   inset: 9%;
   border-radius: 50%;
-  border: 1.5px solid rgba(138,20,80,.16);
+  border: 1.5px solid rgba(38,58,145,.16);
 }
 /* PNG recortado: o bolo já é redondo, então não leva máscara nem fundo —
    flutua no centro dos anéis com sombra que segue o próprio contorno. */
@@ -649,7 +652,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   display: block;
   /* visto de cima, sombra de contorno também suja a borda rendada:
      fica só um apoio bem discreto */
-  filter: drop-shadow(0 10px 16px rgba(58,26,44,.14));
+  filter: drop-shadow(0 10px 16px rgba(31,42,92,.14));
 }
 
 /* ---------- cards de produto ---------- */
@@ -661,7 +664,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
 .produto{
   position: relative;
   background: var(--branco);
-  border: 1.5px solid rgba(138,20,80,.14);
+  border: 1.5px solid rgba(38,58,145,.14);
   border-radius: 20px;
   padding: 14px 14px 18px;
   display: flex;
@@ -672,7 +675,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
 .produto:hover{
   transform: translateY(-6px);
   border-color: var(--rosa-forte);
-  box-shadow: 0 18px 38px rgba(58,26,44,.13);
+  box-shadow: 0 18px 38px rgba(31,42,92,.13);
 }
 
 /* espaço da foto do produto */
@@ -701,10 +704,10 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--rosa-claro);
 }
-.selo-card.novo{ background: var(--rosa-claro); color: var(--vinho); }
+.selo-card.novo{ background: var(--rosa-claro); color: var(--azul); }
 
 .estrelas{
   color: var(--rosa-forte);
@@ -716,7 +719,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 17px;
-  color: var(--vinho);
+  color: var(--azul);
   line-height: 1.25;
 }
 .produto .desc{
@@ -737,7 +740,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 19px;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .btn-mini{
   padding: 8px 18px;
@@ -751,7 +754,7 @@ body.admin .btn-login-topo .t-sair{ display: inline; }
   cursor: pointer;
   transition: background .2s;
 }
-.btn-mini:hover{ background: var(--vinho); }
+.btn-mini:hover{ background: var(--azul); }
 
 .coracao{
   position: absolute;
@@ -809,7 +812,7 @@ img ~ .ph{ display: none; }
   padding: 20px 32px 30px;
 }
 .convite-card{
-  background: var(--vinho);
+  background: var(--azul);
   border-radius: 30px;
   padding: 14px;
   display: grid;
@@ -837,8 +840,8 @@ img ~ .ph{ display: none; }
 .convite-painel h2 em{
   display: block;
   font-family: var(--fonte-script);
-  font-style: normal;
-  font-weight: 400;
+  font-style: italic;
+  font-weight: 600;
   font-size: 1.12em;
   color: var(--rosa-claro);
   margin-top: 6px;
@@ -856,7 +859,7 @@ img ~ .ph{ display: none; }
   padding: 13px 34px;
   border-radius: 999px;
   background: var(--branco);
-  color: var(--vinho);
+  color: var(--azul);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -967,7 +970,7 @@ img ~ .ph{ display: none; }
   .beneficio .linha{ min-width: 12px; }
   .esq .beneficio .linha{ margin-left: 8px; }
   .dir .beneficio .linha{ margin-right: 8px; }
-  .beneficio .ponto{ width: 8px; height: 8px; box-shadow: 0 0 0 3px rgba(229,51,140,.16); }
+  .beneficio .ponto{ width: 8px; height: 8px; box-shadow: 0 0 0 3px rgba(216,27,111,.16); }
   .esq .beneficio:first-child,
   .esq .beneficio:last-child{ margin-right: -14px; }
   .dir .beneficio:first-child,
@@ -1026,7 +1029,7 @@ img ~ .ph{ display: none; }
    RODAPÉ
    ============================================================ */
 .rodape-site{
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--branco);
   border-radius: 40px 40px 0 0;
 }
@@ -1139,7 +1142,7 @@ img ~ .ph{ display: none; }
   border: none;
   border-radius: 999px;
   background: var(--rosa-claro);
-  color: var(--vinho);
+  color: var(--azul);
   font-family: var(--fonte-corpo);
   font-size: 12.5px;
   font-weight: 700;
@@ -1203,7 +1206,7 @@ img ~ .ph{ display: none; }
   line-height: 1;
 }
 .contador.visivel{ display: grid; }
-.acoes button:hover .contador{ background: var(--rosa-claro); color: var(--vinho); }
+.acoes button:hover .contador{ background: var(--rosa-claro); color: var(--azul); }
 
 /* coração ativo no card */
 .coracao.ativo{
@@ -1216,7 +1219,7 @@ img ~ .ph{ display: none; }
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgba(58,26,44,.5);
+  background: rgba(31,42,92,.5);
   backdrop-filter: blur(3px);
   opacity: 0;
   visibility: hidden;
@@ -1235,7 +1238,7 @@ img ~ .ph{ display: none; }
   flex-direction: column;
   transform: translateX(100%);
   transition: transform .3s cubic-bezier(.4,0,.2,1);
-  box-shadow: -20px 0 50px rgba(58,26,44,.2);
+  box-shadow: -20px 0 50px rgba(31,42,92,.2);
 }
 .gaveta.aberta{ transform: translateX(0); }
 
@@ -1245,25 +1248,25 @@ img ~ .ph{ display: none; }
   justify-content: space-between;
   gap: 12px;
   padding: 22px 22px 16px;
-  border-bottom: 1px solid rgba(138,20,80,.14);
+  border-bottom: 1px solid rgba(38,58,145,.14);
 }
 .gaveta-topo h3{
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 20px;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .fechar{
   width: 34px; height: 34px;
   display: grid; place-items: center;
   border: none;
   border-radius: 50%;
-  background: rgba(138,20,80,.08);
-  color: var(--vinho);
+  background: rgba(38,58,145,.08);
+  color: var(--azul);
   cursor: pointer;
   transition: background .2s, color .2s;
 }
-.fechar:hover{ background: var(--vinho); color: var(--rosa-claro); }
+.fechar:hover{ background: var(--azul); color: var(--rosa-claro); }
 .fechar svg{ width: 16px; height: 16px; }
 
 .gaveta-corpo{
@@ -1279,7 +1282,7 @@ img ~ .ph{ display: none; }
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(138,20,80,.1);
+  border-bottom: 1px solid rgba(38,58,145,.1);
 }
 .item-foto{
   width: 62px; height: 62px;
@@ -1298,7 +1301,7 @@ img ~ .ph{ display: none; }
   font-weight: 700;
   font-size: 14.5px;
   line-height: 1.3;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .item-preco{
   font-size: 12.5px;
@@ -1314,10 +1317,10 @@ img ~ .ph{ display: none; }
 .qtd button{
   width: 24px; height: 24px;
   display: grid; place-items: center;
-  border: 1.5px solid rgba(138,20,80,.3);
+  border: 1.5px solid rgba(38,58,145,.3);
   border-radius: 50%;
   background: transparent;
-  color: var(--vinho);
+  color: var(--azul);
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -1330,7 +1333,7 @@ img ~ .ph{ display: none; }
   text-align: center;
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--vinho);
+  color: var(--azul);
 }
 
 /* ---------- estado vazio ---------- */
@@ -1346,7 +1349,7 @@ img ~ .ph{ display: none; }
 .recomendados{
   margin-top: 26px;
   padding-top: 20px;
-  border-top: 2px dashed rgba(138,20,80,.18);
+  border-top: 2px dashed rgba(38,58,145,.18);
 }
 .recomendados h4{
   display: flex;
@@ -1395,7 +1398,7 @@ img ~ .ph{ display: none; }
 /* ---------- pé da gaveta ---------- */
 .gaveta-pe{
   padding: 18px 22px 22px;
-  border-top: 1px solid rgba(138,20,80,.14);
+  border-top: 1px solid rgba(38,58,145,.14);
   background: #FFF7FB;
 }
 .total{
@@ -1414,7 +1417,7 @@ img ~ .ph{ display: none; }
   font-family: var(--fonte-titulo);
   font-weight: 800;
   font-size: 25px;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .btn-whats{
   width: 100%;
@@ -1457,15 +1460,15 @@ img ~ .ph{ display: none; }
   padding: 9px;
   border: none;
   border-radius: 999px;
-  background: rgba(138,20,80,.07);
-  color: var(--vinho);
+  background: rgba(38,58,145,.07);
+  color: var(--azul);
   font-family: var(--fonte-corpo);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
   transition: background .2s, color .2s;
 }
-.abas button.ativa{ background: var(--vinho); color: var(--rosa-claro); }
+.abas button.ativa{ background: var(--azul); color: var(--rosa-claro); }
 
 /* ---------- avisinho flutuante ---------- */
 .toast{
@@ -1476,11 +1479,11 @@ img ~ .ph{ display: none; }
   transform: translate(-50%, 90px);
   padding: 13px 24px;
   border-radius: 999px;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--branco);
   font-size: 13.5px;
   font-weight: 500;
-  box-shadow: 0 14px 34px rgba(58,26,44,.3);
+  box-shadow: 0 14px 34px rgba(31,42,92,.3);
   opacity: 0;
   transition: transform .3s, opacity .3s;
   pointer-events: none;
@@ -1513,7 +1516,7 @@ img ~ .ph{ display: none; }
 .bolha-clara{
   background: var(--branco);
   color: var(--rosa-forte);
-  box-shadow: 0 8px 22px rgba(58,26,44,.16);
+  box-shadow: 0 8px 22px rgba(31,42,92,.16);
 }
 .bolha-clara:hover{ background: var(--rosa-forte); color: var(--branco); }
 
@@ -1521,9 +1524,9 @@ img ~ .ph{ display: none; }
 .bolha-cheia{
   background: var(--rosa-forte);
   color: var(--branco);
-  box-shadow: 0 10px 26px rgba(229,51,140,.42);
+  box-shadow: 0 10px 26px rgba(216,27,111,.42);
 }
-.bolha-cheia:hover{ background: var(--vinho); }
+.bolha-cheia:hover{ background: var(--azul); }
 
 /* contador colado no canto de cada bolha */
 .bolha .contador{
@@ -1531,7 +1534,7 @@ img ~ .ph{ display: none; }
   min-width: 22px; height: 22px;
   font-size: 11px;
   border: 2px solid var(--branco);
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--branco);
 }
 .bolha-clara .contador{ background: var(--rosa-forte); }
@@ -1558,7 +1561,7 @@ img ~ .ph{ display: none; }
   flex-wrap: wrap;
   gap: 14px;
   padding: 10px 18px;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--branco);
   font-size: 13px;
   font-weight: 500;
@@ -1577,7 +1580,7 @@ body.admin .barra-admin{ display: flex; }
   cursor: pointer;
   transition: background .2s, color .2s;
 }
-.barra-admin button:hover{ background: var(--rosa-claro); color: var(--vinho); border-color: var(--rosa-claro); }
+.barra-admin button:hover{ background: var(--rosa-claro); color: var(--azul); border-color: var(--rosa-claro); }
 
 /* botões de editar/excluir em cima do card */
 .acoes-card{
@@ -1593,16 +1596,16 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   padding: 5px 11px;
   border: none;
   border-radius: 999px;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--rosa-claro);
   font-family: var(--fonte-corpo);
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(58,26,44,.25);
+  box-shadow: 0 4px 12px rgba(31,42,92,.25);
   transition: background .2s, color .2s;
 }
-.acoes-card button:hover{ background: var(--rosa-claro); color: var(--vinho); }
+.acoes-card button:hover{ background: var(--rosa-claro); color: var(--azul); }
 .acoes-card .excluir:hover{ background: var(--rosa-forte); color: var(--branco); }
 
 .admin-add{ text-align: center; margin-top: 30px; }
@@ -1615,7 +1618,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(58,26,44,.55);
+  background: rgba(31,42,92,.55);
   backdrop-filter: blur(4px);
   opacity: 0;
   visibility: hidden;
@@ -1630,7 +1633,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   background: var(--branco);
   border-radius: 24px;
   padding: 26px;
-  box-shadow: 0 30px 70px rgba(58,26,44,.3);
+  box-shadow: 0 30px 70px rgba(31,42,92,.3);
   transform: translateY(14px);
   transition: transform .22s;
 }
@@ -1640,7 +1643,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 22px;
-  color: var(--vinho);
+  color: var(--azul);
   margin-bottom: 6px;
 }
 .modal .legenda{
@@ -1666,7 +1669,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   font-weight: 600;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: var(--vinho);
+  color: var(--azul);
   margin-bottom: 6px;
 }
 /* vale pra qualquer campo de digitar — listar tipo por tipo deixava
@@ -1676,7 +1679,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
 .campo select{
   width: 100%;
   padding: 12px 14px;
-  border: 1.5px solid rgba(138,20,80,.22);
+  border: 1.5px solid rgba(38,58,145,.22);
   border-radius: 12px;
   background: #FFF7FB;
   font-family: var(--fonte-corpo);
@@ -1702,14 +1705,14 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
 /* ---------- área de envio de foto ---------- */
 .dropzone{
   position: relative;
-  border: 2px dashed rgba(138,20,80,.3);
+  border: 2px dashed rgba(38,58,145,.3);
   border-radius: 16px;
   background: #FFF7FB;
   transition: border-color .2s, background .2s;
 }
 .dropzone.sobre{
   border-color: var(--rosa-forte);
-  background: rgba(229,51,140,.06);
+  background: rgba(216,27,111,.06);
 }
 
 /* --- sem foto --- */
@@ -1731,7 +1734,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 15px;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .dz-sub{ font-size: 12.5px; color: var(--escuro); opacity: .75; }
 .dz-link{
@@ -1759,7 +1762,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   border-radius: 12px;
   overflow: hidden;
   background: var(--branco);
-  border: 1.5px solid rgba(138,20,80,.14);
+  border: 1.5px solid rgba(38,58,145,.14);
 }
 .dz-previa img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 .dz-info{ text-align: center; margin-top: 11px; }
@@ -1767,7 +1770,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: var(--vinho);
+  color: var(--azul);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1795,7 +1798,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
 }
 .dz-acoes button:hover{ background: var(--rosa-forte); color: var(--branco); }
 .dz-acoes .desfazer{
-  border-color: rgba(138,20,80,.3);
+  border-color: rgba(38,58,145,.3);
   color: var(--escuro);
 }
 .dz-acoes .desfazer:hover{ background: var(--escuro); border-color: var(--escuro); color: var(--branco); }
@@ -1812,7 +1815,7 @@ body.admin .selo-card{ display: none; }   /* o selo cede o lugar pros botões */
   margin-top: 12px;
   padding: 10px 14px;
   border-radius: 12px;
-  background: rgba(229,51,140,.1);
+  background: rgba(216,27,111,.1);
   color: var(--rosa-forte);
   font-size: 12.5px;
   line-height: 1.5;
@@ -1848,7 +1851,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 }
 .divisor-modal{
   border: none;
-  border-top: 2px dashed rgba(138,20,80,.18);
+  border-top: 2px dashed rgba(38,58,145,.18);
   margin: 22px 0 18px;
 }
 
@@ -1859,15 +1862,15 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   justify-content: space-between;
   gap: 12px;
   padding: 12px 14px;
-  border: 1.5px solid rgba(138,20,80,.16);
+  border: 1.5px solid rgba(38,58,145,.16);
   border-radius: 14px;
   background: #FFF7FB;
 }
-.pessoa.dono{ border-color: var(--vinho); background: rgba(138,20,80,.05); }
+.pessoa.dono{ border-color: var(--azul); background: rgba(38,58,145,.05); }
 .pessoa-email{
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--vinho);
+  color: var(--azul);
   word-break: break-all;
 }
 .pessoa-funcao{ font-size: 12px; opacity: .7; margin-top: 2px; }
@@ -1876,34 +1879,34 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   padding: 3px 9px;
   border-radius: 999px;
   background: var(--rosa-claro);
-  color: var(--vinho);
+  color: var(--azul);
   font-size: 10.5px;
   font-weight: 600;
 }
-.chip.vazio{ background: rgba(138,20,80,.1); color: var(--escuro); font-weight: 500; }
+.chip.vazio{ background: rgba(38,58,145,.1); color: var(--escuro); font-weight: 500; }
 .travado{
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--vinho);
+  color: var(--azul);
   opacity: .55;
   white-space: nowrap;
 }
 .pessoa-acoes{ display: flex; gap: 6px; flex-shrink: 0; }
 .pessoa-acoes button{
   padding: 6px 12px;
-  border: 1.5px solid rgba(138,20,80,.3);
+  border: 1.5px solid rgba(38,58,145,.3);
   border-radius: 999px;
   background: transparent;
-  color: var(--vinho);
+  color: var(--azul);
   font-family: var(--fonte-corpo);
   font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   transition: background .2s, color .2s, border-color .2s;
 }
-.pessoa-acoes button:hover{ background: var(--vinho); color: var(--rosa-claro); border-color: var(--vinho); }
+.pessoa-acoes button:hover{ background: var(--azul); color: var(--rosa-claro); border-color: var(--azul); }
 .pessoa-acoes .excluir:hover{ background: var(--rosa-forte); border-color: var(--rosa-forte); color: var(--branco); }
 
 .dupla{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -1914,7 +1917,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   align-items: flex-start;
   gap: 9px;
   padding: 9px 12px;
-  border: 1.5px solid rgba(138,20,80,.16);
+  border: 1.5px solid rgba(38,58,145,.16);
   border-radius: 12px;
   cursor: pointer;
   transition: border-color .2s, background .2s;
@@ -1929,7 +1932,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   text-transform: none;
   letter-spacing: normal;
 }
-.marcar:has(input:checked){ border-color: var(--rosa-forte); background: rgba(229,51,140,.05); }
+.marcar:has(input:checked){ border-color: var(--rosa-forte); background: rgba(216,27,111,.05); }
 
 @media (max-width: 560px){
   .dupla{ grid-template-columns: 1fr; }
@@ -1946,7 +1949,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   align-items: center;
   gap: 10px;
   padding: 16px 16px 14px;
-  border-bottom: 1.5px solid rgba(138,20,80,.14);
+  border-bottom: 1.5px solid rgba(38,58,145,.14);
 }
 .busca-topo > svg{ width: 19px; height: 19px; color: var(--rosa-forte); flex-shrink: 0; }
 #busca-campo{
@@ -1959,7 +1962,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   color: var(--escuro);
 }
 #busca-campo:focus{ outline: none; }
-#busca-campo::placeholder{ color: rgba(58,26,44,.42); }
+#busca-campo::placeholder{ color: rgba(31,42,92,.42); }
 
 .busca-resultado{
   max-height: 60vh;
@@ -1980,7 +1983,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   align-items: center;
   gap: 12px;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(138,20,80,.1);
+  border-bottom: 1px solid rgba(38,58,145,.1);
 }
 .achado:last-child{ border-bottom: none; }
 .achado-foto{
@@ -1996,7 +1999,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 14.5px;
-  color: var(--vinho);
+  color: var(--azul);
   line-height: 1.25;
 }
 .achado-desc{
@@ -2020,7 +2023,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 15px;
-  color: var(--vinho);
+  color: var(--azul);
 }
 
 .busca-dicas{ padding: 26px 4px 14px; text-align: center; }
@@ -2034,17 +2037,17 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 .sugestoes{ display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
 .sugestao{
   padding: 8px 15px;
-  border: 1.5px solid rgba(138,20,80,.25);
+  border: 1.5px solid rgba(38,58,145,.25);
   border-radius: 999px;
   background: transparent;
-  color: var(--vinho);
+  color: var(--azul);
   font-family: var(--fonte-corpo);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
   transition: background .2s, color .2s, border-color .2s;
 }
-.sugestao:hover{ background: var(--vinho); color: var(--rosa-claro); border-color: var(--vinho); }
+.sugestao:hover{ background: var(--azul); color: var(--rosa-claro); border-color: var(--azul); }
 
 @media (max-width: 560px){
   .modal-busca{ padding: 0; }
@@ -2078,7 +2081,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   z-index: 3;
   background: rgba(255,255,255,.92);
   backdrop-filter: blur(6px);
-  box-shadow: 0 4px 14px rgba(58,26,44,.2);
+  box-shadow: 0 4px 14px rgba(31,42,92,.2);
 }
 
 /* ---------- foto com o selo ---------- */
@@ -2100,8 +2103,8 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   gap: 0;
   border-radius: 50%;
   background: var(--rosa-claro);
-  border: 2.5px solid var(--vinho);
-  box-shadow: 0 10px 24px rgba(58,26,44,.24);
+  border: 2.5px solid var(--azul);
+  box-shadow: 0 10px 24px rgba(31,42,92,.24);
   transform: rotate(-8deg);
 }
 .selo-artesanal svg{
@@ -2114,7 +2117,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   font-weight: 800;
   font-size: 19px;
   line-height: 1;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .selo-artesanal span{
   font-family: var(--fonte-corpo);
@@ -2122,7 +2125,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   font-weight: 700;
   letter-spacing: 1.6px;
   text-transform: uppercase;
-  color: var(--vinho);
+  color: var(--azul);
   margin-top: 2px;
 }
 
@@ -2134,7 +2137,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   font-weight: 800;
   font-size: 24px;
   line-height: 1.2;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .det-desc{
   margin-top: 8px;
@@ -2152,7 +2155,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   padding: 14px 16px;
   border-radius: 16px;
   background: #FFF7FB;
-  border: 1.5px solid rgba(138,20,80,.14);
+  border: 1.5px solid rgba(38,58,145,.14);
 }
 .ficha-item{
   display: flex;
@@ -2160,7 +2163,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   gap: 11px;
   padding: 9px 0;
 }
-.ficha-item + .ficha-item{ border-top: 1px solid rgba(138,20,80,.1); }
+.ficha-item + .ficha-item{ border-top: 1px solid rgba(38,58,145,.1); }
 .ficha-item svg{
   width: 18px; height: 18px;
   flex-shrink: 0;
@@ -2217,7 +2220,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--vinho);
+  background: var(--azul);
   color: var(--rosa-claro);
   font-family: var(--fonte-corpo);
   font-size: 11px;
@@ -2233,7 +2236,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   gap: 12px;
   margin-top: 24px;
   padding: 16px 24px 22px;
-  border-top: 1.5px solid rgba(138,20,80,.14);
+  border-top: 1.5px solid rgba(38,58,145,.14);
   background: #FFF7FB;
 }
 .det-preco .rotulo{
@@ -2249,14 +2252,14 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   font-family: var(--fonte-titulo);
   font-weight: 800;
   font-size: 26px;
-  color: var(--vinho);
+  color: var(--azul);
 }
 .det-acoes{ display: flex; align-items: center; gap: 10px; }
 .det-coracao{
   position: static;
   width: 44px; height: 44px;
   flex-shrink: 0;
-  border: 1.5px solid rgba(138,20,80,.25);
+  border: 1.5px solid rgba(38,58,145,.25);
   background: var(--branco);
 }
 .det-coracao svg{ width: 18px; height: 18px; }
@@ -2287,7 +2290,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 .pedido-form{
   flex-shrink: 0;
   padding: 14px 22px 4px;
-  border-top: 1px solid rgba(138,20,80,.14);
+  border-top: 1px solid rgba(38,58,145,.14);
   background: var(--branco);
 }
 .pedido-form[hidden]{ display: none; }
@@ -2307,7 +2310,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   display: block;
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--vinho);
+  color: var(--azul);
   margin-bottom: 4px;
 }
 .campo-ped .opcional{
@@ -2319,7 +2322,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 .campo-ped textarea{
   width: 100%;
   padding: 10px 12px;
-  border: 1.5px solid rgba(138,20,80,.22);
+  border: 1.5px solid rgba(38,58,145,.22);
   border-radius: 12px;
   background: #FFF7FB;
   font-family: var(--fonte-corpo);
@@ -2329,7 +2332,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 }
 .campo-ped textarea{ resize: vertical; min-height: 44px; line-height: 1.45; }
 .campo-ped input::placeholder,
-.campo-ped textarea::placeholder{ color: rgba(58,26,44,.4); }
+.campo-ped textarea::placeholder{ color: rgba(31,42,92,.4); }
 .campo-ped input:focus,
 .campo-ped textarea:focus{
   outline: none;
@@ -2341,7 +2344,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 .campo-ped.falta input,
 .campo-ped.falta textarea{
   border-color: var(--rosa-forte);
-  background: rgba(229,51,140,.06);
+  background: rgba(216,27,111,.06);
 }
 .campo-ped.falta label::after{
   content: " — preencha";
@@ -2388,39 +2391,61 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 .opcao-idioma:hover{ color: var(--rosa-claro); }
 .opcao-idioma.ativa{
   background: var(--rosa-claro);
-  color: var(--vinho);
+  color: var(--azul);
 }
 
 /* ============================================================
-   SWEET LAND — toques da marca
-   Rosa vibrante como bloco de cor, contorno circular multicolorido
-   e pontos de laranja, vermelho e verde-água.
+   DOCERIA DA REBEKA — toques da marca
+   Rosa vibrante como bloco de cor, contorno de selo em azul royal
+   + rosa + branco (igual ao emblema) e pontos de dourado.
    ============================================================ */
 .logo img{ border-radius: 50%; }
-.logo-texto{ font-style: italic; letter-spacing: 0; }
+
+/* nome da marca: serifada robusta, caixa alta, "DOCERIA DA" menor em cima */
+.logo-texto, .rodape-marca .nome{
+  font-family: var(--fonte-titulo);
+  font-weight: 900;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.logo-texto{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  color: var(--rosa);
+}
+.logo-texto small{
+  font-family: var(--fonte-corpo);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--azul);
+}
 
 /* faixa dos produtos em rosa cheio */
 .faixa-clara .cabecalho h2{ color: var(--branco); }
-.faixa-clara .cabecalho h2 em{ color: var(--vinho); }
+.faixa-clara .cabecalho h2 em{ color: var(--azul); }
 .faixa-clara .cabecalho p{ color: var(--branco); opacity: .95; }
 .faixa-clara .pill{ background: var(--branco); color: var(--rosa-forte); }
 .faixa-clara .btn-vazio{ color: var(--branco); border-color: var(--branco); }
 .faixa-clara .btn-vazio:hover{ background: var(--branco); color: var(--rosa-forte); }
-.faixa-clara .produto{ border-color: transparent; box-shadow: 0 10px 26px rgba(138,20,80,.18); }
-.faixa-clara .produto:hover{ border-color: var(--laranja); box-shadow: 0 18px 38px rgba(138,20,80,.28); }
+.faixa-clara .produto{ border-color: transparent; box-shadow: 0 10px 26px rgba(38,58,145,.18); }
+.faixa-clara .produto:hover{ border-color: var(--azul); box-shadow: 0 18px 38px rgba(38,58,145,.28); }
 
 /* estrelas e selos com as cores de apoio */
-.estrelas{ color: var(--laranja); }
-.selo-card.novo{ background: var(--verde-agua); color: var(--escuro); }
+.estrelas{ color: var(--dourado); }
+.selo-card.novo{ background: var(--azul); color: var(--branco); }
 
-/* anel da órbita com o contorno multicolorido do logo */
+/* anel da órbita: contorno de selo azul + rosa, como o emblema */
 .aneis{
-  border: 4px solid transparent;
+  border: 5px solid transparent;
   background:
-    radial-gradient(circle, rgba(255,79,163,.2) 0%, rgba(255,255,255,1) 72%) padding-box,
-    conic-gradient(var(--rosa), var(--laranja), var(--vermelho), var(--verde-agua), var(--rosa)) border-box;
+    radial-gradient(circle, rgba(247,44,131,.16) 0%, var(--creme) 72%) padding-box,
+    conic-gradient(var(--azul) 0 25%, var(--rosa) 0 50%, var(--azul) 0 75%, var(--rosa) 0) border-box;
 }
-.aneis::before{ border: 2px dashed rgba(138,20,80,.2); }
+.aneis::before{ border: 2px dashed rgba(38,58,145,.28); }
 
 /* cada benefício ganha uma cor da paleta */
 .beneficio .ponto{
@@ -2428,30 +2453,31 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--c, var(--rosa-forte)) 22%, transparent);
 }
 .esq .beneficio:nth-child(1), .dir .beneficio:nth-child(3){ --c: var(--rosa); }
-.esq .beneficio:nth-child(2), .dir .beneficio:nth-child(1){ --c: var(--laranja); }
-.esq .beneficio:nth-child(3), .dir .beneficio:nth-child(2){ --c: var(--verde-agua); }
+.esq .beneficio:nth-child(2), .dir .beneficio:nth-child(1){ --c: var(--dourado); }
+.esq .beneficio:nth-child(3), .dir .beneficio:nth-child(2){ --c: var(--azul); }
 @media (max-width: 680px){
   .beneficio .ponto{ box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--rosa-forte)) 22%, transparent); }
 }
 
 /* bolinhas do hero nas cores da marca */
-.pontos span:nth-child(2){ background: rgba(245,130,32,.45); }
-.pontos span:nth-child(3){ background: rgba(66,199,177,.5); }
+.pontos span:nth-child(2){ background: rgba(232,165,43,.55); }
+.pontos span:nth-child(3){ background: rgba(38,58,145,.4); }
 .pontos span.ativo{ background: var(--rosa-forte); }
 
-/* rodapé vinho com blocos de cor orgânicos */
+/* rodapé azul royal com brilhos rosa e dourado, filete rosa no topo */
 .rodape-site{
   background:
-    radial-gradient(520px 300px at 96% 0%, rgba(255,79,163,.38) 0%, transparent 70%),
-    radial-gradient(420px 260px at 0% 100%, rgba(245,130,32,.24) 0%, transparent 70%),
-    var(--vinho);
+    radial-gradient(520px 300px at 96% 0%, rgba(247,44,131,.42) 0%, transparent 70%),
+    radial-gradient(420px 260px at 0% 100%, rgba(232,165,43,.20) 0%, transparent 70%),
+    var(--azul);
+  border-top: 6px solid var(--rosa);
 }
-.selo-logo{ background: transparent; width: 52px; height: 52px; }
+.selo-logo{ background: transparent; width: 64px; height: 64px; }
 .selo-logo img{ width: 100%; height: 100%; }
-.rodape-marca .nome{ font-style: italic; letter-spacing: 0; }
+.rodape-marca .nome{ letter-spacing: 1.5px; }
 
-/* selo "artesanal" da ficha em laranja */
-.selo-artesanal{ background: var(--laranja); border-color: var(--branco); }
+/* selo "artesanal" da ficha em dourado */
+.selo-artesanal{ background: var(--dourado); border-color: var(--branco); }
 .selo-artesanal svg{ color: var(--branco); }
 
 /* no celular o bloco rosa encolhe pra não invadir o texto */
@@ -2463,18 +2489,17 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 .gaveta:not(.aberta){ box-shadow: none; }
 
 /* ============================================================
-   SWEET LAND — fotos reais
+   DOCERIA DA REBEKA — fotos reais
    ============================================================ */
-/* nome da marca na serifada pesada e retrô do copo e dos posts */
-.logo-texto, .rodape-marca .nome{ font-weight: 900; font-style: normal; }
-
-/* hero: a foto vira um bloco orgânico, com o rosa deslocado atrás */
+/* hero: a foto vira um bloco orgânico, com o rosa deslocado atrás
+   e o pingo dourado + azul de apoio */
 .midia::before{ transform: rotate(-9deg) translate(22px, 14px); }
+.midia::after{ background: var(--dourado); box-shadow: -210px -250px 0 -40px var(--azul); }
 .moldura{
   width: min(400px, 88%);
   border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
   border: 8px solid var(--branco);
-  box-shadow: 0 24px 60px rgba(138,20,80,.25);
+  box-shadow: 0 0 0 3px var(--azul), 0 24px 60px rgba(38,58,145,.25);
 }
 .moldura::before{ content: none; }
 .moldura img{ object-fit: cover; object-position: 50% 40%; }
@@ -2483,13 +2508,8 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 }
 
 /* órbita: brigadeiros recortados em círculo */
-.miolo{ border-radius: 50%; overflow: hidden; box-shadow: 0 10px 24px rgba(58,26,44,.18); }
+.miolo{ border-radius: 50%; overflow: hidden; box-shadow: 0 10px 24px rgba(31,42,92,.18); }
 .miolo img{ object-fit: cover; object-position: 50% 62%; filter: none; }
-.aneis{
-  background:
-    radial-gradient(circle, rgba(255,79,163,.2) 0%, var(--creme) 72%) padding-box,
-    conic-gradient(var(--rosa), var(--laranja), var(--vermelho), var(--verde-agua), var(--rosa)) border-box;
-}
 
 /* seis doces: três por linha no computador, foto maior */
 @media (min-width: 901px){
@@ -2524,8 +2544,8 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
   <header class="topbar">
 
     <a class="logo" href="#topo">
-      <img src="imagens/logo-sweetland.svg" alt="" aria-hidden="true">
-      <span class="logo-texto">Sweet <span>Land</span></span>
+      <img src="imagens/logo-rebeka.svg" alt="" aria-hidden="true">
+      <span class="logo-texto"><small>Doceria da</small>Rebeka</span>
     </a>
 
     <button class="sanduiche" id="btn-menu" aria-label="Abrir menu" aria-expanded="false">
@@ -2575,22 +2595,22 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
     <div class="texto">
       <p class="selo">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-8-5.1-8-10.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 3.8C20 15.9 12 21 12 21Z"/></svg>
-        Doceria artesanal
+        Confeitaria artesanal
       </p>
 
       <h1 class="titulo">
-        Brownies, cookies &amp; bolos
-        <span class="script">do jeito mais doce</span>
+        Doces que viram
+        <span class="script">momentos especiais</span>
       </h1>
 
       <p class="sub">
-        Recheio cremoso, chocolate de verdade e aquele exagero gostoso.
-        Bem-vindo ao universo colorido da Sweet Land.
+        Feitos à mão, com carinho e ingredientes de verdade, pra adoçar
+        os momentos especiais da sua família.
       </p>
 
       <div class="botoes">
         <a href="#bolos" class="btn btn-cheio">Ver Doces</a>
-        <a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Quero%20encomendar%20na%20Sweet%20Land." target="_blank" rel="noopener" class="btn btn-vazio">
+        <a href="https://wa.me/5512997376348?text=Ol%C3%A1!%20Quero%20encomendar%20na%20Doceria%20da%20Rebeka." target="_blank" rel="noopener" class="btn btn-vazio">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20h14v-7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v7Z"/><path d="M12 4v4"/><path d="M12 2.5c1.2 1 1.7 1.8 1.7 2.4a1.7 1.7 0 1 1-3.4 0c0-.6.5-1.4 1.7-2.4Z"/></svg>
           Encomendar
         </a>
@@ -2612,7 +2632,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
     <div class="midia">
       <div class="moldura">
 
-        <img src="imagens/copinho-brownie.jpg" alt="Copinho de brownie com granulado colorido no copo da Sweet Land">
+        <img src="imagens/copinho-brownie.jpg" alt="Copinho de brownie com granulado colorido no copo da Doceria da Rebeka">
 
         <div class="placeholder">
           <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2631,14 +2651,14 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 
   </section>
 
-  <!-- ==================== SEÇÃO 2 — POR QUE A SWEET LAND ====================
+  <!-- ==================== SEÇÃO 2 — POR QUE A DOCERIA DA REBEKA ====================
        Diagrama em órbita: foto no miolo, dois anéis e 6 benefícios ligados
        por linhas. Pra trocar um texto, mexe só no <span class="txt">.
   -->
   <section class="secao" id="sobre">
 
     <div class="cabecalho">
-      <span class="pill">Por que Sweet Land</span>
+      <span class="pill">Por que a Rebeka</span>
       <h2>O que tem de bom num <em>docinho artesanal</em></h2>
       <p>Seis motivos que a gente escuta toda semana no balcão.</p>
     </div>
@@ -2667,7 +2687,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
       <!-- ---------- anéis com a foto no miolo ---------- -->
       <div class="aneis">
         <div class="miolo">
-          <img src="imagens/brigadeiro.jpg" alt="Brigadeiros da Sweet Land">
+          <img src="imagens/brigadeiro.jpg" alt="Brigadeiros da Doceria da Rebeka">
         </div>
       </div>
 
@@ -2730,15 +2750,16 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
         <div>
           <div class="rodape-marca">
             <span class="selo-logo">
-              <img src="imagens/logo-sweetland.svg" alt="" aria-hidden="true">
+              <img src="imagens/logo-rebeka.svg" alt="" aria-hidden="true">
             </span>
-            <span class="nome">Sweet Land
-              <span class="tag">Doceria artesanal</span>
+            <span class="nome">Doceria da Rebeka
+              <span class="tag">Confeitaria • Doces • Momentos especiais</span>
             </span>
           </div>
           <ul>
             <li><a href="https://wa.me/5512997376348" target="_blank" rel="noopener">WhatsApp (12) 99737-6348</a></li>
-            <li><a href="https://www.instagram.com/sweetlanddoces/" target="_blank" rel="noopener">Instagram @sweetlanddoces</a></li>
+            <!-- coloque aqui o @ do Instagram da Rebeka -->
+            <li>Instagram: <em>a preencher</em></li>
             <!-- coloque aqui o endereço da loja -->
             <li>Endereço: <em>a preencher</em></li>
           </ul>
@@ -2799,8 +2820,8 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
           <button class="opcao-idioma" data-idioma="pt" lang="pt-BR">PT</button>
           <button class="opcao-idioma" data-idioma="en" lang="en">EN</button>
         </div>
-        <span>© <span id="ano"></span> Sweet Land · Todos os direitos reservados</span>
-        <span>Feito com carinho, doce a doce.</span>
+        <span>© <span id="ano"></span> Doceria da Rebeka · Todos os direitos reservados</span>
+        <span>Feito com carinho, pra adoçar momentos especiais.</span>
       </div>
 
     </div>
@@ -3131,7 +3152,7 @@ body:not(.pode-fotos) .campo-foto{ display: none; }
 
 <script>
 /* ============================================================
-   SWEET LAND — carrinho, favoritos e envio pro WhatsApp
+   DOCERIA DA REBEKA — carrinho, favoritos e envio pro WhatsApp
    ------------------------------------------------------------
    O número da loja está logo abaixo. Pra trocar, muda só essa linha
    (formato: código do país + DDD + número, só dígitos).
@@ -3362,7 +3383,7 @@ function enviarWhatsApp(){
 
   const total = itens.reduce((s,i) => s + i.preco * i.qtd, 0);
 
-  let msg = 'Olá, Sweet Land! Quero fazer um pedido:\n\n';
+  let msg = 'Olá, Doceria da Rebeka! Quero fazer um pedido:\n\n';
   itens.forEach(i => {
     msg += '• ' + i.qtd + 'x ' + i.nome + ' — ' + moeda(i.preco * i.qtd) + '\n';
   });
@@ -3921,7 +3942,7 @@ const PRODUTOS_PADRAO = [
     id: 'sl3',
     nome: 'Copinho de Brownie',
     preco: 18.90,
-    desc: 'Brownie molhadinho com creme de chocolate e granulado colorido, no copinho Sweet Land.',
+    desc: 'Brownie molhadinho com creme de chocolate e granulado colorido, no copinho da Rebeka.',
     selo: '',
     estrelas: 5,
     img: 'imagens/copinho-brownie.jpg',
@@ -4878,16 +4899,18 @@ const DICIONARIO = {
 
   /* hero */
   'Doceria artesanal': 'Artisan sweet shop',
-  'Brownies, cookies & bolos': 'Brownies, cookies & cakes',
-  'do jeito mais doce': 'the sweetest way',
-  'Recheio cremoso, chocolate de verdade e aquele exagero gostoso. Bem-vindo ao universo colorido da Sweet Land.':
-    'Creamy fillings, real chocolate and that tasty bit of excess. Welcome to the colorful world of Sweet Land.',
+  'Doces que viram': 'Sweets that become',
+  'momentos especiais': 'special moments',
+  'Confeitaria artesanal': 'Artisan confectionery',
+  'Confeitaria • Doces • Momentos especiais': 'Confectionery • Sweets • Special moments',
+  'Feitos à mão, com carinho e ingredientes de verdade, pra adoçar os momentos especiais da sua família.':
+    'Handmade with love and real ingredients, to sweeten your family's special moments.',
   'Ver menu completo': 'See full menu',
   'Ver Doces': 'See Sweets',
   'Encomendar': 'Order now',
 
   /* seção dos benefícios */
-  'Por que Sweet Land': 'Why Sweet Land',
+  'Por que a Rebeka': 'Why Rebeka',
   'O que tem de bom num': "What's so good about a",
   'docinho artesanal': 'handmade treat',
   'Seis motivos que a gente escuta toda semana no balcão.':
@@ -4986,7 +5009,7 @@ const DICIONARIO = {
   'Seu melhor e-mail': 'Your best email',
   'Assinar': 'Subscribe',
   'Todos os direitos reservados': 'All rights reserved',
-  'Feito com carinho, doce a doce.': 'Made with love, one treat at a time.',
+  'Feito com carinho, pra adoçar momentos especiais.': 'Made with love, to sweeten special moments.',
   'Endereço:': 'Address:',
   'a preencher': 'to be filled in',
   'Idioma': 'Language'

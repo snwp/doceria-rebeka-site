@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" role="img" aria-label="Doceria da Rebeka">
+  <!-- Selo ornamental da Doceria da Rebeka (recriação vetorial a partir da identidade).
+       Contornos em azul royal + rosa + branco, bolinho no topo, nome em rosa. -->
+  <!-- borda recortada (babado) em azul -->
+  <g fill="#263A91">
+    <circle cx="100" cy="100" r="92"/>
+    <g id="babado">
+      <circle cx="100" cy="7" r="8"/>
+    </g>
+    <use xlink:href="#babado" transform="rotate(15 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(30 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(45 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(60 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(75 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(90 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(105 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(120 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(135 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(150 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(165 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(180 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(195 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(210 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(225 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(240 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(255 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(270 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(285 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(300 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(315 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(330 100 100)"/>
+    <use xlink:href="#babado" transform="rotate(345 100 100)"/>
+  </g>
+
+  <!-- anéis: branco, rosa, branco pontilhado -->
+  <circle cx="100" cy="100" r="86" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="80" fill="#F72C83"/>
+  <circle cx="100" cy="100" r="74" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="69" fill="none" stroke="#263A91" stroke-width="1.6" stroke-dasharray="1.5 4" stroke-linecap="round"/>
+
+  <!-- bolinho decorado no topo -->
+  <g transform="translate(100 62)">
+    <rect x="-17" y="-2" width="34" height="14" rx="3" fill="#F72C83"/>
+    <path d="M-17 2 q4.25 5 8.5 0 q4.25 5 8.5 0 q4.25 5 8.5 0 q4.25 5 8.5 0" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+    <rect x="-11" y="-14" width="22" height="12" rx="3" fill="#F8DCE8" stroke="#F72C83" stroke-width="1.5"/>
+    <rect x="-21" y="11" width="42" height="4" rx="2" fill="#263A91"/>
+    <rect x="-1.4" y="-22" width="2.8" height="8" rx="1" fill="#263A91"/>
+    <path d="M0 -29 c2.6 2.4 3.4 4 3.4 5.2 a3.4 3.4 0 1 1 -6.8 0 c0 -1.2 .8 -2.8 3.4 -5.2Z" fill="#E8A52B"/>
+  </g>
+
+  <!-- DOCERIA DA -->
+  <text x="100" y="99" fill="#263A91" font-family="Poppins, Arial, sans-serif" font-size="11" font-weight="700" textLength="92" lengthAdjust="spacingAndGlyphs" text-anchor="middle">DOCERIA DA</text>
+
+  <!-- REBEKA -->
+  <text x="100" y="128" fill="#F72C83" stroke="#263A91" stroke-width="1" paint-order="stroke" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-size="30" font-weight="900" textLength="112" lengthAdjust="spacingAndGlyphs" text-anchor="middle">REBEKA</text>
+
+  <!-- filete e coraçãozinho -->
+  <path d="M62 140 H90 M110 140 H138" stroke="#263A91" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M100 145.5s-5.5-3.4-5.5-7a3 3 0 0 1 5.5-1.7 3 3 0 0 1 5.5 1.7c0 3.6-5.5 7-5.5 7Z" fill="#F72C83"/>
+</svg>
